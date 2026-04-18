@@ -6,12 +6,9 @@ const path = require('path');
 const SurveyResponse = require('../models/SurveyResponse');
 const { flattenResponsesForAnalytics } = require('./exportService');
 const { buildResponseQuery } = require('./queryService');
+const { buildLocalAnalytics } = require('./localAnalyticsService');
 
-const runPythonAnalytics = async (filters = {}) => {
-  const query = buildResponseQuery(filters);
-  const responses = await SurveyResponse.find(query).populate('sector', 'name').lean();
-  const rows = await flattenResponsesForAnalytics(responses);
-
+const runPythonAnalyticsProcess = async (rows) => {
   const tempFile = path.join(os.tmpdir(), `cloud-survey-${Date.now()}.json`);
   await fs.writeFile(tempFile, JSON.stringify(rows), 'utf8');
 
@@ -25,6 +22,14 @@ const runPythonAnalytics = async (filters = {}) => {
     const child = spawn(pythonPath, [scriptPath, tempFile], { cwd: path.resolve(__dirname, '..') });
     let stdout = '';
     let stderr = '';
+    let settled = false;
+
+    const finish = async (handler, value) => {
+      if (settled) return;
+      settled = true;
+      await fs.unlink(tempFile).catch(() => {});
+      handler(value);
+    };
 
     child.stdout.on('data', (chunk) => {
       stdout += chunk.toString();
@@ -34,20 +39,35 @@ const runPythonAnalytics = async (filters = {}) => {
       stderr += chunk.toString();
     });
 
-    child.on('close', async (code) => {
-      await fs.unlink(tempFile).catch(() => {});
+    child.on('error', (error) => {
+      finish(reject, new Error(`Unable to start Python analytics: ${error.message}`));
+    });
 
+    child.on('close', (code) => {
       if (code !== 0) {
-        return reject(new Error(stderr || 'Python analytics failed'));
+        return finish(reject, new Error(stderr || 'Python analytics failed'));
       }
 
       try {
-        resolve(JSON.parse(stdout));
+        return finish(resolve, JSON.parse(stdout));
       } catch (error) {
-        reject(new Error(`Analytics returned invalid JSON: ${error.message}`));
+        return finish(reject, new Error(`Analytics returned invalid JSON: ${error.message}`));
       }
     });
   });
+};
+
+const runPythonAnalytics = async (filters = {}) => {
+  const query = buildResponseQuery(filters);
+  const responses = await SurveyResponse.find(query).populate('sector', 'name').lean();
+  const rows = await flattenResponsesForAnalytics(responses);
+
+  try {
+    return await runPythonAnalyticsProcess(rows);
+  } catch (error) {
+    console.warn(`Python analytics failed, using local fallback: ${error.message}`);
+    return buildLocalAnalytics(rows);
+  }
 };
 
 module.exports = { runPythonAnalytics };
