@@ -25,7 +25,7 @@ import StatCard from '../components/ui/StatCard';
 const OVERVIEW_TAB_ID = 'overview';
 const FINAL_TAB_ID = 'final-report';
 const CHART_COLORS = ['#0f7c90', '#14b8a6', '#84cc16', '#f59e0b', '#ef4444', '#6366f1', '#64748b'];
-const PANEL_CLASS = 'rounded border border-slate-200 bg-white p-5 shadow-soft';
+const PANEL_CLASS = 'rounded border border-slate-200 bg-white p-4 shadow-soft sm:p-5';
 const numberFormatter = new Intl.NumberFormat('en-US');
 
 const formatPercent = (value) => `${Number(value || 0).toFixed(Number(value || 0) % 1 === 0 ? 0 : 1)}%`;
@@ -54,8 +54,40 @@ const buildCacheKey = (tab, filters) => {
 
 const sortRows = (rows = []) => [...rows].sort((left, right) => (right.count || 0) - (left.count || 0));
 
+function useMediaQuery(query) {
+  const getMatch = () => {
+    if (typeof window === 'undefined' || !window.matchMedia) return false;
+    return window.matchMedia(query).matches;
+  };
+
+  const [matches, setMatches] = useState(getMatch);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return undefined;
+
+    const mediaQuery = window.matchMedia(query);
+    const handleChange = (event) => setMatches(event.matches);
+
+    setMatches(mediaQuery.matches);
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, [query]);
+
+  return matches;
+}
+
 function ActiveChip({ label }) {
-  return <span className="rounded bg-slate-100 px-3 py-1.5 text-sm font-medium text-slate-600">{label}</span>;
+  return (
+    <span className="max-w-full truncate rounded bg-slate-100 px-3 py-1.5 text-xs font-medium text-slate-600 sm:text-sm">
+      {label}
+    </span>
+  );
 }
 
 function FiltersBar({ filters, sectors, districts, onChange, onClear, onRefresh, refreshing }) {
@@ -63,7 +95,7 @@ function FiltersBar({ filters, sectors, districts, onChange, onClear, onRefresh,
   const selectedSector = sectors.find((sector) => (sector._id || sector.name) === filters.sector);
 
   return (
-    <section className="sticky top-0 z-20 -mx-2 rounded border border-slate-200 bg-slate-50/95 px-2 pb-2 pt-1 backdrop-blur sm:mx-0 sm:px-0">
+    <section className="-mx-2 rounded border border-slate-200 bg-slate-50/95 px-2 pb-2 pt-1 backdrop-blur lg:sticky lg:top-3 lg:z-20 sm:mx-0 sm:px-0">
       <div className="rounded border border-slate-200 bg-white p-5 shadow-soft sm:p-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div>
@@ -78,14 +110,14 @@ function FiltersBar({ filters, sectors, districts, onChange, onClear, onRefresh,
           <button
             type="button"
             onClick={onRefresh}
-            className="inline-flex items-center gap-2 rounded border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-slate-400 hover:text-slate-900"
+            className="inline-flex w-full items-center justify-center gap-2 rounded border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-slate-400 hover:text-slate-900 sm:w-auto"
           >
             <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
             Refresh Active Tab
           </button>
         </div>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <label className="block">
             <span className="mb-2 flex items-center gap-2 text-sm font-medium text-slate-600">
               <Filter size={15} />
@@ -178,7 +210,23 @@ function FiltersBar({ filters, sectors, districts, onChange, onClear, onRefresh,
 function TabBar({ tabs, activeTab, onSelect }) {
   return (
     <section className="rounded border border-slate-200 bg-white shadow-soft">
-      <div className="overflow-x-auto">
+      <div className="border-b border-slate-200 p-3 sm:hidden">
+        <label className="block">
+          <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-500">Active tab</span>
+          <select
+            value={activeTab}
+            onChange={(event) => onSelect(event.target.value)}
+            className="w-full rounded border border-slate-300 bg-white px-3 py-2.5 text-sm font-medium text-ink outline-none transition focus:border-teal-600"
+          >
+            {tabs.map((tab) => (
+              <option key={tab.id} value={tab.id}>
+                {tab.label}
+              </option>
+            ))}
+          </select>
+        </label>
+      </div>
+      <div className="hidden overflow-x-auto sm:block">
         <div className="flex min-w-max gap-2 p-2">
           {tabs.map((tab) => {
             const active = tab.id === activeTab;
@@ -206,9 +254,9 @@ function TabBar({ tabs, activeTab, onSelect }) {
 
 function SectionIntro({ eyebrow, title, description }) {
   return (
-    <section className="rounded border border-slate-200 bg-white p-6 shadow-soft sm:p-7">
+    <section className="rounded border border-slate-200 bg-white p-5 shadow-soft sm:p-7">
       <p className="text-sm font-medium uppercase tracking-wide text-slate-500">{eyebrow}</p>
-      <h2 className="mt-2 text-2xl font-bold leading-tight text-ink sm:text-3xl">{title}</h2>
+      <h2 className="mt-2 text-xl font-bold leading-tight text-ink sm:text-3xl">{title}</h2>
       <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-500">{description}</p>
     </section>
   );
@@ -220,7 +268,7 @@ function HighlightGrid({ items = [] }) {
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {items.map((item, index) => (
         <div key={`${item.label}-${index}`} className="rounded border border-slate-200 bg-white p-4 shadow-soft">
           <p className="text-sm font-medium text-slate-500">{item.label}</p>
@@ -233,6 +281,7 @@ function HighlightGrid({ items = [] }) {
 }
 
 function FrequencyTable({ rows, title = 'Frequency breakdown', emptyMessage = 'Xog lagama helin filter-kan.' }) {
+  const isMobile = useMediaQuery('(max-width: 639px)');
   const orderedRows = sortRows(rows);
 
   if (!orderedRows.length) {
@@ -245,26 +294,44 @@ function FrequencyTable({ rows, title = 'Frequency breakdown', emptyMessage = 'X
         <h3 className="text-lg font-semibold text-ink">{title}</h3>
         <p className="mt-1 text-sm text-slate-500">All rows use the real Somali answers and grouped labels from the survey data.</p>
       </div>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse text-left text-sm">
-          <thead>
-            <tr className="border-b border-slate-200 text-slate-500">
-              <th className="py-3 pr-4 font-semibold">Answer / Theme</th>
-              <th className="py-3 pr-4 font-semibold">Count</th>
-              <th className="py-3 pr-4 font-semibold">Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orderedRows.map((row, index) => (
-              <tr key={`${formatLabel(row)}-${index}`} className="border-b border-slate-100 last:border-b-0">
-                <td className="py-3 pr-4 font-medium text-ink">{formatLabel(row)}</td>
-                <td className="py-3 pr-4 text-slate-600">{formatCount(row.count)}</td>
-                <td className="py-3 pr-4 text-slate-600">{formatPercent(row.percentage)}</td>
+      {isMobile ? (
+        <div className="space-y-3">
+          {orderedRows.map((row, index) => (
+            <div key={`${formatLabel(row)}-${index}`} className="rounded border border-slate-200 bg-slate-50 p-4">
+              <p className="text-sm font-semibold text-ink">{formatLabel(row)}</p>
+              <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+                <span className="text-slate-500">Count</span>
+                <span className="font-medium text-slate-900">{formatCount(row.count)}</span>
+              </div>
+              <div className="mt-2 flex items-center justify-between gap-3 text-sm">
+                <span className="text-slate-500">Percentage</span>
+                <span className="font-medium text-teal-700">{formatPercent(row.percentage)}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-full border-collapse text-left text-sm">
+            <thead>
+              <tr className="border-b border-slate-200 text-slate-500">
+                <th className="py-3 pr-4 font-semibold">Answer / Theme</th>
+                <th className="py-3 pr-4 font-semibold">Count</th>
+                <th className="py-3 pr-4 font-semibold">Percentage</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {orderedRows.map((row, index) => (
+                <tr key={`${formatLabel(row)}-${index}`} className="border-b border-slate-100 last:border-b-0">
+                  <td className="py-3 pr-4 font-medium text-ink">{formatLabel(row)}</td>
+                  <td className="py-3 pr-4 text-slate-600">{formatCount(row.count)}</td>
+                  <td className="py-3 pr-4 text-slate-600">{formatPercent(row.percentage)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 }
@@ -357,31 +424,40 @@ function GroupedCategoryList({ groups = [] }) {
 }
 
 function MainBarChart({ title, description, data, labelKey = 'label', horizontal = false, color = '#0f7c90', name = 'Responses' }) {
+  const isCompact = useMediaQuery('(max-width: 767px)');
+
   if (!data?.length) {
     return <EmptyState title={title} message="Xog jaantus lama helin filter-kan." />;
   }
 
   return (
-    <ChartPanel title={title} description={description} height="h-80 sm:h-96">
+    <ChartPanel title={title} description={description} height="h-72 sm:h-96">
       <ResponsiveContainer>
         <BarChart data={data} layout={horizontal ? 'vertical' : 'horizontal'} margin={{ top: 8, right: 16, left: 8, bottom: 16 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
           {horizontal ? (
             <>
               <XAxis type="number" allowDecimals={false} />
-              <YAxis type="category" dataKey={labelKey} width={170} tickFormatter={(value) => shortLabel(value, 28)} />
+              <YAxis
+                type="category"
+                dataKey={labelKey}
+                width={isCompact ? 110 : 170}
+                tick={{ fontSize: isCompact ? 11 : 12 }}
+                tickFormatter={(value) => shortLabel(value, isCompact ? 16 : 28)}
+              />
             </>
           ) : (
             <>
               <XAxis
                 dataKey={labelKey}
                 interval={0}
-                tickFormatter={(value) => shortLabel(value, 18)}
-                angle={data.length > 4 ? -18 : 0}
+                tick={{ fontSize: isCompact ? 11 : 12 }}
+                tickFormatter={(value) => shortLabel(value, isCompact ? 12 : 18)}
+                angle={data.length > 4 ? (isCompact ? -30 : -18) : 0}
                 textAnchor={data.length > 4 ? 'end' : 'middle'}
-                height={data.length > 4 ? 56 : 36}
+                height={data.length > 4 ? (isCompact ? 74 : 56) : 36}
               />
-              <YAxis allowDecimals={false} />
+              <YAxis allowDecimals={false} tick={{ fontSize: isCompact ? 11 : 12 }} />
             </>
           )}
           <Tooltip formatter={(value) => [formatCount(value), name]} labelFormatter={(value) => value} />
@@ -393,17 +469,26 @@ function MainBarChart({ title, description, data, labelKey = 'label', horizontal
 }
 
 function SecondaryPieChart({ title, description, data, labelKey = 'label' }) {
+  const isCompact = useMediaQuery('(max-width: 767px)');
+
   if (!data?.length) {
     return <EmptyState title={title} message="Xog qaybinta lama helin filter-kan." />;
   }
 
   return (
-    <ChartPanel title={title} description={description} height="h-[28rem]">
+    <ChartPanel title={title} description={description} height="h-[24rem] sm:h-[28rem]">
       <div className="flex h-full flex-col">
         <div className="min-h-0 flex-1">
           <ResponsiveContainer>
             <PieChart>
-              <Pie data={data} dataKey="count" nameKey={labelKey} innerRadius={72} outerRadius={110} paddingAngle={2}>
+              <Pie
+                data={data}
+                dataKey="count"
+                nameKey={labelKey}
+                innerRadius={isCompact ? 48 : 72}
+                outerRadius={isCompact ? 80 : 110}
+                paddingAngle={2}
+              >
                 {data.map((entry, index) => (
                   <Cell key={`${formatLabel(entry)}-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
                 ))}
@@ -427,12 +512,14 @@ function SecondaryPieChart({ title, description, data, labelKey = 'label' }) {
 }
 
 function TrendChart({ title, description, data, dataKey, stroke = '#0f7c90', type = 'line' }) {
+  const isCompact = useMediaQuery('(max-width: 767px)');
+
   if (!data?.length) {
     return <EmptyState title={title} message="Waqti-taxane xog lama helin filter-kan." />;
   }
 
   return (
-    <ChartPanel title={title} description={description} height="h-80 sm:h-96">
+    <ChartPanel title={title} description={description} height="h-72 sm:h-96">
       <ResponsiveContainer>
         {type === 'area' ? (
           <AreaChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
@@ -443,16 +530,16 @@ function TrendChart({ title, description, data, dataKey, stroke = '#0f7c90', typ
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="date" />
-            <YAxis allowDecimals={false} />
+            <XAxis dataKey="date" tick={{ fontSize: isCompact ? 11 : 12 }} minTickGap={isCompact ? 20 : 8} />
+            <YAxis allowDecimals={false} tick={{ fontSize: isCompact ? 11 : 12 }} />
             <Tooltip formatter={(value) => [formatCount(value), title]} />
             <Area type="monotone" dataKey={dataKey} stroke={stroke} fill={`url(#${title}-gradient)`} strokeWidth={3} />
           </AreaChart>
         ) : (
           <LineChart data={data} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis dataKey="date" />
-            <YAxis />
+            <XAxis dataKey="date" tick={{ fontSize: isCompact ? 11 : 12 }} minTickGap={isCompact ? 20 : 8} />
+            <YAxis tick={{ fontSize: isCompact ? 11 : 12 }} />
             <Tooltip formatter={(value) => [formatCount(value), title]} />
             <Line type="monotone" dataKey={dataKey} stroke={stroke} strokeWidth={3} dot={{ r: 3 }} activeDot={{ r: 5 }} />
           </LineChart>
@@ -498,7 +585,7 @@ function OverviewView({ report }) {
         description={report.executiveSummary}
       />
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {(report.summaryCards || []).map((card) => (
           <StatCard key={card.label} label={card.label} value={card.value} helper={card.helper} />
         ))}
@@ -506,7 +593,7 @@ function OverviewView({ report }) {
 
       <HighlightGrid items={report.highlightCards} />
 
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <SecondaryPieChart
           title="Readiness Bands"
           description="A quick view of low, medium, and high readiness distribution."
@@ -550,12 +637,12 @@ function OverviewView({ report }) {
         />
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <FrequencyTable rows={awarenessRows} title="Awareness Level Summary" emptyMessage="Awareness summary is not available for the active filters." />
         <FrequencyTable rows={willingnessRows} title="Adoption Willingness Summary" emptyMessage="Willingness summary is not available for the active filters." />
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <section className={PANEL_CLASS}>
           <div className="mb-4">
             <h3 className="text-lg font-semibold text-ink">Most Common Answer Patterns</h3>
@@ -608,7 +695,7 @@ function SummaryCards({ report }) {
   const primary = report.dominantAnswer;
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard label="Total Responses" value={formatCount(report.totalResponses || 0)} helper="Filtered respondents who answered this question" />
       <StatCard label="Response Completion Rate" value={formatPercent(report.responseCompletionRate)} helper="Share of filtered respondents with a valid answer here" />
       <StatCard label="Question Code" value={String(report.code || '').toUpperCase()} helper={report.section || 'Survey question analysis'} />
@@ -637,7 +724,7 @@ function QuestionReportView({ report }) {
         <QuestionViewHeader report={report} />
         <SummaryCards report={report} />
         <HighlightGrid items={report.highlights} />
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(360px,0.8fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
           <MainBarChart
             title="Keyword Frequency"
             description="Most repeated words across the filtered open-ended responses."
@@ -648,7 +735,7 @@ function QuestionReportView({ report }) {
           />
           <ThemeHighlights themes={report.topThemes} />
         </div>
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <GroupedCategoryList groups={report.groupedCategories} />
           <InterpretationPanel interpretation={report.interpretation} insights={report.insightSummary} />
         </div>
@@ -663,7 +750,7 @@ function QuestionReportView({ report }) {
         <QuestionViewHeader report={report} />
         <SummaryCards report={report} />
         <HighlightGrid items={report.highlights} />
-        <div className="grid gap-4 md:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2">
           <div className="rounded border border-teal-200 bg-teal-50 p-5">
             <p className="text-sm font-medium text-teal-800">Haa</p>
             <p className="mt-2 text-3xl font-bold text-teal-900">{formatPercent(report.yesNoSummary?.yesPercentage)}</p>
@@ -675,7 +762,7 @@ function QuestionReportView({ report }) {
             <p className="mt-2 text-sm text-rose-800">{formatCount(report.yesNoSummary?.noCount)} responses</p>
           </div>
         </div>
-        <div className="grid gap-5 xl:grid-cols-2">
+        <div className="grid gap-5 lg:grid-cols-2">
           <MainBarChart
             title="Response Distribution"
             description="How many respondents selected Haa or Maya."
@@ -689,7 +776,7 @@ function QuestionReportView({ report }) {
             data={rows}
           />
         </div>
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <FrequencyTable rows={rows} />
           <InterpretationPanel interpretation={report.interpretation} insights={report.insightSummary} />
         </div>
@@ -703,7 +790,7 @@ function QuestionReportView({ report }) {
         <QuestionViewHeader report={report} />
         <SummaryCards report={report} />
         <HighlightGrid items={report.highlights} />
-        <div className="grid gap-5 xl:grid-cols-2">
+        <div className="grid gap-5 lg:grid-cols-2">
           <MainBarChart
             title="Likert Scale Ranking"
             description="Main chart for agreement, confidence, or attitude distribution."
@@ -720,7 +807,7 @@ function QuestionReportView({ report }) {
             color="#f59e0b"
           />
         </div>
-        <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
           <FrequencyTable rows={rows} />
           <InterpretationPanel interpretation={report.interpretation} insights={report.insightSummary} />
         </div>
@@ -733,7 +820,7 @@ function QuestionReportView({ report }) {
       <QuestionViewHeader report={report} />
       <SummaryCards report={report} />
       <HighlightGrid items={report.highlights} />
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <MainBarChart
           title="Main Chart"
           description="Primary frequency chart for this question only."
@@ -747,7 +834,7 @@ function QuestionReportView({ report }) {
           data={rows}
         />
       </div>
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.1fr)_minmax(360px,0.9fr)]">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <FrequencyTable rows={rows} />
         <InterpretationPanel interpretation={report.interpretation} insights={report.insightSummary} />
       </div>
@@ -809,14 +896,14 @@ function FinalReportView({ report }) {
         <p className="text-sm text-slate-500">Generated {generatedAt.toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })}</p>
       ) : null}
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatCard label="Overall Readiness" value={formatPercent(report.cloudReadinessSummary?.overallAverage)} helper="Average cloud readiness from the filtered dataset" />
         <StatCard label="Strongest Factor" value={report.cloudReadinessSummary?.strongestFactor || 'No factor'} />
         <StatCard label="Weakest Factor" value={report.cloudReadinessSummary?.weakestFactor || 'No factor'} />
         <StatCard label="Recommendations" value={formatCount(report.recommendations?.length || 0)} helper="Auto-generated action points" />
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)]">
         <section className={PANEL_CLASS}>
           <h3 className="text-lg font-semibold text-ink">Key Findings</h3>
           <ul className="mt-4 space-y-3">
@@ -836,7 +923,7 @@ function FinalReportView({ report }) {
         />
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <MainBarChart
           title="Readiness Ranking"
           description="Presentation-ready ranking of the strongest sectors in the current filter set."
@@ -853,7 +940,7 @@ function FinalReportView({ report }) {
         />
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         <InsightColumn title="Top 5 Patterns" items={report.topPatterns || []} />
         <InsightColumn title="Top 5 Problems" items={report.topProblems || []} tone="rose" />
         <InsightColumn title="Top 5 Opportunities" items={report.topOpportunities || []} tone="amber" />
