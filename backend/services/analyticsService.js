@@ -9,6 +9,14 @@ const { buildCompatibleResponseQuery } = require('./queryService');
 const { buildLocalAnalytics } = require('./localAnalyticsService');
 const { normalizeResponseSectors } = require('./responseCompatibilityService');
 
+const logAnalyticsServiceError = (scope, error, metadata = {}) => {
+  const message = error?.message || 'Unknown analytics error';
+  console.error(`[AnalyticsService:${scope}] ${message}`, metadata);
+  if (error?.stack) {
+    console.error(error.stack);
+  }
+};
+
 const runPythonAnalyticsProcess = async (rows) => {
   const tempFile = path.join(os.tmpdir(), `cloud-survey-${Date.now()}.json`);
   await fs.writeFile(tempFile, JSON.stringify(rows), 'utf8');
@@ -59,9 +67,16 @@ const runPythonAnalyticsProcess = async (rows) => {
 };
 
 const runPythonAnalytics = async (filters = {}) => {
-  const query = await buildCompatibleResponseQuery(filters);
-  const responses = await normalizeResponseSectors(await SurveyResponse.find(query).lean());
-  const rows = await flattenResponsesForAnalytics(responses);
+  let rows = [];
+
+  try {
+    const query = await buildCompatibleResponseQuery(filters);
+    const responses = await normalizeResponseSectors(await SurveyResponse.find(query).lean());
+    rows = await flattenResponsesForAnalytics(responses);
+  } catch (error) {
+    logAnalyticsServiceError('prepare', error, { filters });
+    throw error;
+  }
 
   try {
     return await runPythonAnalyticsProcess(rows);
