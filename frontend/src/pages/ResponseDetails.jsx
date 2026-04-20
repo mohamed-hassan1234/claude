@@ -22,7 +22,7 @@ export default function ResponseDetails() {
         setForm({
           respondentName: loaded.respondentName || '',
           organizationName: loaded.organizationName || '',
-          sector: loaded.sector?._id || loaded.sector,
+          sector: loaded.sector?._id || '',
           district: loaded.district || '',
           phoneNumber: loaded.phoneNumber || '',
           answers: loaded.answers || {}
@@ -32,6 +32,7 @@ export default function ResponseDetails() {
   }, [id]);
 
   if (!response || !form) return <Loading />;
+  const sectorLabel = response.sector?.name || (typeof response.sector === 'string' ? response.sector : '-');
 
   const save = async (event) => {
     event.preventDefault();
@@ -53,7 +54,7 @@ export default function ResponseDetails() {
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
         <div>
           <h1 className="break-words text-2xl font-bold text-ink">{response.organizationName}</h1>
-          <p className="text-slate-500">{response.sector?.name} in {response.district}</p>
+          <p className="text-slate-500">{sectorLabel} in {response.district}</p>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <button onClick={() => setEditing(!editing)} className="w-full rounded bg-ocean px-4 py-2 text-sm font-semibold text-white sm:w-auto">

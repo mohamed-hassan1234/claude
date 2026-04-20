@@ -5,8 +5,9 @@ const path = require('path');
 
 const SurveyResponse = require('../models/SurveyResponse');
 const { flattenResponsesForAnalytics } = require('./exportService');
-const { buildResponseQuery } = require('./queryService');
+const { buildCompatibleResponseQuery } = require('./queryService');
 const { buildLocalAnalytics } = require('./localAnalyticsService');
+const { normalizeResponseSectors } = require('./responseCompatibilityService');
 
 const runPythonAnalyticsProcess = async (rows) => {
   const tempFile = path.join(os.tmpdir(), `cloud-survey-${Date.now()}.json`);
@@ -58,8 +59,8 @@ const runPythonAnalyticsProcess = async (rows) => {
 };
 
 const runPythonAnalytics = async (filters = {}) => {
-  const query = buildResponseQuery(filters);
-  const responses = await SurveyResponse.find(query).populate('sector', 'name').lean();
+  const query = await buildCompatibleResponseQuery(filters);
+  const responses = await normalizeResponseSectors(await SurveyResponse.find(query).lean());
   const rows = await flattenResponsesForAnalytics(responses);
 
   try {

@@ -1,26 +1,64 @@
-const buildResponseQuery = (query) => {
-  const filter = { deletedAt: { $exists: false } };
+const Sector = require('../models/Sector');
 
-  if (query.sector) filter.sector = query.sector;
-  if (query.district) filter.district = new RegExp(query.district, 'i');
+const escapeRegex = (value = '') => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const buildResponseQuery = (query = {}) => {
+  const conditions = [
+    {
+      $or: [{ deletedAt: { $exists: false } }, { deletedAt: null }]
+    }
+  ];
+
+  if (query.sector) conditions.push({ sector: query.sector });
+  if (query.district) conditions.push({ district: new RegExp(escapeRegex(query.district), 'i') });
+  if (query.readinessLevel) conditions.push({ readinessBand: query.readinessLevel });
+  if (query.awarenessLevel) conditions.push({ awarenessLevel: query.awarenessLevel });
+  if (query.willingnessLevel) conditions.push({ willingnessToAdopt: query.willingnessLevel });
+
   if (query.search) {
-    filter.$or = [
-      { organizationName: new RegExp(query.search, 'i') },
-      { respondentName: new RegExp(query.search, 'i') },
-      { district: new RegExp(query.search, 'i') }
-    ];
+    const search = new RegExp(escapeRegex(query.search), 'i');
+    conditions.push({
+      $or: [{ organizationName: search }, { respondentName: search }, { district: search }]
+    });
   }
+
   if (query.startDate || query.endDate) {
-    filter.createdAt = {};
-    if (query.startDate) filter.createdAt.$gte = new Date(query.startDate);
+    const createdAt = {};
+    if (query.startDate) createdAt.$gte = new Date(query.startDate);
     if (query.endDate) {
       const end = new Date(query.endDate);
       end.setHours(23, 59, 59, 999);
-      filter.createdAt.$lte = end;
+      createdAt.$lte = end;
     }
+    conditions.push({ createdAt });
   }
 
-  return filter;
+  return conditions.length === 1 ? conditions[0] : { $and: conditions };
 };
 
-module.exports = { buildResponseQuery };
+const buildCompatibleResponseQuery = async (query = {}) => {
+  const base = buildResponseQuery(query);
+  if (!query.sector) return base;
+
+  const sectorDoc = await Sector.findById(query.sector).select('name').lean().catch(() => null);
+  const sectorName = sectorDoc?.name;
+  if (!sectorName) return base;
+
+  const conditions = [];
+
+  if (base.$and) {
+    conditions.push(
+      ...base.$and.filter((condition) => !(Object.keys(condition).length === 1 && Object.prototype.hasOwnProperty.call(condition, 'sector')))
+    );
+  } else {
+    conditions.push(base);
+  }
+
+  conditions.push({
+    $or: [{ sector: query.sector }, { sector: sectorName }]
+  });
+
+  return { $and: conditions };
+};
+
+module.exports = { buildResponseQuery, buildCompatibleResponseQuery };

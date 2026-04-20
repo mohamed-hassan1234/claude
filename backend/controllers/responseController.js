@@ -6,7 +6,8 @@ const Sector = require('../models/Sector');
 const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const { scoreResponse, extractAnswerByCode } = require('../services/readinessService');
-const { buildResponseQuery } = require('../services/queryService');
+const { buildCompatibleResponseQuery } = require('../services/queryService');
+const { normalizeResponseSectors } = require('../services/responseCompatibilityService');
 const { writeAudit } = require('../services/auditService');
 
 const responseValidators = [
@@ -77,24 +78,32 @@ const hydrateAnswers = async (submittedAnswers = {}) => {
 const listResponses = asyncHandler(async (req, res) => {
   const page = Math.max(Number(req.query.page) || 1, 1);
   const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), 100);
-  const filter = buildResponseQuery(req.query);
+  const filter = await buildCompatibleResponseQuery(req.query);
 
   const [responses, total] = await Promise.all([
     SurveyResponse.find(filter)
-      .populate('sector', 'name')
+      .lean()
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit),
     SurveyResponse.countDocuments(filter)
   ]);
 
-  res.json({ responses, pagination: { page, limit, total, pages: Math.ceil(total / limit) } });
+  res.json({
+    responses: await normalizeResponseSectors(responses),
+    pagination: { page, limit, total, pages: Math.ceil(total / limit) }
+  });
 });
 
 const getResponse = asyncHandler(async (req, res) => {
-  const response = await SurveyResponse.findOne({ _id: req.params.id, deletedAt: { $exists: false } }).populate('sector', 'name');
+  const response = await SurveyResponse.findOne({
+    _id: req.params.id,
+    $or: [{ deletedAt: { $exists: false } }, { deletedAt: null }]
+  }).lean();
+
   if (!response) throw new ApiError(404, 'Response not found');
-  res.json({ response });
+  const [normalized] = await normalizeResponseSectors([response]);
+  res.json({ response: normalized });
 });
 
 const createResponse = asyncHandler(async (req, res) => {

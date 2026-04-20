@@ -1,6 +1,7 @@
 const SurveyResponse = require('../models/SurveyResponse');
 const Sector = require('../models/Sector');
 const asyncHandler = require('../utils/asyncHandler');
+const { normalizeResponseSectors } = require('../services/responseCompatibilityService');
 
 const startOfDay = (date) => {
   const copy = new Date(date);
@@ -10,15 +11,16 @@ const startOfDay = (date) => {
 
 const dashboardStats = asyncHandler(async (req, res) => {
   const today = startOfDay(new Date());
-  const baseFilter = { deletedAt: { $exists: false } };
+  const baseFilter = { $or: [{ deletedAt: { $exists: false } }, { deletedAt: null }] };
 
-  const [totalResponses, totalSectors, districts, responsesToday, allResponses] = await Promise.all([
+  const [totalResponses, totalSectors, districts, responsesToday, rawResponses] = await Promise.all([
     SurveyResponse.countDocuments(baseFilter),
     Sector.countDocuments({ isActive: true }),
     SurveyResponse.distinct('district', baseFilter),
     SurveyResponse.countDocuments({ ...baseFilter, createdAt: { $gte: today } }),
-    SurveyResponse.find(baseFilter).populate('sector', 'name').lean()
+    SurveyResponse.find(baseFilter).lean()
   ]);
+  const allResponses = await normalizeResponseSectors(rawResponses);
 
   const awareCount = allResponses.filter((item) => item.awarenessLevel === 'Haa').length;
   const willingCount = allResponses.filter((item) => ['Haa', 'Waxaa ku xiran qiimaha'].includes(item.willingnessToAdopt)).length;

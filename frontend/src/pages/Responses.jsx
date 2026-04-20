@@ -75,6 +75,7 @@ export default function Responses() {
   };
 
   const query = new URLSearchParams(filters).toString();
+  const sectorLabel = (sector) => sector?.name || (typeof sector === 'string' ? sector : '-') || '-';
 
   return (
     <div className="space-y-5">
@@ -132,7 +133,7 @@ export default function Responses() {
                 <div className="mt-4 grid gap-3 sm:grid-cols-2">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Sector</p>
-                    <p className="mt-1 text-sm text-ink">{item.sector?.name || '-'}</p>
+                    <p className="mt-1 text-sm text-ink">{sectorLabel(item.sector)}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">District</p>
@@ -189,7 +190,7 @@ export default function Responses() {
                       <p className="font-semibold text-ink">{item.organizationName}</p>
                       <p className="text-slate-500">{item.respondentName || 'Anonymous'}</p>
                     </td>
-                    <td className="p-3">{item.sector?.name}</td>
+                    <td className="p-3">{sectorLabel(item.sector)}</td>
                     <td className="p-3">{item.district}</td>
                     <td className="p-3">{new Date(item.createdAt).toLocaleDateString()}</td>
                     <td className="p-3">{item.answers?.q8 || '-'}</td>

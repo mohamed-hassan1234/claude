@@ -16,11 +16,16 @@ const displayValue = (value) => {
 
 const flattenResponse = (response, questions = []) => {
   const answers = toPlainAnswers(response);
+  const sectorValue =
+    response.sector?.name ||
+    (typeof response.sector === 'string' ? response.sector : '') ||
+    displayValue(answers.q1) ||
+    '';
   const row = {
     id: response._id.toString(),
     respondentName: response.respondentName,
     organizationName: response.organizationName,
-    sector: response.sector?.name || '',
+    sector: sectorValue,
     district: response.district,
     phoneNumber: response.phoneNumber,
     awarenessLevel: response.awarenessLevel,
