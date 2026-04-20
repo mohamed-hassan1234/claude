@@ -1,9 +1,18 @@
 const express = require('express');
-const { getAnalytics, getReportSummary } = require('../controllers/analyticsController');
+const {
+  getAnalytics,
+  getFilterOptions,
+  getQuestionAnalytics,
+  getFinalReport,
+  getReportSummary
+} = require('../controllers/analyticsController');
 const { protect, authorize } = require('../middleware/auth');
 
 const router = express.Router();
 
+router.get('/filter-options', protect, authorize('admin'), getFilterOptions);
+router.get('/questions/:code', protect, authorize('admin'), getQuestionAnalytics);
+router.get('/final-report', protect, authorize('admin'), getFinalReport);
 router.get('/', protect, authorize('admin'), getAnalytics);
 router.get('/report', protect, authorize('admin'), getReportSummary);
 

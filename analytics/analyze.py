@@ -54,7 +54,8 @@ QUESTIONS = {
     "q30": "Maxaad kula talin lahayd dowladda ama shirkadaha si loo kordhiyo cloud adoption-ka Soomaaliya?",
 }
 
-TEXT_QUESTIONS = {"q7", "q16", "q28", "q29", "q30"}
+TEXT_QUESTIONS = {"q1", "q4", "q7", "q16", "q28", "q29", "q30"}
+BUSINESS_TEXT_QUESTIONS = {"q16", "q28", "q29", "q30"}
 
 FACTOR_QUESTIONS = {
     "cloudAwareness": ["q5", "q6"],
@@ -244,6 +245,8 @@ STOPWORDS = {
 }
 
 QUESTION_GROUP_LABELS = {
+    "q1": "Organization type",
+    "q4": "Department",
     "q7": "Cloud understanding",
     "q16": "Current cloud services",
     "q28": "Desired cloud services",
@@ -1019,7 +1022,7 @@ def build_business_needs_analysis(frequencies, text_analysis):
     combined_keyword_counts = Counter()
     grouped_topics = []
 
-    for code in TEXT_QUESTIONS:
+    for code in BUSINESS_TEXT_QUESTIONS:
         entry = text_analysis.get(code, {})
         for item in entry.get("themes", []):
             combined_theme_counts[item["theme"]] += item["count"]
@@ -1049,7 +1052,7 @@ def build_business_needs_analysis(frequencies, text_analysis):
     return {
         "digitalNeeds": frequencies.get("q26", {}).get("answers", []),
         "willingness": frequencies.get("q27", {}).get("answers", []),
-        "openEndedQuestions": {code: text_analysis.get(code, {}) for code in TEXT_QUESTIONS},
+        "openEndedQuestions": {code: text_analysis.get(code, {}) for code in BUSINESS_TEXT_QUESTIONS},
         "themeCards": theme_cards,
         "groupedTopicBlocks": grouped_topics[:10],
         "keywordChart": keyword_chart,
