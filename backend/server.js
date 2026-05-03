@@ -20,8 +20,6 @@ const auditRoutes = require('./routes/auditRoutes');
 
 const app = express();
 
-connectDB();
-
 const normalizeOrigin = (value = '') => value.trim().replace(/\/+$/, '');
 const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || '')
   .split(',')
@@ -86,6 +84,12 @@ app.use(
 app.use(errorHandler);
 
 const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`API running on http://localhost:${port}`);
-});
+
+const startServer = async () => {
+  await connectDB();
+  app.listen(port, () => {
+    console.log(`API running on http://localhost:${port}`);
+  });
+};
+
+startServer();
