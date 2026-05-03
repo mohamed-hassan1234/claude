@@ -122,8 +122,8 @@ function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefres
   const selectedSector = sectors.find((sector) => (sector._id || sector.name) === filters.sector);
 
   return (
-    <section className="rounded border border-slate-200 bg-white shadow-soft">
-      <div className="border-b border-slate-200 p-4 sm:p-6">
+    <section className="relative rounded border border-slate-200 bg-white shadow-soft">
+      <div className="border-b border-slate-200 p-4 sm:p-5">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">Analytics and Reports</p>
@@ -143,7 +143,7 @@ function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefres
         </div>
       </div>
 
-      <div className="grid gap-4 p-4 sm:grid-cols-2 sm:p-6 xl:grid-cols-4">
+      <div className="grid gap-4 p-4 sm:grid-cols-2 sm:p-5 xl:grid-cols-4">
         <label className="block">
           <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-600">
             <Filter size={15} />
