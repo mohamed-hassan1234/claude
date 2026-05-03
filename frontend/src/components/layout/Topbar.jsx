@@ -6,7 +6,7 @@ export default function Topbar({ onOpenMenu }) {
   const { user } = useAuth();
 
   return (
-    <header className="no-print sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <header className="no-print border-b border-slate-200 bg-white">
       <div className="flex min-h-16 items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-start gap-3">
           <button onClick={onOpenMenu} className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded border border-slate-200 text-slate-600 lg:hidden" aria-label="Open navigation">
