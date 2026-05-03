@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const DEFAULT_API_ORIGIN = 'http://localhost:5000';
+const DEFAULT_API_URL = import.meta.env.DEV ? 'http://localhost:5001/api' : '/api';
 
 const resolveApiBaseUrl = (value) => {
-  const normalized = (value || DEFAULT_API_ORIGIN).trim().replace(/\/+$/, '');
+  const normalized = (value || DEFAULT_API_URL).trim().replace(/\/+$/, '');
   return normalized.endsWith('/api') ? normalized : `${normalized}/api`;
 };
 
