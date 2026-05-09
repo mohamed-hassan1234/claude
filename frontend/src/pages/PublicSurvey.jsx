@@ -6,7 +6,7 @@ const initialMeta = {
   respondentName: '',
   organizationName: '',
   sector: '',
-  district: '',
+  district: 'Hodon',
   phoneNumber: ''
 };
 
