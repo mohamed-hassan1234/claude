@@ -2,11 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import api from '../api/axios';
 import QuestionInput from '../components/forms/QuestionInput';
 
+const DEFAULT_DISTRICT = 'Hodon';
+
 const initialMeta = {
   respondentName: '',
   organizationName: '',
   sector: '',
-  district: 'Hodon',
+  district: DEFAULT_DISTRICT,
   phoneNumber: ''
 };
 
@@ -41,6 +43,7 @@ export default function PublicSurvey() {
     try {
       await api.post('/responses/public', {
         ...meta,
+        district: DEFAULT_DISTRICT,
         answers
       });
       setMeta(initialMeta);
@@ -102,7 +105,13 @@ export default function PublicSurvey() {
               </label>
               <label className="text-sm font-medium text-slate-700">
                 Degmada *
-                <input required className="mt-2 w-full rounded border border-slate-300 px-3 py-2" value={meta.district} onChange={(e) => setMeta({ ...meta, district: e.target.value })} />
+                <input
+                  required
+                  disabled
+                  className="mt-2 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700"
+                  value={DEFAULT_DISTRICT}
+                  readOnly
+                />
               </label>
               <label className="text-sm font-medium text-slate-700">
                 Telefoon
