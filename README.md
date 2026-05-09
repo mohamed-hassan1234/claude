@@ -87,7 +87,7 @@ npm run dev:frontend
 Open:
 
 - Public survey: `http://localhost:5173`
-- Admin login: `http://localhost:5173/login`
+- Admin login: `http://localhost:5173/galiadi`
 - API health: `http://localhost:5000/api/health`
 
 If port `5000` is already occupied on your machine, start the backend on another port and point Vite at it:

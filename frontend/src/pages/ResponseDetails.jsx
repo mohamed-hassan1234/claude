@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import api from '../api/axios';
 import QuestionInput from '../components/forms/QuestionInput';
 import Loading from '../components/ui/Loading';
+import { adminPath } from '../routes';
 
 export default function ResponseDetails() {
   const { id } = useParams();
@@ -60,7 +61,7 @@ export default function ResponseDetails() {
           <button onClick={() => setEditing(!editing)} className="w-full rounded bg-ocean px-4 py-2 text-sm font-semibold text-white sm:w-auto">
             {editing ? 'Cancel edit' : 'Edit response'}
           </button>
-          <Link to="/admin/responses" className="w-full rounded border border-slate-300 bg-white px-4 py-2 text-center text-sm font-semibold sm:w-auto">Back</Link>
+          <Link to={adminPath('responses')} className="w-full rounded border border-slate-300 bg-white px-4 py-2 text-center text-sm font-semibold sm:w-auto">Back</Link>
         </div>
       </div>
 

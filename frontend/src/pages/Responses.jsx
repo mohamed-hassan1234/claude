@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import EmptyState from '../components/ui/EmptyState';
 import Loading from '../components/ui/Loading';
+import { adminPath } from '../routes';
 
 const downloadFile = async (url, filename) => {
   const { data } = await api.get(url, { responseType: 'blob' });
@@ -157,7 +158,7 @@ export default function Responses() {
                   </div>
                 </div>
                 <div className="mt-4 grid grid-cols-2 gap-2">
-                  <Link className="rounded border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700" to={`/admin/responses/${item._id}`}>View</Link>
+                  <Link className="rounded border border-slate-300 px-3 py-2 text-center text-sm font-medium text-slate-700" to={adminPath(`responses/${item._id}`)}>View</Link>
                   <button className="rounded border border-red-300 px-3 py-2 text-sm font-medium text-red-700" onClick={() => remove(item._id)}>Delete</button>
                 </div>
               </article>
@@ -198,7 +199,7 @@ export default function Responses() {
                     <td className="p-3">{item.willingnessToAdopt}</td>
                     <td className="p-3">
                       <div className="flex gap-2">
-                        <Link className="rounded border border-slate-300 px-3 py-1" to={`/admin/responses/${item._id}`}>View</Link>
+                        <Link className="rounded border border-slate-300 px-3 py-1" to={adminPath(`responses/${item._id}`)}>View</Link>
                         <button className="rounded border border-red-300 px-3 py-1 text-red-700" onClick={() => remove(item._id)}>Delete</button>
                       </div>
                     </td>

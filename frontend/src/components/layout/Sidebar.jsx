@@ -1,13 +1,14 @@
 import { BarChart3, ClipboardList, FileText, HelpCircle, LayoutDashboard, LogOut, PieChart, Settings, X } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { adminPath } from '../../routes';
 
 const items = [
-  { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/admin/responses', label: 'Responses', icon: ClipboardList },
-  { to: '/admin/sectors', label: 'Sectors', icon: PieChart },
-  { to: '/admin/questions', label: 'Questions', icon: HelpCircle },
-  { to: '/admin/reports', label: 'Analytics & Reports', icon: FileText }
+  { to: adminPath('dashboard'), label: 'Dashboard', icon: LayoutDashboard },
+  { to: adminPath('responses'), label: 'Responses', icon: ClipboardList },
+  { to: adminPath('sectors'), label: 'Sectors', icon: PieChart },
+  { to: adminPath('questions'), label: 'Questions', icon: HelpCircle },
+  { to: adminPath('reports'), label: 'Analytics & Reports', icon: FileText }
 ];
 
 export default function Sidebar({ open = false, onClose = () => {} }) {

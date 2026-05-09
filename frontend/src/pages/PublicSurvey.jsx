@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
 import api from '../api/axios';
 import QuestionInput from '../components/forms/QuestionInput';
 
@@ -77,11 +76,6 @@ export default function PublicSurvey() {
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-        <div className="mb-5 flex justify-end">
-          <Link to="/login" className="rounded border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700">
-            Admin login
-          </Link>
-        </div>
         {status.message ? <div className="mb-5 rounded border border-emerald-200 bg-emerald-50 p-4 text-emerald-800">{status.message}</div> : null}
         {status.error ? <div className="mb-5 rounded border border-red-200 bg-red-50 p-4 text-red-700">{status.error}</div> : null}
 

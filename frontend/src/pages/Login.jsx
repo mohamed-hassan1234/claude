@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { adminPath } from '../routes';
 
 export default function Login() {
   const { login, isAuthenticated } = useAuth();
@@ -9,7 +10,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  if (isAuthenticated) return <Navigate to={location.state?.from || '/admin/dashboard'} replace />;
+  if (isAuthenticated) return <Navigate to={location.state?.from || adminPath('dashboard')} replace />;
 
   const submit = async (event) => {
     event.preventDefault();

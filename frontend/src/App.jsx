@@ -10,15 +10,16 @@ import Responses from './pages/Responses';
 import ResponseDetails from './pages/ResponseDetails';
 import Sectors from './pages/Sectors';
 import NotFound from './pages/NotFound';
+import { ADMIN_BASE_PATH, LOGIN_PATH, adminPath } from './routes';
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<PublicSurvey />} />
-      <Route path="/login" element={<Login />} />
+      <Route path={LOGIN_PATH} element={<Login />} />
       <Route element={<ProtectedRoute />}>
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path={ADMIN_BASE_PATH} element={<AdminLayout />}>
+          <Route index element={<Navigate to={adminPath('dashboard')} replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="responses" element={<Responses />} />
           <Route path="responses/:id" element={<ResponseDetails />} />
