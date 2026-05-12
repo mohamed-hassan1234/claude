@@ -44,11 +44,11 @@ const buildSectorMatchConditions = (ids = [], names = []) => {
     .filter(Boolean)
     .forEach((name) => {
       const matcher = exactMatchRegex(name);
-      conditions.push({ 'answers.q1': matcher });
+      conditions.push({ 'answers.q2': matcher });
       conditions.push({
         answerDetails: {
           $elemMatch: {
-            code: 'q1',
+            code: 'q2',
             value: matcher
           }
         }

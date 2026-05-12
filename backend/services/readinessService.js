@@ -1,29 +1,104 @@
 const SCORE_KEYS = ['awareness', 'technology', 'infrastructure', 'backup', 'cloudTools', 'securityTrust', 'willingness'];
 
 const VALUE_SCORES = {
-  q5: { Haa: 100, Maya: 0 },
-  q6: { 'Aad u fiican': 100, Fiican: 80, Dhexdhexaad: 60, Yar: 30, 'Midna ma aqaan': 0 },
-  q8: { Desktop: 70, Laptop: 85, Tablet: 65, 'Mobile phone': 50 },
+  q6: { Haa: 100, Maya: 0 },
+  q7: { 'Aad u sarreeya': 100, Sarreeya: 80, Dhexdhexaad: 60, Hooseeya: 30, 'Aad u hooseeya': 10 },
+  q8: { Desktop: 75, Laptop: 85, Tablet: 65, 'Mobile phone': 55, Printer: 55, 'POS system': 85 },
   q9: { Haa: 100, Maya: 20 },
-  q10: { Haa: 100, Maya: 0 },
-  q11: { 'Aad u fiican': 100, Fiican: 80, Dhexdhexaad: 60, Liita: 20 },
-  q12: { Warqado: 10, 'Computer local ah': 45, 'External hard disk': 60, 'Cloud storage': 100 },
-  q13: { 'Haa maalin kasta': 100, Toddobaadle: 80, 'Mararka qaar': 45, Maya: 0 },
-  q15: { Haa: 100, Maya: 0 },
-  q17: { 'Aad u badan': 100, Dhexdhexaad: 60, 'Wax yar': 30, Maya: 0 },
+  q10: {
+    'Accounting software': 90,
+    'Inventory system': 90,
+    'POS system': 85,
+    'HR system': 85,
+    'CRM system': 85,
+    'Email system': 80,
+    'WhatsApp Business': 65,
+    'Ma isticmaalno': 0
+  },
+  q11: { 'Aad u sarreeya': 100, Sarreeya: 80, Dhexdhexaad: 60, Hooseeya: 30, 'Aad u hooseeya': 10 },
+  q12: {
+    Xisaabaadka: 30,
+    'Kaydinta xogta': 25,
+    Macaamiisha: 35,
+    Iibka: 40,
+    Inventory: 35,
+    'HR / shaqaalaha': 40,
+    Warbixinada: 30,
+    Waxba: 100
+  },
+  q13: {
+    Warqado: 10,
+    'Computer local ah': 40,
+    'External hard disk': 60,
+    'Mobile phone': 30,
+    'Cloud storage': 100,
+    'Server gudaha xarunta': 80
+  },
+  q14: { 'Maalin kasta': 100, Toddobaadle: 80, Bille: 60, 'Mararka qaar': 35, Marnaba: 0 },
+  q15: { Haa: 30, Maya: 100 },
+  q16: {
+    'Koronto la’aan': 35,
+    'Qalab xumaaday': 30,
+    'Virus / malware': 20,
+    'Qalad shaqaale': 45,
+    'Backup la’aan': 10,
+    'Ma jirto xog lumis': 100
+  },
+  q17: { 'Aad baan ugu kalsoonahay': 100, 'Waan ku kalsoonahay': 80, Dhexdhexaad: 60, 'Kalsooni yar': 30, 'Kuma kalsooni': 10 },
   q18: { Haa: 100, Maya: 0 },
-  q19: { Badanaa: 10, 'Mararka qaar': 45, 'Marar dhif ah': 75, Marnaba: 100 },
-  q20: { Haa: 20, Maya: 100 },
-  q24: { 'Aad baan ugu kalsoonahay': 100, 'Waan ku kalsoonahay': 80, Dhexdhexaad: 60, 'Kuma kalsooni': 10 },
-  q27: { Haa: 100, Maya: 0, 'Waxaa ku xiran qiimaha': 60 }
+  q19: {
+    'Google Drive': 85,
+    Dropbox: 80,
+    OneDrive: 80,
+    'Google Workspace': 95,
+    'Microsoft 365': 95,
+    Zoom: 75,
+    'WhatsApp Business': 65,
+    'Online accounting system': 90,
+    'Ma isticmaalno': 0
+  },
+  q20: { 'Aad muhiim u ah': 100, Muhiim: 80, Dhexdhexaad: 60, 'Muhiim ma aha': 10 },
+  q21: { 'Maalin kasta': 100, 'Marar badan': 80, 'Mararka qaar': 55, 'Marar dhif ah': 25, Marnaba: 0 },
+  q22: { 'Aad u sarreeya': 100, Sarreeya: 80, Dhexdhexaad: 60, Hooseeya: 30, 'Aad u hooseeya': 10 },
+  q23: { 'Aad u sarreeya': 100, Sarreeya: 80, Dhexdhexaad: 60, Hooseeya: 30, 'Aad u hooseeya': 10 },
+  q24: { Haa: 100, Maya: 20 },
+  q26: {
+    'Aad baan uga welwelsanahay': 10,
+    'Waan ka welwelsanahay': 30,
+    Dhexdhexaad: 60,
+    'Wax yar': 80,
+    'Ma welwelsani': 100
+  },
+  q27: {
+    'Xatooyo xog': 25,
+    Hackers: 25,
+    'Sirta oo baxda': 25,
+    'Qiimaha adeegga': 55,
+    'Internet la’aan': 45,
+    'Access control la’aan': 30
+  },
+  q28: {
+    'Cloud storage': 85,
+    'Online backup': 90,
+    'Email hosting': 75,
+    'Accounting system': 85,
+    'Inventory system': 85,
+    'Customer management': 85,
+    'Video meetings': 70,
+    'Data analytics': 95
+  },
+  q29: { Haa: 100, Maya: 0 }
 };
 
 const FALLBACK_SCORES = {
   Haa: 100,
   Maya: 0,
-  'Aad u fiican': 100,
-  Fiican: 80,
-  Dhexdhexaad: 60
+  'Aad u sarreeya': 100,
+  Sarreeya: 80,
+  Dhexdhexaad: 60,
+  Hooseeya: 30,
+  'Aad u hooseeya': 10,
+  Muhiim: 80
 };
 
 const scoreText = (code, value) => {
@@ -58,9 +133,6 @@ const scoreResponse = (answerDetails = []) => {
     return values.reduce((sum, item) => sum + item, 0) / values.length;
   });
 
-  // Transparent model: each readiness factor carries equal weight.
-  // Score = average of seven factors: awareness, technology usage, backup
-  // practice, cloud tools use, infrastructure, security trust, and willingness.
   const readinessScore = Math.round(factorScores.reduce((sum, item) => sum + item, 0) / SCORE_KEYS.length);
   const readinessBand = readinessScore >= 70 ? 'High' : readinessScore >= 40 ? 'Medium' : 'Low';
 

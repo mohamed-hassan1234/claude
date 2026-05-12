@@ -70,11 +70,11 @@ const normalizeResponseSectors = async (responses = []) => {
 
   return responses.map((response) => {
     const candidate = getSectorCandidate(response);
-    const legacyName = extractAnswerValue(response, 'q1');
+    const questionSectorName = extractAnswerValue(response, 'q2');
     const sectorFromId = candidate.id ? byId.get(candidate.id) : null;
     const sectorFromName = candidate.name ? byName.get(candidate.name.toLowerCase()) : null;
     const matched = sectorFromId || sectorFromName;
-    const fallbackName = candidate.name || legacyName || 'Unknown';
+    const fallbackName = candidate.name || questionSectorName || 'Unknown';
 
     return {
       ...response,

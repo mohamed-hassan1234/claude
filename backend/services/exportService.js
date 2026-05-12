@@ -14,12 +14,29 @@ const displayValue = (value) => {
   return value ?? '';
 };
 
+const findCurrentAnswerValue = (response, question) => {
+  const detail = (response.answerDetails || []).find(
+    (item) => item.code === question.code && item.questionText === question.text
+  );
+
+  if (detail) return detail.value;
+
+  // Legacy responses used the same q-codes for a different instrument. When a
+  // snapshot exists but the question text does not match, leave the new column
+  // blank instead of carrying old answers into new analytics.
+  if ((response.answerDetails || []).some((item) => item.code === question.code)) {
+    return '';
+  }
+
+  return toPlainAnswers(response)[question.code];
+};
+
 const flattenResponse = (response, questions = []) => {
   const answers = toPlainAnswers(response);
   const sectorValue =
     response.sector?.name ||
     (typeof response.sector === 'string' ? response.sector : '') ||
-    displayValue(answers.q1) ||
+    displayValue(answers.q2) ||
     '';
   const row = {
     id: response._id.toString(),
@@ -39,7 +56,7 @@ const flattenResponse = (response, questions = []) => {
   for (const question of questionList) {
     const code = question.code;
     const text = question.text || question.questionText;
-    row[text] = displayValue(answers[code]);
+    row[text] = displayValue(findCurrentAnswerValue(response, { code, text }));
   }
 
   return row;

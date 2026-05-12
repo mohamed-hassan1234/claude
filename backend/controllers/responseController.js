@@ -126,8 +126,8 @@ const createResponse = asyncHandler(async (req, res) => {
     answerDetails,
     readinessScore,
     readinessBand,
-    awarenessLevel: extractAnswerByCode(answers, 'q5'),
-    willingnessToAdopt: extractAnswerByCode(answers, 'q27'),
+    awarenessLevel: extractAnswerByCode(answers, 'q6'),
+    willingnessToAdopt: extractAnswerByCode(answers, 'q29'),
     submittedBy: req.user ? 'admin' : 'public'
   });
 
@@ -151,8 +151,8 @@ const updateResponse = asyncHandler(async (req, res) => {
           answerDetails: hydrated.answerDetails,
           readinessScore: scoring.readinessScore,
           readinessBand: scoring.readinessBand,
-          awarenessLevel: extractAnswerByCode(hydrated.answers, 'q5'),
-          willingnessToAdopt: extractAnswerByCode(hydrated.answers, 'q27')
+          awarenessLevel: extractAnswerByCode(hydrated.answers, 'q6'),
+          willingnessToAdopt: extractAnswerByCode(hydrated.answers, 'q29')
         }
       : {}),
     editedBy: req.user._id

@@ -490,6 +490,7 @@ function NarrativePanel({ title = 'Interpretation', text, items = [] }) {
 
 function OverviewView({ report }) {
   const charts = report.charts || {};
+  const sectorDistributionRows = toChartRows(charts.sectorDistribution);
   const sectorRows = toChartRows(charts.sectorRanking, {
     label: (item) => item.sector || item.name || item.label,
     value: (item) => item.averageReadiness ?? item.score ?? item.value ?? item.count
@@ -499,6 +500,9 @@ function OverviewView({ report }) {
   const willingnessRows = toChartRows(charts.willingnessDistribution);
   const barrierRows = toChartRows(charts.barrierRanking);
   const securityRows = toChartRows(charts.securityTrust);
+  const technologyRows = toChartRows(charts.technologyUsage);
+  const cloudUsageRows = toChartRows(charts.cloudUsage);
+  const infrastructureRows = toChartRows(charts.infrastructureReadiness);
 
   return (
     <div className="space-y-6">
@@ -524,13 +528,19 @@ function OverviewView({ report }) {
       </div>
 
       <div className="grid gap-5 lg:grid-cols-3">
+        <DonutChart title="Sector Distribution" description="Respondents grouped by business sector." data={sectorDistributionRows} />
+        <DonutChart title="Technology Usage Summary" description="Overall technology usage level from Q11." data={technologyRows} />
+        <DonutChart title="Cloud Usage Summary" description="Current cloud tools usage from Q18." data={cloudUsageRows} />
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-3">
         <DonutChart title="Awareness Distribution" description="How respondents answered the cloud awareness question." data={awarenessRows} />
-        <DonutChart title="Adoption Willingness" description="Willingness to adopt cloud solutions." data={willingnessRows} />
+        <DonutChart title="Infrastructure Readiness" description="Internet reliability levels from Q22." data={infrastructureRows} />
         <DonutChart title="Security Trust" description="Trust levels around cloud storage and security." data={securityRows} />
       </div>
 
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-        <TrendChart title="Daily Response Trend" description="Survey submissions across the available days." data={charts.dailyResponses} />
+      <div className="grid gap-5 lg:grid-cols-2">
+        <DonutChart title="Adoption Readiness" description="Whether respondents believe Cloud Computing can change their organization." data={willingnessRows} />
         <SmartBarChart
           title="Top Barriers"
           description="Most common challenges reported by respondents."
@@ -540,13 +550,18 @@ function OverviewView({ report }) {
         />
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        <InsightList title="Key Findings" items={report.insightSummary || []} icon={TrendingUp} />
+      <div className="grid gap-5 xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+        <TrendChart title="Daily Response Trend" description="Survey submissions across the available days." data={charts.dailyResponses} />
         <RankingTable
           title="Common Answer Patterns"
           description="Dominant answers from important survey questions."
           rows={(report.commonPatterns || []).map((item) => ({ ...item, label: item.question, count: item.percentage }))}
         />
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <InsightList title="Key Findings" items={report.insightSummary || []} icon={TrendingUp} />
+        <InsightList title="Report Focus" items={(report.highlightCards || []).map((item) => `${item.label}: ${item.value}`)} icon={CheckCircle2} />
       </div>
     </div>
   );
@@ -736,12 +751,16 @@ function FinalReportView({ report }) {
 
       <div className="grid gap-5 lg:grid-cols-3">
         <InsightList title="Key Findings" items={report.keyFindings || []} icon={CheckCircle2} />
-        <InsightList title="Problems" items={report.topProblems || []} tone="rose" icon={AlertCircle} />
-        <InsightList title="Opportunities" items={report.topOpportunities || report.topPatterns || []} tone="amber" icon={TrendingUp} />
+        <InsightList title="Major Patterns" items={report.topPatterns || []} icon={TrendingUp} />
+        <InsightList title="Main Challenges" items={report.topProblems || []} tone="rose" icon={AlertCircle} />
       </div>
 
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        <InsightList title="Opportunities" items={report.topOpportunities || []} tone="amber" icon={TrendingUp} />
         <InsightList title="Recommendations" items={report.recommendations || []} icon={CheckCircle2} />
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         <NarrativePanel title="Conclusion" text={report.conclusion} />
       </div>
     </div>

@@ -543,11 +543,16 @@ const buildOverviewReport = (analytics = {}) => {
       readinessBands: overview.readinessBands || [],
       dailyResponses: overview.timeSeries?.dailyResponses || [],
       awarenessTrend: overview.timeSeries?.awarenessTrend || [],
+      sectorDistribution: payload.sectorDistribution || [],
       sectorRanking,
       awarenessDistribution: payload.awarenessDistribution || [],
       willingnessDistribution: payload.willingnessDistribution || [],
       barrierRanking: payload.commonBarriers || payload.barriers?.overallRanking || [],
-      securityTrust: payload.security?.trustLevels || []
+      technologyUsage: payload.frequencyAnalysis?.q11?.answers || [],
+      cloudUsage: payload.frequencyAnalysis?.q18?.answers || [],
+      infrastructureReadiness: payload.frequencyAnalysis?.q22?.answers || [],
+      securityTrust: payload.security?.trustLevels || [],
+      adoptionReadiness: payload.willingnessDistribution || []
     }
   };
 };
@@ -558,20 +563,20 @@ const buildFinalReport = (analytics = {}) => {
   const strongestFactor = factorSummary[0];
   const weakestFactor = factorSummary[factorSummary.length - 1];
   const topPatterns = [
-    payload.questionAnalysis?.find((item) => item.code === 'q5')?.answers?.[0]
-      ? `Su'aasha Q5, jawaabta ugu badan waa ${payload.questionAnalysis.find((item) => item.code === 'q5').answers[0].answer}.`
+    payload.questionAnalysis?.find((item) => item.code === 'q6')?.answers?.[0]
+      ? `Cloud awareness: ${payload.questionAnalysis.find((item) => item.code === 'q6').answers[0].answer} ayaa ahayd jawaabta ugu badan.`
       : '',
     payload.questionAnalysis?.find((item) => item.code === 'q8')?.answers?.[0]
       ? `Qalabka ugu badan ee la adeegsado waa ${payload.questionAnalysis.find((item) => item.code === 'q8').answers[0].answer}.`
       : '',
-    payload.questionAnalysis?.find((item) => item.code === 'q11')?.answers?.[0]
-      ? `Heerka internet-ka ee ugu badan waa ${payload.questionAnalysis.find((item) => item.code === 'q11').answers[0].answer}.`
+    payload.questionAnalysis?.find((item) => item.code === 'q13')?.answers?.[0]
+      ? `Habka kaydinta xogta ee ugu badan waa ${payload.questionAnalysis.find((item) => item.code === 'q13').answers[0].answer}.`
       : '',
-    payload.questionAnalysis?.find((item) => item.code === 'q12')?.answers?.[0]
-      ? `Habka kaydinta ugu badan waa ${payload.questionAnalysis.find((item) => item.code === 'q12').answers[0].answer}.`
+    payload.questionAnalysis?.find((item) => item.code === 'q18')?.answers?.[0]
+      ? `Cloud usage: ${payload.questionAnalysis.find((item) => item.code === 'q18').answers[0].answer} ayaa ah jawaabta ugu badan.`
       : '',
-    payload.questionAnalysis?.find((item) => item.code === 'q27')?.answers?.[0]
-      ? `Q27, jawaabta ugu badan waa ${payload.questionAnalysis.find((item) => item.code === 'q27').answers[0].answer}.`
+    payload.questionAnalysis?.find((item) => item.code === 'q29')?.answers?.[0]
+      ? `Adoption readiness: ${payload.questionAnalysis.find((item) => item.code === 'q29').answers[0].answer} ayaa ugu badan.`
       : ''
   ]
     .filter(Boolean)
@@ -581,9 +586,15 @@ const buildFinalReport = (analytics = {}) => {
     (item) => `${item.answer} waxay saamayn ku leedahay ${item.percentage}% jawaab bixiyeyaasha.`
   );
 
-  const topOpportunities = (payload.readiness?.highReadinessOpportunities || []).slice(0, 5).map(
-    (item) => `${item.sector} waxay leedahay fursad sare oo diyaar-garow ah (${item.averageReadiness}%).`
-  );
+  const topOpportunities = payload.reportView?.topOpportunities?.length
+    ? payload.reportView.topOpportunities.slice(0, 5).map((item) => {
+        const label = item.answer || item.label || item.sector || item.topic || 'Opportunity';
+        const percentage = item.percentage !== undefined ? ` (${item.percentage}%)` : '';
+        return `${label}${percentage} waa fursad muhiim ah oo ka muuqata jawaabaha.`;
+      })
+    : (payload.readiness?.highReadinessOpportunities || []).slice(0, 5).map(
+        (item) => `${item.sector} waxay leedahay fursad sare oo diyaar-garow ah (${item.averageReadiness}%).`
+      );
 
   const recommendations = payload.reportView?.recommendations?.length
     ? payload.reportView.recommendations

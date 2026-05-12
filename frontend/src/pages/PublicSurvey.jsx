@@ -41,10 +41,16 @@ export default function PublicSurvey() {
     event.preventDefault();
     setStatus({ loading: false, saving: true, message: '', error: '' });
     try {
+      const selectedSector = sectors.find((sector) => sector._id === meta.sector);
       await api.post('/responses/public', {
         ...meta,
         district: DEFAULT_DISTRICT,
-        answers
+        answers: {
+          ...answers,
+          q1: answers.q1 || meta.organizationName,
+          q2: answers.q2 || selectedSector?.name || '',
+          q3: answers.q3 || DEFAULT_DISTRICT
+        }
       });
       setMeta(initialMeta);
       setAnswers({});
