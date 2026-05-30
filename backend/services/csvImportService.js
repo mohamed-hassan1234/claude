@@ -3,12 +3,32 @@ const SurveyResponse = require('../models/SurveyResponse');
 const Sector = require('../models/Sector');
 const ApiError = require('../utils/ApiError');
 const { scoreResponse, extractAnswerByCode } = require('./readinessService');
-const { hydrateAnswersFromQuestions, optionLabelsForQuestion } = require('./responseHydrationService');
+const { hydrateAnswersFromQuestions } = require('./responseHydrationService');
 
 const TIMESTAMP_HEADERS = ['timestamp', 'submittedat', 'submitted at', 'submission time', 'waqtiga'];
+const SECTOR_ALIASES = new Map([
+  ['hotel / hospitality', 'Hotels / Hospitality Services'],
+  ['hotel/hospitality', 'Hotels / Hospitality Services'],
+  ['hotels / hospitality', 'Hotels / Hospitality Services'],
+  ['hospitality', 'Hotels / Hospitality Services'],
+  ['university', 'Universities'],
+  ['restaurant / cafe', 'Tech-based Restaurants / Cafes'],
+  ['restaurant / café', 'Tech-based Restaurants / Cafes'],
+  ['restaurant/cafe', 'Tech-based Restaurants / Cafes'],
+  ['restaurant/café', 'Tech-based Restaurants / Cafes'],
+  ['restaurant', 'Tech-based Restaurants / Cafes']
+]);
 
 const normalizeText = (value) => String(value ?? '').trim();
 const normalizeLookup = (value) => normalizeText(value).toLowerCase();
+const simplifyLookup = (value) =>
+  normalizeLookup(value)
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/café/g, 'cafe')
+    .replace(/^q(?:uestion)?\s*\d+\s*[:.)-]?\s*/i, '')
+    .replace(/^\d+\s*[:.)-]?\s*/, '')
+    .replace(/[^a-z0-9\u00c0-\u024f\u0600-\u06ff]+/gi, '');
 
 const parseCsv = (csvText = '') => {
   const text = String(csvText || '').replace(/^\uFEFF/, '');
@@ -72,15 +92,32 @@ const detectTimestampColumn = (columns = []) =>
 
 const loadQuestions = () => SurveyQuestion.find({ isActive: true }).sort({ order: 1 }).lean();
 
-const buildAutoMapping = (columns = [], questions = []) => {
-  const byHeader = new Map(columns.map((column) => [normalizeLookup(column), column]));
+const buildAutoMapping = (columns = [], questions = [], timestampColumn = '') => {
+  const answerColumns = columns.filter((column) => column !== timestampColumn);
+  const byHeader = new Map(answerColumns.map((column) => [normalizeLookup(column), column]));
+  const bySimpleHeader = new Map(answerColumns.map((column) => [simplifyLookup(column), column]));
   const mapping = {};
+  const usedColumns = new Set();
 
   for (const question of questions) {
     const exactText = byHeader.get(normalizeLookup(question.text));
     const exactCode = byHeader.get(normalizeLookup(question.code));
-    mapping[question.code] = exactText || exactCode || '';
+    const fuzzyText = bySimpleHeader.get(simplifyLookup(question.text));
+    const fuzzyCode = bySimpleHeader.get(simplifyLookup(question.code));
+    const matched = exactText || exactCode || fuzzyText || fuzzyCode || '';
+    mapping[question.code] = matched;
+    if (matched) usedColumns.add(matched);
   }
+
+  const remainingColumns = answerColumns.filter((column) => !usedColumns.has(column));
+  let fallbackIndex = 0;
+  questions.forEach((question) => {
+    if (!mapping[question.code] && remainingColumns[fallbackIndex]) {
+      mapping[question.code] = remainingColumns[fallbackIndex];
+      usedColumns.add(remainingColumns[fallbackIndex]);
+      fallbackIndex += 1;
+    }
+  });
 
   return mapping;
 };
@@ -88,12 +125,13 @@ const buildAutoMapping = (columns = [], questions = []) => {
 const previewCsvImport = async (csvText = '') => {
   const { columns, records } = parseCsv(csvText);
   const questions = await loadQuestions();
+  const timestampColumn = detectTimestampColumn(columns);
 
   return {
     columns,
     totalRows: records.length,
     sampleRows: records.slice(0, 5).map((item) => item.record),
-    timestampColumn: detectTimestampColumn(columns),
+    timestampColumn,
     questions: questions.map((question) => ({
       _id: question._id,
       code: question.code,
@@ -102,7 +140,7 @@ const previewCsvImport = async (csvText = '') => {
       required: question.required,
       options: question.options || []
     })),
-    mapping: buildAutoMapping(columns, questions)
+    mapping: buildAutoMapping(columns, questions, timestampColumn)
   };
 };
 
@@ -140,24 +178,16 @@ const valueForQuestion = (question, rawValue) => {
   return normalizeText(rawValue);
 };
 
-const validateOptionValues = (question, value, errors) => {
-  if (question.type === 'multiple_choice') return;
-  if (!['multiple_choice', 'single_select', 'likert', 'yes_no'].includes(question.type)) return;
-
-  const labels = optionLabelsForQuestion(question);
-  if (!labels.length) return;
-
-  const allowed = new Set(labels);
-  const values = Array.isArray(value) ? value : value ? [value] : [];
-  const invalid = values.filter((item) => !allowed.has(item));
-  if (invalid.length) {
-    errors.push(`${question.code} has invalid value(s): ${invalid.join(', ')}`);
-  }
-};
-
 const loadSectorsByName = async () => {
   const sectors = await Sector.find({ isActive: true }).lean();
-  return new Map(sectors.map((sector) => [normalizeLookup(sector.name), sector]));
+  const byName = new Map(sectors.map((sector) => [normalizeLookup(sector.name), sector]));
+
+  for (const [alias, canonical] of SECTOR_ALIASES.entries()) {
+    const sector = byName.get(normalizeLookup(canonical));
+    if (sector) byName.set(normalizeLookup(alias), sector);
+  }
+
+  return byName;
 };
 
 const findExistingDuplicate = async (organizationName, submittedAt) =>
@@ -192,7 +222,6 @@ const buildRowPayload = ({ row, questions, mapping, timestampColumn, sectorsByNa
     }
 
     if (!isEmpty) {
-      validateOptionValues(question, value, errors);
       answers[question.code] = value;
     }
   }
@@ -223,10 +252,7 @@ const buildRowPayload = ({ row, questions, mapping, timestampColumn, sectorsByNa
     };
   }
 
-  const importQuestions = questions.map((question) =>
-    question.type === 'multiple_choice' ? { ...question, options: [] } : question
-  );
-  const hydrated = hydrateAnswersFromQuestions(importQuestions, answers);
+  const hydrated = hydrateAnswersFromQuestions(questions, answers, { skipOptionValidation: true });
   const { readinessScore, readinessBand } = scoreResponse(hydrated.answerDetails);
 
   return {
@@ -256,7 +282,7 @@ const importCsvResponses = async ({ csvText = '', mapping = {}, timestampColumn 
   const questions = await loadQuestions();
   const sectorsByName = await loadSectorsByName();
   const resolvedTimestampColumn = timestampColumn || detectTimestampColumn(columns);
-  const resolvedMapping = { ...buildAutoMapping(columns, questions), ...mapping };
+  const resolvedMapping = { ...buildAutoMapping(columns, questions, resolvedTimestampColumn), ...mapping };
   const seenKeys = new Set();
   const rowResults = [];
   const toInsert = [];

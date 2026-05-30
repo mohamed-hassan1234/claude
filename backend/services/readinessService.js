@@ -101,6 +101,132 @@ const FALLBACK_SCORES = {
   Muhiim: 80
 };
 
+const normalizeScoreLookup = (value) =>
+  String(value ?? '')
+    .trim()
+    .toLowerCase()
+    .replace(/[“”]/g, '"')
+    .replace(/[‘’]/g, "'")
+    .replace(/café/g, 'cafe')
+    .replace(/\s+/g, ' ');
+
+const VALUE_ALIASES = {
+  q2: {
+    'hotel / hospitality': 'Hotels / Hospitality Services',
+    university: 'Universities',
+    'restaurant / cafe': 'Tech-based Restaurants / Cafes'
+  },
+  q5: {
+    '11-20': '11-25',
+    '11–20': '11-25',
+    '11 - 20': '11-25',
+    '21-50': '26-50',
+    '21–50': '26-50',
+    '21 - 50': '26-50',
+    'in ka badan 50': '51+'
+  },
+  q6: {
+    'haa, waan maqlay': 'Haa',
+    'maya, maanan maqlin': 'Maya',
+    'maya, maanan maqal wali': 'Maya',
+    'maya maanan maqal wali': 'Maya'
+  },
+  q7: {
+    'aad ayuu u sarreeya': 'Aad u sarreeya',
+    'aad ayuu sarreeya': 'Aad u sarreeya',
+    'wuu sareeyaa': 'Sarreeya',
+    sareeyaa: 'Sarreeya',
+    hoose: 'Hooseeya',
+    'fikir kama heysto': 'Aad u hooseeya',
+    'fikir kama haysto': 'Aad u hooseeya'
+  },
+  q11: {
+    'aad ayuu u sarreeya': 'Aad u sarreeya',
+    'aad ayuu sarreeya': 'Aad u sarreeya',
+    'wuu sareeyaa': 'Sarreeya',
+    sareeyaa: 'Sarreeya',
+    hoose: 'Hooseeya',
+    'fikir kama heysto': 'Aad u hooseeya',
+    'fikir kama haysto': 'Aad u hooseeya'
+  },
+  q13: {
+    'local computers': 'Computer local ah',
+    'computer local': 'Computer local ah',
+    'external hard drive': 'External hard disk',
+    'usb / flash drive': 'External hard disk',
+    'usb/ flash.': 'External hard disk',
+    buugaag: 'Warqado',
+    'ku keydinta cloud-ka': 'Cloud storage'
+  },
+  q14: {
+    maalinle: 'Maalin kasta',
+    'marar dhif ah': 'Mararka qaar',
+    'waligeed ma sameyn backup': 'Marnaba',
+    'shirkada service ka nasiiso ayaa backup ka qaado': 'Toddobaadle'
+  },
+  q15: {
+    'haa, way la kulantay': 'Haa',
+    'maya, lama kulmin wali': 'Maya',
+    'maya lama kulmin': 'Maya'
+  },
+  q16: {
+    'khalad bini’aadan': 'Qalad shaqaale',
+    "khalad bini'aadam": 'Qalad shaqaale',
+    'harware failure': 'Qalab xumaaday',
+    'hardware failure': 'Qalab xumaaday',
+    'fayras / malware': 'Virus / malware',
+    'fayras /malware': 'Virus / malware',
+    'waligeed lama kulmin lumis xog': 'Ma jirto xog lumis'
+  },
+  q17: {
+    'aad ayaan ugu kalsoonahay': 'Aad baan ugu kalsoonahay',
+    'kuma kalsoonin': 'Kuma kalsooni'
+  },
+  q18: {
+    'haa, waa isticmaashaa': 'Haa',
+    'maya, ma isticmaasho': 'Maya'
+  },
+  q21: {
+    badanaa: 'Marar badan',
+    'inta badan waan isticmaalnaa': 'Marar badan',
+    'in badan ayay isticmaashaa': 'Marar badan',
+    'waligeed ma isticmaalin': 'Marnaba'
+  },
+  q22: {
+    'isku halayn sare': 'Sarreeya',
+    fiican: 'Sarreeya'
+  },
+  q23: {
+    'aad u deggan': 'Aad u sarreeya',
+    'aad u degan': 'Aad u sarreeya',
+    deggan: 'Sarreeya',
+    degan: 'Sarreeya',
+    'aan degganayn': 'Hooseeya'
+  },
+  q24: {
+    'haa, waa leedahay': 'Haa',
+    'maya, malahan': 'Maya',
+    haa: 'Haa',
+    maya: 'Maya'
+  },
+  q26: {
+    'aad ayaan uga welwelsanahay': 'Aad baan uga welwelsanahay',
+    'wan ka welwelsanahay': 'Waan ka welwelsanahay',
+    'waan ka welwelsanahay': 'Waan ka welwelsanahay',
+    'welwel ma qabo': 'Ma welwelsani'
+  },
+  q29: {
+    'haa, waan qabaa fikir kaas': 'Haa',
+    'maya, ma qabo fikir kaas': 'Maya'
+  }
+};
+
+const resolveScoreAlias = (code, value) => {
+  const text = String(value ?? '').trim();
+  const aliases = VALUE_ALIASES[code] || {};
+  return aliases[normalizeScoreLookup(text)] || text;
+};
+
 const scoreText = (code, value) => {
   if (Array.isArray(value)) {
     if (!value.length) return 0;
@@ -109,11 +235,17 @@ const scoreText = (code, value) => {
 
   const text = String(value ?? '').trim();
   if (!text) return 0;
-  if (VALUE_SCORES[code] && Object.prototype.hasOwnProperty.call(VALUE_SCORES[code], text)) {
-    return VALUE_SCORES[code][text];
+  if (text.includes(',')) {
+    const values = text.split(',').map((item) => item.trim()).filter(Boolean);
+    if (values.length > 1) return scoreText(code, values);
   }
-  if (Object.prototype.hasOwnProperty.call(FALLBACK_SCORES, text)) {
-    return FALLBACK_SCORES[text];
+
+  const scoreValue = resolveScoreAlias(code, text);
+  if (VALUE_SCORES[code] && Object.prototype.hasOwnProperty.call(VALUE_SCORES[code], scoreValue)) {
+    return VALUE_SCORES[code][scoreValue];
+  }
+  if (Object.prototype.hasOwnProperty.call(FALLBACK_SCORES, scoreValue)) {
+    return FALLBACK_SCORES[scoreValue];
   }
   return 40;
 };

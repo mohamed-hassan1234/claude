@@ -34,7 +34,7 @@ const assertRealOptionLabels = (question, value) => {
   }
 };
 
-const hydrateAnswersFromQuestions = (questions = [], submittedAnswers = {}) => {
+const hydrateAnswersFromQuestions = (questions = [], submittedAnswers = {}, options = {}) => {
   const answers = {};
   const answerDetails = [];
 
@@ -49,7 +49,9 @@ const hydrateAnswersFromQuestions = (questions = [], submittedAnswers = {}) => {
 
     if (!hasAnswer || isEmpty) continue;
 
-    assertRealOptionLabels(question, normalized);
+    if (!options.skipOptionValidation) {
+      assertRealOptionLabels(question, normalized);
+    }
     answers[question.code] = normalized;
     answerDetails.push({
       code: question.code,
