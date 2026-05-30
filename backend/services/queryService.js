@@ -80,16 +80,28 @@ const buildResponseQuery = (query = {}) => {
   }
 
   if (query.startDate || query.endDate) {
-    const createdAt = {};
+    const submittedAt = {};
     const start = parseDate(query.startDate);
     const end = parseDate(query.endDate);
 
-    if (start) createdAt.$gte = start;
+    if (start) submittedAt.$gte = start;
     if (end) {
       end.setHours(23, 59, 59, 999);
-      createdAt.$lte = end;
+      submittedAt.$lte = end;
     }
-    if (Object.keys(createdAt).length) conditions.push({ createdAt });
+    if (Object.keys(submittedAt).length) {
+      conditions.push({
+        $or: [
+          { submittedAt },
+          {
+            $and: [
+              { $or: [{ submittedAt: { $exists: false } }, { submittedAt: null }] },
+              { createdAt: submittedAt }
+            ]
+          }
+        ]
+      });
+    }
   }
 
   return mergeConditions(conditions);

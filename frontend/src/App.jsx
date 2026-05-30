@@ -7,6 +7,7 @@ import PublicSurvey from './pages/PublicSurvey';
 import Questions from './pages/Questions';
 import Reports from './pages/Reports';
 import Responses from './pages/Responses';
+import ImportResponses from './pages/ImportResponses';
 import ResponseDetails from './pages/ResponseDetails';
 import Sectors from './pages/Sectors';
 import NotFound from './pages/NotFound';
@@ -22,6 +23,7 @@ export default function App() {
           <Route index element={<Navigate to={adminPath('dashboard')} replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="responses" element={<Responses />} />
+          <Route path="import-responses" element={<ImportResponses />} />
           <Route path="responses/:id" element={<ResponseDetails />} />
           <Route path="sectors" element={<Sectors />} />
           <Route path="questions" element={<Questions />} />

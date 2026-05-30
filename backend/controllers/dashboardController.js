@@ -17,7 +17,22 @@ const dashboardStats = asyncHandler(async (req, res) => {
     SurveyResponse.countDocuments(baseFilter),
     Sector.countDocuments({ isActive: true }),
     SurveyResponse.distinct('district', baseFilter),
-    SurveyResponse.countDocuments({ ...baseFilter, createdAt: { $gte: today } }),
+    SurveyResponse.countDocuments({
+      $and: [
+        baseFilter,
+        {
+          $or: [
+            { submittedAt: { $gte: today } },
+            {
+              $and: [
+                { $or: [{ submittedAt: { $exists: false } }, { submittedAt: null }] },
+                { createdAt: { $gte: today } }
+              ]
+            }
+          ]
+        }
+      ]
+    }),
     SurveyResponse.find(baseFilter).lean()
   ]);
   const allResponses = await normalizeResponseSectors(rawResponses);
@@ -60,7 +75,7 @@ const dashboardStats = asyncHandler(async (req, res) => {
     return {
       date: date.toISOString().slice(0, 10),
       submissions: allResponses.filter((item) => {
-        const created = new Date(item.createdAt);
+        const created = new Date(item.submittedAt || item.createdAt);
         return created >= date && created < next;
       }).length
     };

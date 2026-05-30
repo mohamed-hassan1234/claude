@@ -30,6 +30,9 @@ const surveyResponseSchema = new mongoose.Schema(
     awarenessLevel: { type: String, default: 'Unknown' },
     willingnessToAdopt: { type: String, default: 'Unknown' },
     submittedBy: { type: String, enum: ['public', 'admin'], default: 'public' },
+    submittedAt: { type: Date, default: Date.now, index: true },
+    importedAt: Date,
+    importSource: { type: String, trim: true, default: '' },
     editedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'AdminUser' },
     deletedAt: Date
   },
@@ -37,5 +40,6 @@ const surveyResponseSchema = new mongoose.Schema(
 );
 
 surveyResponseSchema.index({ organizationName: 'text', respondentName: 'text', district: 'text' });
+surveyResponseSchema.index({ organizationName: 1, submittedAt: 1 });
 
 module.exports = mongoose.model('SurveyResponse', surveyResponseSchema);

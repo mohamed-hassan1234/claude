@@ -6,7 +6,9 @@ const {
   createResponse,
   updateResponse,
   deleteResponse,
-  bulkDeleteResponses
+  bulkDeleteResponses,
+  previewImportResponses,
+  importResponses
 } = require('../controllers/responseController');
 const { protect, authorize } = require('../middleware/auth');
 
@@ -15,6 +17,8 @@ const router = express.Router();
 router.post('/public', responseValidators, createResponse);
 router.use(protect, authorize('admin'));
 router.get('/', listResponses);
+router.post('/import/preview', previewImportResponses);
+router.post('/import', importResponses);
 router.get('/:id', getResponse);
 router.post('/', responseValidators, createResponse);
 router.put('/:id', updateResponse);

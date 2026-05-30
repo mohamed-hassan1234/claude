@@ -49,7 +49,7 @@ const flattenResponse = (response, questions = []) => {
     willingnessToAdopt: response.willingnessToAdopt,
     readinessScore: response.readinessScore,
     readinessBand: response.readinessBand,
-    submittedAt: response.createdAt
+    submittedAt: response.submittedAt || response.createdAt
   };
 
   const questionList = questions.length ? questions : response.answerDetails || [];

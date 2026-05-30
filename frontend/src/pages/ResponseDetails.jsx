@@ -104,7 +104,7 @@ export default function ResponseDetails() {
         </div>
         <div className="rounded border border-slate-200 bg-white p-5 shadow-soft">
           <p className="text-sm text-slate-500">Submitted</p>
-          <p className="text-lg font-semibold text-ink">{new Date(response.createdAt).toLocaleString()}</p>
+          <p className="text-lg font-semibold text-ink">{new Date(response.submittedAt || response.createdAt).toLocaleString()}</p>
         </div>
       </section>
       <section className="rounded border border-slate-200 bg-white shadow-soft">

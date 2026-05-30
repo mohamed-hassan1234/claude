@@ -1,4 +1,4 @@
-import { BarChart3, ClipboardList, FileText, HelpCircle, LayoutDashboard, LogOut, PieChart, Settings, X } from 'lucide-react';
+import { BarChart3, ClipboardList, FileText, HelpCircle, LayoutDashboard, LogOut, PieChart, Settings, Upload, X } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { adminPath } from '../../routes';
@@ -6,6 +6,7 @@ import { adminPath } from '../../routes';
 const items = [
   { to: adminPath('dashboard'), label: 'Dashboard', icon: LayoutDashboard },
   { to: adminPath('responses'), label: 'Responses', icon: ClipboardList },
+  { to: adminPath('import-responses'), label: 'Import Responses', icon: Upload },
   { to: adminPath('sectors'), label: 'Sectors', icon: PieChart },
   { to: adminPath('questions'), label: 'Questions', icon: HelpCircle },
   { to: adminPath('reports'), label: 'Analytics & Reports', icon: FileText }

@@ -1,13 +1,14 @@
 const { body, validationResult } = require('express-validator');
 
 const SurveyResponse = require('../models/SurveyResponse');
-const SurveyQuestion = require('../models/SurveyQuestion');
 const Sector = require('../models/Sector');
 const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const { scoreResponse, extractAnswerByCode } = require('../services/readinessService');
 const { buildCompatibleResponseQuery } = require('../services/queryService');
 const { normalizeResponseSectors } = require('../services/responseCompatibilityService');
+const { hydrateAnswers } = require('../services/responseHydrationService');
+const { importCsvResponses, previewCsvImport } = require('../services/csvImportService');
 const { writeAudit } = require('../services/auditService');
 
 const responseValidators = [
@@ -17,64 +18,6 @@ const responseValidators = [
   body('answers').custom((value) => value && typeof value === 'object' && !Array.isArray(value)).withMessage('Answers must be an object keyed by q1, q2, q3...')
 ];
 
-const normalizeScalar = (value) => String(value ?? '').trim();
-
-const normalizeAnswerValue = (question, value) => {
-  if (question.type === 'multiple_choice') {
-    const values = Array.isArray(value) ? value : value ? [value] : [];
-    return values.map(normalizeScalar).filter(Boolean);
-  }
-  return normalizeScalar(value);
-};
-
-const assertRealOptionLabels = (question, value) => {
-  if (!['multiple_choice', 'single_select', 'likert', 'yes_no'].includes(question.type)) return;
-
-  const optionLabels = question.type === 'yes_no' && (!question.options || question.options.length === 0)
-    ? ['Haa', 'Maya']
-    : (question.options || []).map((item) => item.label);
-  const allowed = new Set(optionLabels);
-  const selected = Array.isArray(value) ? value : value ? [value] : [];
-
-  for (const item of selected) {
-    if (!allowed.has(item)) {
-      throw new ApiError(400, `Invalid answer for ${question.code}. Answers must use the real option text, not indexes or IDs.`);
-    }
-  }
-};
-
-const hydrateAnswers = async (submittedAnswers = {}) => {
-  const questions = await SurveyQuestion.find({ isActive: true }).sort({ order: 1 });
-  const answers = {};
-  const answerDetails = [];
-
-  for (const question of questions) {
-    const hasAnswer = Object.prototype.hasOwnProperty.call(submittedAnswers, question.code);
-    const normalized = normalizeAnswerValue(question, submittedAnswers[question.code]);
-    const isEmpty = Array.isArray(normalized) ? normalized.length === 0 : normalized === '';
-
-    if (question.required && (!hasAnswer || isEmpty)) {
-      throw new ApiError(400, `Required question missing: ${question.text}`);
-    }
-
-    if (!hasAnswer || isEmpty) continue;
-
-    assertRealOptionLabels(question, normalized);
-    answers[question.code] = normalized;
-    answerDetails.push({
-      code: question.code,
-      questionId: question._id,
-      questionText: question.text,
-      section: question.section,
-      type: question.type,
-      scoringKey: question.scoringKey,
-      value: normalized
-    });
-  }
-
-  return { answers, answerDetails };
-};
-
 const listResponses = asyncHandler(async (req, res) => {
   const page = Math.max(Number(req.query.page) || 1, 1);
   const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), 100);
@@ -83,7 +26,7 @@ const listResponses = asyncHandler(async (req, res) => {
   const [responses, total] = await Promise.all([
     SurveyResponse.find(filter)
       .lean()
-      .sort({ createdAt: -1 })
+      .sort({ submittedAt: -1, createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit),
     SurveyResponse.countDocuments(filter)
@@ -180,6 +123,33 @@ const bulkDeleteResponses = asyncHandler(async (req, res) => {
   res.json({ message: 'Selected responses deleted' });
 });
 
+const previewImportResponses = asyncHandler(async (req, res) => {
+  if (!req.body.csv) throw new ApiError(400, 'CSV content is required');
+  const preview = await previewCsvImport(req.body.csv);
+  res.json({ preview });
+});
+
+const importResponses = asyncHandler(async (req, res) => {
+  if (!req.body.csv) throw new ApiError(400, 'CSV content is required');
+
+  const result = await importCsvResponses({
+    csvText: req.body.csv,
+    mapping: req.body.mapping || {},
+    timestampColumn: req.body.timestampColumn || '',
+    importedBy: req.user?._id,
+    source: req.body.filename || 'Google Forms CSV'
+  });
+
+  await writeAudit({
+    req,
+    action: 'import_csv',
+    entity: 'SurveyResponse',
+    metadata: result.summary
+  });
+
+  res.status(201).json({ importResult: result });
+});
+
 module.exports = {
   responseValidators,
   listResponses,
@@ -187,5 +157,7 @@ module.exports = {
   createResponse,
   updateResponse,
   deleteResponse,
-  bulkDeleteResponses
+  bulkDeleteResponses,
+  previewImportResponses,
+  importResponses
 };

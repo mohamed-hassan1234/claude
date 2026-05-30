@@ -15,6 +15,11 @@ const downloadFile = async (url, filename) => {
   URL.revokeObjectURL(href);
 };
 
+const displayAnswer = (value) => {
+  if (Array.isArray(value)) return value.join(', ');
+  return value || '-';
+};
+
 export default function Responses() {
   const [responses, setResponses] = useState([]);
   const [sectors, setSectors] = useState([]);
@@ -142,11 +147,11 @@ export default function Responses() {
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Submission date</p>
-                    <p className="mt-1 text-sm text-ink">{new Date(item.createdAt).toLocaleDateString()}</p>
+                    <p className="mt-1 text-sm text-ink">{new Date(item.submittedAt || item.createdAt).toLocaleDateString()}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Technology</p>
-                    <p className="mt-1 text-sm text-ink">{item.answers?.q8 || '-'}</p>
+                    <p className="mt-1 text-sm text-ink">{displayAnswer(item.answers?.q8)}</p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Awareness</p>
@@ -193,8 +198,8 @@ export default function Responses() {
                     </td>
                     <td className="p-3">{sectorLabel(item.sector)}</td>
                     <td className="p-3">{item.district}</td>
-                    <td className="p-3">{new Date(item.createdAt).toLocaleDateString()}</td>
-                    <td className="p-3">{item.answers?.q8 || '-'}</td>
+                    <td className="p-3">{new Date(item.submittedAt || item.createdAt).toLocaleDateString()}</td>
+                    <td className="p-3">{displayAnswer(item.answers?.q8)}</td>
                     <td className="p-3">{item.awarenessLevel}</td>
                     <td className="p-3">{item.willingnessToAdopt}</td>
                     <td className="p-3">

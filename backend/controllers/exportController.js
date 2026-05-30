@@ -14,7 +14,7 @@ const { writeAudit } = require('../services/auditService');
 
 const getExportResponses = async (query) => {
   const filter = await buildCompatibleResponseQuery(query);
-  const responses = await SurveyResponse.find(filter).sort({ createdAt: -1 }).lean();
+  const responses = await SurveyResponse.find(filter).sort({ submittedAt: -1, createdAt: -1 }).lean();
   return normalizeResponseSectors(responses);
 };
 
