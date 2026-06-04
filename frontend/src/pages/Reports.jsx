@@ -135,7 +135,32 @@ function ScopeChip({ label }) {
   return <span className="rounded bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">{label}</span>;
 }
 
-function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefresh, refreshing, onGenerateReport, generatingReport }) {
+function ReportActionPanel({ onGenerateReport, generatingReport }) {
+  return (
+    <section className="rounded border border-teal-200 bg-teal-50 p-4 shadow-soft sm:p-5">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div className="min-w-0">
+          <p className="text-sm font-semibold uppercase tracking-wide text-teal-800">Academic DOCX Report</p>
+          <h2 className="mt-1 text-xl font-bold text-ink sm:text-2xl">Generate complete research report</h2>
+          <p className="mt-2 max-w-3xl text-sm leading-7 text-slate-600">
+            Create the full university-style DOCX report from live MongoDB survey responses, analytics, charts, sector comparisons, readiness scores, and NLP results.
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={onGenerateReport}
+          disabled={generatingReport}
+          className="inline-flex w-full items-center justify-center gap-2 rounded bg-teal-700 px-4 py-3 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        >
+          <BookOpen size={18} className={generatingReport ? 'animate-pulse' : ''} />
+          {generatingReport ? 'Generating DOCX...' : 'Generate Academic Research Report'}
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefresh, refreshing }) {
   const hasFilters = Object.values(filters).some(Boolean);
   const selectedSector = sectors.find((sector) => (sector._id || sector.name) === filters.sector);
 
@@ -151,15 +176,6 @@ function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefres
             </p>
           </div>
           <div className="flex flex-col gap-2 sm:flex-row">
-            <button
-              type="button"
-              onClick={onGenerateReport}
-              disabled={generatingReport}
-              className="inline-flex w-full items-center justify-center gap-2 rounded bg-teal-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
-            >
-              <BookOpen size={16} className={generatingReport ? 'animate-pulse' : ''} />
-              {generatingReport ? 'Generating...' : 'Generate Academic Research Report'}
-            </button>
             <button
               type="button"
               onClick={onRefresh}
@@ -972,11 +988,30 @@ export default function Reports() {
     }
   };
 
-  if (metaLoading) return <Loading label="Loading reports and analytics..." />;
-  if (metaError) return <ActiveError message={metaError} onRetry={retryMetaLoad} />;
+  if (metaLoading) {
+    return (
+      <div className="space-y-6">
+        <ReportActionPanel onGenerateReport={generateResearchReport} generatingReport={generatingReport} />
+        {downloadError ? <ActiveError message={downloadError} onRetry={generateResearchReport} /> : null}
+        <Loading label="Loading reports and analytics..." />
+      </div>
+    );
+  }
+
+  if (metaError) {
+    return (
+      <div className="space-y-6">
+        <ReportActionPanel onGenerateReport={generateResearchReport} generatingReport={generatingReport} />
+        {downloadError ? <ActiveError message={downloadError} onRetry={generateResearchReport} /> : null}
+        <ActiveError message={metaError} onRetry={retryMetaLoad} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
+      <ReportActionPanel onGenerateReport={generateResearchReport} generatingReport={generatingReport} />
+
       <FilterHeader
         filters={filters}
         sectors={sectors}
@@ -985,8 +1020,6 @@ export default function Reports() {
         onClear={clearFilters}
         onRefresh={refreshActiveTab}
         refreshing={refreshing}
-        onGenerateReport={generateResearchReport}
-        generatingReport={generatingReport}
       />
 
       {downloadError ? <ActiveError message={downloadError} onRetry={generateResearchReport} /> : null}
