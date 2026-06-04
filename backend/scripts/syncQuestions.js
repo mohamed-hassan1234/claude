@@ -29,8 +29,8 @@ const syncQuestions = async () => {
 
   await SurveyQuestion.updateMany({ code: { $nin: codes } }, { $set: { isActive: false } });
 
-  console.log(`Synced ${questions.length} active survey questions.`);
-  console.log('Existing responses were not deleted. Old-response answer snapshots will not be reused for the new question text.');
+  console.info(`Synced ${questions.length} active survey questions.`);
+  console.info('Existing responses were not deleted. Old-response answer snapshots will not be reused for the new question text.');
   await mongoose.connection.close();
 };
 

@@ -5,7 +5,8 @@ const {
   exportAnalyticsSummary,
   exportSectorComparison,
   exportReadinessRanking,
-  exportReportSummary
+  exportReportSummary,
+  exportResearchReportDocx
 } = require('../controllers/exportController');
 const { protect, authorize } = require('../middleware/auth');
 
@@ -17,5 +18,6 @@ router.get('/analytics-summary.xlsx', protect, authorize('admin'), exportAnalyti
 router.get('/sector-comparison.xlsx', protect, authorize('admin'), exportSectorComparison);
 router.get('/readiness-ranking.xlsx', protect, authorize('admin'), exportReadinessRanking);
 router.get('/report-summary.xlsx', protect, authorize('admin'), exportReportSummary);
+router.get('/research-report.docx', protect, authorize('admin'), exportResearchReportDocx);
 
 module.exports = router;

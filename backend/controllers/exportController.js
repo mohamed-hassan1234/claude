@@ -9,6 +9,7 @@ const {
   buildReadinessRankingWorkbook,
   buildPresentationReportWorkbook
 } = require('../services/reportExportService');
+const { buildAcademicResearchReportDocx } = require('../services/academicReportService');
 const { normalizeResponseSectors } = require('../services/responseCompatibilityService');
 const { writeAudit } = require('../services/auditService');
 
@@ -72,11 +73,32 @@ const exportReportSummary = asyncHandler(async (req, res) => {
   await sendWorkbook(req, res, workbook, `cloud-survey-report-summary-${Date.now()}.xlsx`, 'export_report_summary');
 });
 
+const exportResearchReportDocx = asyncHandler(async (req, res) => {
+  const { buffer, analytics, filename } = await buildAcademicResearchReportDocx(req.query);
+
+  await writeAudit({
+    req,
+    action: 'export_research_report_docx',
+    entity: 'AcademicReport',
+    metadata: {
+      filters: req.query,
+      responses: analytics.totals.totalResponses,
+      sectors: analytics.totals.totalSectorsCovered,
+      districts: analytics.totals.totalDistrictsCovered
+    }
+  });
+
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+  res.send(buffer);
+});
+
 module.exports = {
   exportExcel,
   exportCsv,
   exportAnalyticsSummary,
   exportSectorComparison,
   exportReadinessRanking,
-  exportReportSummary
+  exportReportSummary,
+  exportResearchReportDocx
 };

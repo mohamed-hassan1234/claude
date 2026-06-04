@@ -111,9 +111,8 @@ const seed = async () => {
 
   await SurveyResponse.insertMany(responses);
 
-  console.log('Seed complete');
-  console.log(`Admin email: ${process.env.ADMIN_SEED_EMAIL || 'admin@example.com'}`);
-  console.log(`Admin password: ${process.env.ADMIN_SEED_PASSWORD || 'Admin@12345'}`);
+  console.info('Seed complete');
+  console.info(`Admin email: ${process.env.ADMIN_SEED_EMAIL || 'admin@example.com'}`);
   await mongoose.connection.close();
 };
 

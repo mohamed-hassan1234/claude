@@ -21,7 +21,8 @@ const auditRoutes = require('./routes/auditRoutes');
 const app = express();
 
 const normalizeOrigin = (value = '') => value.trim().replace(/\/+$/, '');
-const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || '')
+const defaultClientOrigins = 'https://claude.elivateict.com';
+const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || defaultClientOrigins)
   .split(',')
   .map(normalizeOrigin)
   .filter(Boolean);
@@ -37,7 +38,10 @@ const corsOptions = {
 
     return callback(new Error(`Origin ${origin} is not allowed by CORS`));
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  optionsSuccessStatus: 204
 };
 
 app.use(
@@ -46,6 +50,7 @@ app.use(
   })
 );
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json({ limit: '20mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
@@ -88,7 +93,9 @@ const port = process.env.PORT || 5000;
 const startServer = async () => {
   await connectDB();
   app.listen(port, () => {
-    console.log(`API running on http://localhost:${port}`);
+    if (process.env.NODE_ENV !== 'production') {
+      console.info(`API running on port ${port}`);
+    }
   });
 };
 

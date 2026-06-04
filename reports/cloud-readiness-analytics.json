@@ -1,0 +1,3883 @@
+{
+  "analytics": {
+    "generatedAt": "2026-06-04T14:15:11.331Z",
+    "totals": {
+      "totalResponses": 24,
+      "totalSectorsCovered": 14,
+      "totalDistrictsCovered": 7,
+      "responsesToday": 0,
+      "responsesThisWeek": 24,
+      "averageCloudReadinessScore": 56.25,
+      "awarenessRate": 50,
+      "adoptionWillingnessRate": 33.33,
+      "cloudToolsUsageRate": 50,
+      "backupPracticeRate": 100,
+      "infrastructureStabilityRate": 54.5,
+      "securityTrustRate": 52.5
+    },
+    "frequencyAnalysis": {
+      "q1": {
+        "question": "Ganacsigaaga ama hay’addaadu noocee ah ayey tahay?",
+        "answers": [
+          {
+            "answer": "Banks / Financial Institutions",
+            "label": "Banks / Financial Institutions",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "E-commerce / Online Businesses",
+            "label": "E-commerce / Online Businesses",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Hospitals / Clinics",
+            "label": "Hospitals / Clinics",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Hotels / Hospitality Services",
+            "label": "Hotels / Hospitality Services",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Logistics & Transportation",
+            "label": "Logistics & Transportation",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Schools / Educational Institutions",
+            "label": "Schools / Educational Institutions",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Supermarkets / Retail Shops",
+            "label": "Supermarkets / Retail Shops",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Tech-based Restaurants / Cafes",
+            "label": "Tech-based Restaurants / Cafes",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Telecom / Mobile Money Agents",
+            "label": "Telecom / Mobile Money Agents",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Universities",
+            "label": "Universities",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Media & Communication Companies",
+            "label": "Media & Communication Companies",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "NGOs / Non-Profit Organizations",
+            "label": "NGOs / Non-Profit Organizations",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "Real Estate / Property Management",
+            "label": "Real Estate / Property Management",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "SMEs",
+            "label": "SMEs",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          }
+        ]
+      },
+      "q2": {
+        "question": "Immisa sano ayuu ganacsigaagu shaqeynayay?",
+        "answers": [
+          {
+            "answer": "1",
+            "label": "1",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "10",
+            "label": "10",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "11",
+            "label": "11",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "12",
+            "label": "12",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "2",
+            "label": "2",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "3",
+            "label": "3",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "4",
+            "label": "4",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "5",
+            "label": "5",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "6",
+            "label": "6",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "7",
+            "label": "7",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "8",
+            "label": "8",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "9",
+            "label": "9",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          }
+        ]
+      },
+      "q3": {
+        "question": "Immisa shaqaale ayaa ka shaqeeya hay’addaada?",
+        "answers": [
+          {
+            "answer": "10",
+            "label": "10",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "12",
+            "label": "12",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "14",
+            "label": "14",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "16",
+            "label": "16",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "18",
+            "label": "18",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "20",
+            "label": "20",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "22",
+            "label": "22",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "24",
+            "label": "24",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "26",
+            "label": "26",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "28",
+            "label": "28",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "30",
+            "label": "30",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "32",
+            "label": "32",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "34",
+            "label": "34",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "36",
+            "label": "36",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "38",
+            "label": "38",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "4",
+            "label": "4",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "40",
+            "label": "40",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "42",
+            "label": "42",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "44",
+            "label": "44",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "46",
+            "label": "46",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "48",
+            "label": "48",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "50",
+            "label": "50",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "6",
+            "label": "6",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "8",
+            "label": "8",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          }
+        ]
+      },
+      "q4": {
+        "question": "Waaxdee ayaad ka shaqeysaa?",
+        "answers": [
+          {
+            "answer": "Howlgallada",
+            "label": "Howlgallada",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "IT",
+            "label": "IT",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Maamulka",
+            "label": "Maamulka",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Xisaabaadka",
+            "label": "Xisaabaadka",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q5": {
+        "question": "Ma maqashay erayga “Cloud Computing” hore?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q6": {
+        "question": "Sidee baad u qiimeyn lahayd fahamkaaga cloud computing?",
+        "answers": [
+          {
+            "answer": "Aad u fiican",
+            "label": "Aad u fiican",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Fiican",
+            "label": "Fiican",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Yar",
+            "label": "Yar",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Midna ma aqaan",
+            "label": "Midna ma aqaan",
+            "count": 4,
+            "percentage": 16.67,
+            "responsePercentage": 16.67
+          }
+        ]
+      },
+      "q7": {
+        "question": "Maxaad u fahantaa cloud computing?",
+        "answers": [
+          {
+            "answer": "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "label": "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "count": 24,
+            "percentage": 100,
+            "responsePercentage": 100
+          }
+        ]
+      },
+      "q8": {
+        "question": "Noocee qalab ah ayaad inta badan isticmaashaan?",
+        "answers": [
+          {
+            "answer": "Desktop",
+            "label": "Desktop",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Laptop",
+            "label": "Laptop",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Mobile phone",
+            "label": "Mobile phone",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Tablet",
+            "label": "Tablet",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q9": {
+        "question": "Ma isticmaashaan software maamulka ganacsiga?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q10": {
+        "question": "Internet joogto ah ma haysataan?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q11": {
+        "question": "Tayada internet-kiinnu sidee tahay?",
+        "answers": [
+          {
+            "answer": "Aad u fiican",
+            "label": "Aad u fiican",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Fiican",
+            "label": "Fiican",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Liita",
+            "label": "Liita",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q12": {
+        "question": "Xogta ganacsiga xaggee ku kaydsataan?",
+        "answers": [
+          {
+            "answer": "Cloud storage",
+            "label": "Cloud storage",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Computer local ah",
+            "label": "Computer local ah",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "External hard disk",
+            "label": "External hard disk",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Warqado",
+            "label": "Warqado",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q13": {
+        "question": "Ma sameysaan backup joogto ah?",
+        "answers": [
+          {
+            "answer": "Haa maalin kasta",
+            "label": "Haa maalin kasta",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Mararka qaar",
+            "label": "Mararka qaar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Toddobaadle",
+            "label": "Toddobaadle",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q14": {
+        "question": "Immisa jeer ayay xog kaa luntay?",
+        "answers": [
+          {
+            "answer": "Hal mar",
+            "label": "Hal mar",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "In ka badan hal mar",
+            "label": "In ka badan hal mar",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Marna",
+            "label": "Marna",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          }
+        ]
+      },
+      "q15": {
+        "question": "Ma isticmaashaan adeegyada cloud sida Google Drive, OneDrive, Dropbox?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q16": {
+        "question": "Haddii haa, adeeggee ugu badan ayaad isticmaashaan?",
+        "answers": [
+          {
+            "answer": "Dropbox",
+            "label": "Dropbox",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Google Drive",
+            "label": "Google Drive",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Ma isticmaalno",
+            "label": "Ma isticmaalno",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "OneDrive",
+            "label": "OneDrive",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q17": {
+        "question": "Cloud systems ma ka caawiyeen shaqadaada?",
+        "answers": [
+          {
+            "answer": "Aad u badan",
+            "label": "Aad u badan",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Wax yar",
+            "label": "Wax yar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q18": {
+        "question": "Koronto joogto ah ma haysataan?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q19": {
+        "question": "Koronto la’aantu intee jeer ayay shaqada hakisaa?",
+        "answers": [
+          {
+            "answer": "Badanaa",
+            "label": "Badanaa",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Marar dhif ah",
+            "label": "Marar dhif ah",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Mararka qaar",
+            "label": "Mararka qaar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Marnaba",
+            "label": "Marnaba",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q20": {
+        "question": "Internet la’aantu ma caqabad weyn bay idiin tahay?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q21": {
+        "question": "Maxay yihiin caqabadaha ugu waaweyn ee kaa hor istaagaya cloud adoption?",
+        "answers": [
+          {
+            "answer": "Amni darro",
+            "label": "Amni darro",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Aqoonta oo yar",
+            "label": "Aqoonta oo yar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Internet liita",
+            "label": "Internet liita",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Kharash badan",
+            "label": "Kharash badan",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q22": {
+        "question": "Shaqaalahaagu ma leeyihiin xirfad ku filan cloud technology?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Qaar kaliya",
+            "label": "Qaar kaliya",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          }
+        ]
+      },
+      "q23": {
+        "question": "Tababar ma u baahan tihiin?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q24": {
+        "question": "Ma ku kalsoon tahay in xogtaada lagu kaydiyo cloud?",
+        "answers": [
+          {
+            "answer": "Aad baan ugu kalsoonahay",
+            "label": "Aad baan ugu kalsoonahay",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Kuma kalsooni",
+            "label": "Kuma kalsooni",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Waan ku kalsoonahay",
+            "label": "Waan ku kalsoonahay",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q25": {
+        "question": "Maxaa kaa walwal geliya cloud security?",
+        "answers": [
+          {
+            "answer": "Access control la’aan",
+            "label": "Access control la’aan",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Hackers",
+            "label": "Hackers",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Sirta oo baxda",
+            "label": "Sirta oo baxda",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Xatooyo xog",
+            "label": "Xatooyo xog",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      "q26": {
+        "question": "Ganacsigaagu ma u baahan yahay nidaam digital casri ah?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      "q27": {
+        "question": "Haddii cloud solution la heli karo, ma diyaar baad u tahay inaad isticmaasho?",
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Waxaa ku xiran qiimaha",
+            "label": "Waxaa ku xiran qiimaha",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          }
+        ]
+      },
+      "q28": {
+        "question": "Maxay yihiin adeegyada aad rabto in cloud kuu xalliyo?",
+        "answers": [
+          {
+            "answer": "backup",
+            "label": "backup",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "iyo maamulka dukumentiyada.",
+            "label": "iyo maamulka dukumentiyada.",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "Waxaan rabnaa kayd xogeed",
+            "label": "Waxaan rabnaa kayd xogeed",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          }
+        ]
+      },
+      "q29": {
+        "question": "Sidee ayaad u aragtaa mustaqbalka cloud computing ee Soomaaliya?",
+        "answers": [
+          {
+            "answer": "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "label": "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "count": 24,
+            "percentage": 100,
+            "responsePercentage": 100
+          }
+        ]
+      },
+      "q30": {
+        "question": "Maxaad kula talin lahayd dowladda ama shirkadaha si loo kordhiyo cloud adoption-ka Soomaaliya?",
+        "answers": [
+          {
+            "answer": "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin",
+            "label": "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "iyo adeegyo qiimo jaban.",
+            "label": "iyo adeegyo qiimo jaban.",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "tababar",
+            "label": "tababar",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          }
+        ]
+      }
+    },
+    "questionAnalysis": [
+      {
+        "code": "q1",
+        "question": "Ganacsigaaga ama hay’addaadu noocee ah ayey tahay?",
+        "type": "short_text",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Banks / Financial Institutions",
+            "label": "Banks / Financial Institutions",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "E-commerce / Online Businesses",
+            "label": "E-commerce / Online Businesses",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Hospitals / Clinics",
+            "label": "Hospitals / Clinics",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Hotels / Hospitality Services",
+            "label": "Hotels / Hospitality Services",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Logistics & Transportation",
+            "label": "Logistics & Transportation",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Schools / Educational Institutions",
+            "label": "Schools / Educational Institutions",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Supermarkets / Retail Shops",
+            "label": "Supermarkets / Retail Shops",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Tech-based Restaurants / Cafes",
+            "label": "Tech-based Restaurants / Cafes",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Telecom / Mobile Money Agents",
+            "label": "Telecom / Mobile Money Agents",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Universities",
+            "label": "Universities",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "Media & Communication Companies",
+            "label": "Media & Communication Companies",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "NGOs / Non-Profit Organizations",
+            "label": "NGOs / Non-Profit Organizations",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "Real Estate / Property Management",
+            "label": "Real Estate / Property Management",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "SMEs",
+            "label": "SMEs",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          }
+        ]
+      },
+      {
+        "code": "q2",
+        "question": "Immisa sano ayuu ganacsigaagu shaqeynayay?",
+        "type": "numeric",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "1",
+            "label": "1",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "10",
+            "label": "10",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "11",
+            "label": "11",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "12",
+            "label": "12",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "2",
+            "label": "2",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "3",
+            "label": "3",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "4",
+            "label": "4",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "5",
+            "label": "5",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "6",
+            "label": "6",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "7",
+            "label": "7",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "8",
+            "label": "8",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          },
+          {
+            "answer": "9",
+            "label": "9",
+            "count": 2,
+            "percentage": 8.33,
+            "responsePercentage": 8.33
+          }
+        ]
+      },
+      {
+        "code": "q3",
+        "question": "Immisa shaqaale ayaa ka shaqeeya hay’addaada?",
+        "type": "numeric",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "10",
+            "label": "10",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "12",
+            "label": "12",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "14",
+            "label": "14",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "16",
+            "label": "16",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "18",
+            "label": "18",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "20",
+            "label": "20",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "22",
+            "label": "22",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "24",
+            "label": "24",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "26",
+            "label": "26",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "28",
+            "label": "28",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "30",
+            "label": "30",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "32",
+            "label": "32",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "34",
+            "label": "34",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "36",
+            "label": "36",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "38",
+            "label": "38",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "4",
+            "label": "4",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "40",
+            "label": "40",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "42",
+            "label": "42",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "44",
+            "label": "44",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "46",
+            "label": "46",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "48",
+            "label": "48",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "50",
+            "label": "50",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "6",
+            "label": "6",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          },
+          {
+            "answer": "8",
+            "label": "8",
+            "count": 1,
+            "percentage": 4.17,
+            "responsePercentage": 4.17
+          }
+        ]
+      },
+      {
+        "code": "q4",
+        "question": "Waaxdee ayaad ka shaqeysaa?",
+        "type": "short_text",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Howlgallada",
+            "label": "Howlgallada",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "IT",
+            "label": "IT",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Maamulka",
+            "label": "Maamulka",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Xisaabaadka",
+            "label": "Xisaabaadka",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q5",
+        "question": "Ma maqashay erayga “Cloud Computing” hore?",
+        "type": "yes_no",
+        "scoringKey": "awareness",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q6",
+        "question": "Sidee baad u qiimeyn lahayd fahamkaaga cloud computing?",
+        "type": "single_select",
+        "scoringKey": "awareness",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Aad u fiican",
+            "label": "Aad u fiican",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Fiican",
+            "label": "Fiican",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Yar",
+            "label": "Yar",
+            "count": 5,
+            "percentage": 20.83,
+            "responsePercentage": 20.83
+          },
+          {
+            "answer": "Midna ma aqaan",
+            "label": "Midna ma aqaan",
+            "count": 4,
+            "percentage": 16.67,
+            "responsePercentage": 16.67
+          }
+        ]
+      },
+      {
+        "code": "q7",
+        "question": "Maxaad u fahantaa cloud computing?",
+        "type": "paragraph",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "label": "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "count": 24,
+            "percentage": 100,
+            "responsePercentage": 100
+          }
+        ]
+      },
+      {
+        "code": "q8",
+        "question": "Noocee qalab ah ayaad inta badan isticmaashaan?",
+        "type": "single_select",
+        "scoringKey": "technology",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Desktop",
+            "label": "Desktop",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Laptop",
+            "label": "Laptop",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Mobile phone",
+            "label": "Mobile phone",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Tablet",
+            "label": "Tablet",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q9",
+        "question": "Ma isticmaashaan software maamulka ganacsiga?",
+        "type": "yes_no",
+        "scoringKey": "technology",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q10",
+        "question": "Internet joogto ah ma haysataan?",
+        "type": "yes_no",
+        "scoringKey": "infrastructure",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q11",
+        "question": "Tayada internet-kiinnu sidee tahay?",
+        "type": "single_select",
+        "scoringKey": "infrastructure",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Aad u fiican",
+            "label": "Aad u fiican",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Fiican",
+            "label": "Fiican",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Liita",
+            "label": "Liita",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q12",
+        "question": "Xogta ganacsiga xaggee ku kaydsataan?",
+        "type": "single_select",
+        "scoringKey": "backup",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Cloud storage",
+            "label": "Cloud storage",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Computer local ah",
+            "label": "Computer local ah",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "External hard disk",
+            "label": "External hard disk",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Warqado",
+            "label": "Warqado",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q13",
+        "question": "Ma sameysaan backup joogto ah?",
+        "type": "single_select",
+        "scoringKey": "backup",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa maalin kasta",
+            "label": "Haa maalin kasta",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Mararka qaar",
+            "label": "Mararka qaar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Toddobaadle",
+            "label": "Toddobaadle",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q14",
+        "question": "Immisa jeer ayay xog kaa luntay?",
+        "type": "single_select",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Hal mar",
+            "label": "Hal mar",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "In ka badan hal mar",
+            "label": "In ka badan hal mar",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Marna",
+            "label": "Marna",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          }
+        ]
+      },
+      {
+        "code": "q15",
+        "question": "Ma isticmaashaan adeegyada cloud sida Google Drive, OneDrive, Dropbox?",
+        "type": "yes_no",
+        "scoringKey": "cloudTools",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q16",
+        "question": "Haddii haa, adeeggee ugu badan ayaad isticmaashaan?",
+        "type": "short_text",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Dropbox",
+            "label": "Dropbox",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Google Drive",
+            "label": "Google Drive",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Ma isticmaalno",
+            "label": "Ma isticmaalno",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "OneDrive",
+            "label": "OneDrive",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q17",
+        "question": "Cloud systems ma ka caawiyeen shaqadaada?",
+        "type": "single_select",
+        "scoringKey": "cloudTools",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Aad u badan",
+            "label": "Aad u badan",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Wax yar",
+            "label": "Wax yar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q18",
+        "question": "Koronto joogto ah ma haysataan?",
+        "type": "yes_no",
+        "scoringKey": "infrastructure",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q19",
+        "question": "Koronto la’aantu intee jeer ayay shaqada hakisaa?",
+        "type": "single_select",
+        "scoringKey": "infrastructure",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Badanaa",
+            "label": "Badanaa",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Marar dhif ah",
+            "label": "Marar dhif ah",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Mararka qaar",
+            "label": "Mararka qaar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Marnaba",
+            "label": "Marnaba",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q20",
+        "question": "Internet la’aantu ma caqabad weyn bay idiin tahay?",
+        "type": "yes_no",
+        "scoringKey": "infrastructure",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q21",
+        "question": "Maxay yihiin caqabadaha ugu waaweyn ee kaa hor istaagaya cloud adoption?",
+        "type": "multiple_choice",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Amni darro",
+            "label": "Amni darro",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Aqoonta oo yar",
+            "label": "Aqoonta oo yar",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Internet liita",
+            "label": "Internet liita",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Kharash badan",
+            "label": "Kharash badan",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q22",
+        "question": "Shaqaalahaagu ma leeyihiin xirfad ku filan cloud technology?",
+        "type": "single_select",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Qaar kaliya",
+            "label": "Qaar kaliya",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          }
+        ]
+      },
+      {
+        "code": "q23",
+        "question": "Tababar ma u baahan tihiin?",
+        "type": "yes_no",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q24",
+        "question": "Ma ku kalsoon tahay in xogtaada lagu kaydiyo cloud?",
+        "type": "single_select",
+        "scoringKey": "securityTrust",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Aad baan ugu kalsoonahay",
+            "label": "Aad baan ugu kalsoonahay",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Dhexdhexaad",
+            "label": "Dhexdhexaad",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Kuma kalsooni",
+            "label": "Kuma kalsooni",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Waan ku kalsoonahay",
+            "label": "Waan ku kalsoonahay",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q25",
+        "question": "Maxaa kaa walwal geliya cloud security?",
+        "type": "multiple_choice",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Access control la’aan",
+            "label": "Access control la’aan",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Hackers",
+            "label": "Hackers",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Sirta oo baxda",
+            "label": "Sirta oo baxda",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          },
+          {
+            "answer": "Xatooyo xog",
+            "label": "Xatooyo xog",
+            "count": 6,
+            "percentage": 25,
+            "responsePercentage": 25
+          }
+        ]
+      },
+      {
+        "code": "q26",
+        "question": "Ganacsigaagu ma u baahan yahay nidaam digital casri ah?",
+        "type": "yes_no",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 12,
+            "percentage": 50,
+            "responsePercentage": 50
+          }
+        ]
+      },
+      {
+        "code": "q27",
+        "question": "Haddii cloud solution la heli karo, ma diyaar baad u tahay inaad isticmaasho?",
+        "type": "single_select",
+        "scoringKey": "willingness",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Haa",
+            "label": "Haa",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Maya",
+            "label": "Maya",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          },
+          {
+            "answer": "Waxaa ku xiran qiimaha",
+            "label": "Waxaa ku xiran qiimaha",
+            "count": 8,
+            "percentage": 33.33,
+            "responsePercentage": 33.33
+          }
+        ]
+      },
+      {
+        "code": "q28",
+        "question": "Maxay yihiin adeegyada aad rabto in cloud kuu xalliyo?",
+        "type": "paragraph",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "backup",
+            "label": "backup",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "iyo maamulka dukumentiyada.",
+            "label": "iyo maamulka dukumentiyada.",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "Waxaan rabnaa kayd xogeed",
+            "label": "Waxaan rabnaa kayd xogeed",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          }
+        ]
+      },
+      {
+        "code": "q29",
+        "question": "Sidee ayaad u aragtaa mustaqbalka cloud computing ee Soomaaliya?",
+        "type": "paragraph",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "label": "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "count": 24,
+            "percentage": 100,
+            "responsePercentage": 100
+          }
+        ]
+      },
+      {
+        "code": "q30",
+        "question": "Maxaad kula talin lahayd dowladda ama shirkadaha si loo kordhiyo cloud adoption-ka Soomaaliya?",
+        "type": "paragraph",
+        "scoringKey": "none",
+        "totalResponses": 24,
+        "answers": [
+          {
+            "answer": "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin",
+            "label": "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "iyo adeegyo qiimo jaban.",
+            "label": "iyo adeegyo qiimo jaban.",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          },
+          {
+            "answer": "tababar",
+            "label": "tababar",
+            "count": 24,
+            "percentage": 33.33,
+            "responsePercentage": 100
+          }
+        ]
+      }
+    ],
+    "sectorDistribution": [
+      {
+        "answer": "Banks / Financial Institutions",
+        "label": "Banks / Financial Institutions",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "E-commerce / Online Businesses",
+        "label": "E-commerce / Online Businesses",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Hospitals / Clinics",
+        "label": "Hospitals / Clinics",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Hotels / Hospitality Services",
+        "label": "Hotels / Hospitality Services",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Logistics & Transportation",
+        "label": "Logistics & Transportation",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Schools / Educational Institutions",
+        "label": "Schools / Educational Institutions",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Supermarkets / Retail Shops",
+        "label": "Supermarkets / Retail Shops",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Tech-based Restaurants / Cafes",
+        "label": "Tech-based Restaurants / Cafes",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Telecom / Mobile Money Agents",
+        "label": "Telecom / Mobile Money Agents",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Universities",
+        "label": "Universities",
+        "count": 2,
+        "percentage": 8.33,
+        "responsePercentage": 8.33
+      },
+      {
+        "answer": "Media & Communication Companies",
+        "label": "Media & Communication Companies",
+        "count": 1,
+        "percentage": 4.17,
+        "responsePercentage": 4.17
+      },
+      {
+        "answer": "NGOs / Non-Profit Organizations",
+        "label": "NGOs / Non-Profit Organizations",
+        "count": 1,
+        "percentage": 4.17,
+        "responsePercentage": 4.17
+      },
+      {
+        "answer": "Real Estate / Property Management",
+        "label": "Real Estate / Property Management",
+        "count": 1,
+        "percentage": 4.17,
+        "responsePercentage": 4.17
+      },
+      {
+        "answer": "SMEs",
+        "label": "SMEs",
+        "count": 1,
+        "percentage": 4.17,
+        "responsePercentage": 4.17
+      }
+    ],
+    "districtDistribution": [
+      {
+        "answer": "Hodan",
+        "label": "Hodan",
+        "count": 4,
+        "percentage": 16.67,
+        "responsePercentage": 16.67
+      },
+      {
+        "answer": "Karaan",
+        "label": "Karaan",
+        "count": 4,
+        "percentage": 16.67,
+        "responsePercentage": 16.67
+      },
+      {
+        "answer": "Wadajir",
+        "label": "Wadajir",
+        "count": 4,
+        "percentage": 16.67,
+        "responsePercentage": 16.67
+      },
+      {
+        "answer": "Baidoa",
+        "label": "Baidoa",
+        "count": 3,
+        "percentage": 12.5,
+        "responsePercentage": 12.5
+      },
+      {
+        "answer": "Garowe",
+        "label": "Garowe",
+        "count": 3,
+        "percentage": 12.5,
+        "responsePercentage": 12.5
+      },
+      {
+        "answer": "Hargeisa",
+        "label": "Hargeisa",
+        "count": 3,
+        "percentage": 12.5,
+        "responsePercentage": 12.5
+      },
+      {
+        "answer": "Kismayo",
+        "label": "Kismayo",
+        "count": 3,
+        "percentage": 12.5,
+        "responsePercentage": 12.5
+      }
+    ],
+    "sectorComparison": {
+      "rows": [
+        {
+          "sector": "Media & Communication Companies",
+          "label": "Media & Communication Companies",
+          "responses": 1,
+          "averageReadiness": 74,
+          "awareness": 80,
+          "technology": 68.75,
+          "infrastructure": 45,
+          "backup": 63.33,
+          "cloudTools": 93.33,
+          "securityTrust": 50,
+          "willingness": 100
+        },
+        {
+          "sector": "Banks / Financial Institutions",
+          "label": "Banks / Financial Institutions",
+          "responses": 2,
+          "averageReadiness": 67,
+          "awareness": 95,
+          "technology": 56.25,
+          "infrastructure": 46,
+          "backup": 50,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 75
+        },
+        {
+          "sector": "Hospitals / Clinics",
+          "label": "Hospitals / Clinics",
+          "responses": 2,
+          "averageReadiness": 64,
+          "awareness": 87.5,
+          "technology": 56.25,
+          "infrastructure": 46,
+          "backup": 50,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 75
+        },
+        {
+          "sector": "Telecom / Mobile Money Agents",
+          "label": "Telecom / Mobile Money Agents",
+          "responses": 2,
+          "averageReadiness": 58.5,
+          "awareness": 85,
+          "technology": 43.75,
+          "infrastructure": 46,
+          "backup": 41.67,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 50
+        },
+        {
+          "sector": "Schools / Educational Institutions",
+          "label": "Schools / Educational Institutions",
+          "responses": 2,
+          "averageReadiness": 57,
+          "awareness": 71.25,
+          "technology": 56.25,
+          "infrastructure": 46,
+          "backup": 50,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 75
+        },
+        {
+          "sector": "Hotels / Hospitality Services",
+          "label": "Hotels / Hospitality Services",
+          "responses": 2,
+          "averageReadiness": 56.5,
+          "awareness": 73.75,
+          "technology": 43.75,
+          "infrastructure": 46,
+          "backup": 41.67,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 50
+        },
+        {
+          "sector": "Tech-based Restaurants / Cafes",
+          "label": "Tech-based Restaurants / Cafes",
+          "responses": 2,
+          "averageReadiness": 55,
+          "awareness": 23.75,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "Supermarkets / Retail Shops",
+          "label": "Supermarkets / Retail Shops",
+          "responses": 2,
+          "averageReadiness": 53.5,
+          "awareness": 45,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "Logistics & Transportation",
+          "label": "Logistics & Transportation",
+          "responses": 2,
+          "averageReadiness": 52.5,
+          "awareness": 35,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "E-commerce / Online Businesses",
+          "label": "E-commerce / Online Businesses",
+          "responses": 2,
+          "averageReadiness": 52.5,
+          "awareness": 21.25,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "SMEs",
+          "label": "SMEs",
+          "responses": 1,
+          "averageReadiness": 50,
+          "awareness": 100,
+          "technology": 43.75,
+          "infrastructure": 47,
+          "backup": 36.67,
+          "cloudTools": 76.67,
+          "securityTrust": 60,
+          "willingness": 50
+        },
+        {
+          "sector": "NGOs / Non-Profit Organizations",
+          "label": "NGOs / Non-Profit Organizations",
+          "responses": 1,
+          "averageReadiness": 50,
+          "awareness": 40,
+          "technology": 43.75,
+          "infrastructure": 60,
+          "backup": 66.67,
+          "cloudTools": 26.67,
+          "securityTrust": 50,
+          "willingness": 50
+        },
+        {
+          "sector": "Universities",
+          "label": "Universities",
+          "responses": 2,
+          "averageReadiness": 48,
+          "awareness": 37.5,
+          "technology": 43.75,
+          "infrastructure": 63,
+          "backup": 56.67,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 50
+        },
+        {
+          "sector": "Real Estate / Property Management",
+          "label": "Real Estate / Property Management",
+          "responses": 1,
+          "averageReadiness": 47,
+          "awareness": 17.5,
+          "technology": 43.75,
+          "infrastructure": 66,
+          "backup": 46.67,
+          "cloudTools": 46.67,
+          "securityTrust": 50,
+          "willingness": 50
+        }
+      ]
+    },
+    "districtComparison": {
+      "rows": [
+        {
+          "district": "Garowe",
+          "label": "Garowe",
+          "responses": 3,
+          "averageReadiness": 60.33,
+          "awareness": 69.17,
+          "technology": 52.08,
+          "infrastructure": 52.67,
+          "backup": 48.89,
+          "cloudTools": 72.22,
+          "securityTrust": 53.33,
+          "willingness": 66.67
+        },
+        {
+          "district": "Hodan",
+          "label": "Hodan",
+          "responses": 4,
+          "averageReadiness": 58.25,
+          "awareness": 61.25,
+          "technology": 56.25,
+          "infrastructure": 54.5,
+          "backup": 57.5,
+          "cloudTools": 60.83,
+          "securityTrust": 52.5,
+          "willingness": 75
+        },
+        {
+          "district": "Baidoa",
+          "label": "Baidoa",
+          "responses": 3,
+          "averageReadiness": 56.67,
+          "awareness": 51.67,
+          "technology": 52.08,
+          "infrastructure": 57,
+          "backup": 58.89,
+          "cloudTools": 55.56,
+          "securityTrust": 50,
+          "willingness": 66.67
+        },
+        {
+          "district": "Karaan",
+          "label": "Karaan",
+          "responses": 4,
+          "averageReadiness": 55.5,
+          "awareness": 53.13,
+          "technology": 50,
+          "infrastructure": 54.5,
+          "backup": 53.33,
+          "cloudTools": 60.83,
+          "securityTrust": 52.5,
+          "willingness": 62.5
+        },
+        {
+          "district": "Wadajir",
+          "label": "Wadajir",
+          "responses": 4,
+          "averageReadiness": 55,
+          "awareness": 59.38,
+          "technology": 50,
+          "infrastructure": 54.5,
+          "backup": 53.33,
+          "cloudTools": 60.83,
+          "securityTrust": 52.5,
+          "willingness": 62.5
+        },
+        {
+          "district": "Kismayo",
+          "label": "Kismayo",
+          "responses": 3,
+          "averageReadiness": 54.67,
+          "awareness": 60.83,
+          "technology": 52.08,
+          "infrastructure": 50.67,
+          "backup": 55.56,
+          "cloudTools": 65.56,
+          "securityTrust": 53.33,
+          "willingness": 66.67
+        },
+        {
+          "district": "Hargeisa",
+          "label": "Hargeisa",
+          "responses": 3,
+          "averageReadiness": 53.33,
+          "awareness": 49.17,
+          "technology": 52.08,
+          "infrastructure": 57.67,
+          "backup": 55.56,
+          "cloudTools": 50,
+          "securityTrust": 53.33,
+          "willingness": 66.67
+        }
+      ]
+    },
+    "readinessStats": {
+      "average": 56.25,
+      "median": 56.5,
+      "min": 36,
+      "max": 77
+    },
+    "readiness": {
+      "overallAverage": 56.25,
+      "distribution": [
+        {
+          "band": "Low",
+          "label": "Low",
+          "count": 1,
+          "percentage": 4.17
+        },
+        {
+          "band": "Medium",
+          "label": "Medium",
+          "count": 20,
+          "percentage": 83.33
+        },
+        {
+          "band": "High",
+          "label": "High",
+          "count": 3,
+          "percentage": 12.5
+        }
+      ],
+      "sectorLeaderboard": [
+        {
+          "sector": "Media & Communication Companies",
+          "label": "Media & Communication Companies",
+          "responses": 1,
+          "averageReadiness": 74,
+          "awareness": 80,
+          "technology": 68.75,
+          "infrastructure": 45,
+          "backup": 63.33,
+          "cloudTools": 93.33,
+          "securityTrust": 50,
+          "willingness": 100
+        },
+        {
+          "sector": "Banks / Financial Institutions",
+          "label": "Banks / Financial Institutions",
+          "responses": 2,
+          "averageReadiness": 67,
+          "awareness": 95,
+          "technology": 56.25,
+          "infrastructure": 46,
+          "backup": 50,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 75
+        },
+        {
+          "sector": "Hospitals / Clinics",
+          "label": "Hospitals / Clinics",
+          "responses": 2,
+          "averageReadiness": 64,
+          "awareness": 87.5,
+          "technology": 56.25,
+          "infrastructure": 46,
+          "backup": 50,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 75
+        },
+        {
+          "sector": "Telecom / Mobile Money Agents",
+          "label": "Telecom / Mobile Money Agents",
+          "responses": 2,
+          "averageReadiness": 58.5,
+          "awareness": 85,
+          "technology": 43.75,
+          "infrastructure": 46,
+          "backup": 41.67,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 50
+        },
+        {
+          "sector": "Schools / Educational Institutions",
+          "label": "Schools / Educational Institutions",
+          "responses": 2,
+          "averageReadiness": 57,
+          "awareness": 71.25,
+          "technology": 56.25,
+          "infrastructure": 46,
+          "backup": 50,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 75
+        },
+        {
+          "sector": "Hotels / Hospitality Services",
+          "label": "Hotels / Hospitality Services",
+          "responses": 2,
+          "averageReadiness": 56.5,
+          "awareness": 73.75,
+          "technology": 43.75,
+          "infrastructure": 46,
+          "backup": 41.67,
+          "cloudTools": 85,
+          "securityTrust": 55,
+          "willingness": 50
+        },
+        {
+          "sector": "Tech-based Restaurants / Cafes",
+          "label": "Tech-based Restaurants / Cafes",
+          "responses": 2,
+          "averageReadiness": 55,
+          "awareness": 23.75,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "Supermarkets / Retail Shops",
+          "label": "Supermarkets / Retail Shops",
+          "responses": 2,
+          "averageReadiness": 53.5,
+          "awareness": 45,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "Logistics & Transportation",
+          "label": "Logistics & Transportation",
+          "responses": 2,
+          "averageReadiness": 52.5,
+          "awareness": 35,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "E-commerce / Online Businesses",
+          "label": "E-commerce / Online Businesses",
+          "responses": 2,
+          "averageReadiness": 52.5,
+          "awareness": 21.25,
+          "technology": 56.25,
+          "infrastructure": 63,
+          "backup": 65,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 75
+        },
+        {
+          "sector": "SMEs",
+          "label": "SMEs",
+          "responses": 1,
+          "averageReadiness": 50,
+          "awareness": 100,
+          "technology": 43.75,
+          "infrastructure": 47,
+          "backup": 36.67,
+          "cloudTools": 76.67,
+          "securityTrust": 60,
+          "willingness": 50
+        },
+        {
+          "sector": "NGOs / Non-Profit Organizations",
+          "label": "NGOs / Non-Profit Organizations",
+          "responses": 1,
+          "averageReadiness": 50,
+          "awareness": 40,
+          "technology": 43.75,
+          "infrastructure": 60,
+          "backup": 66.67,
+          "cloudTools": 26.67,
+          "securityTrust": 50,
+          "willingness": 50
+        },
+        {
+          "sector": "Universities",
+          "label": "Universities",
+          "responses": 2,
+          "averageReadiness": 48,
+          "awareness": 37.5,
+          "technology": 43.75,
+          "infrastructure": 63,
+          "backup": 56.67,
+          "cloudTools": 36.67,
+          "securityTrust": 50,
+          "willingness": 50
+        },
+        {
+          "sector": "Real Estate / Property Management",
+          "label": "Real Estate / Property Management",
+          "responses": 1,
+          "averageReadiness": 47,
+          "awareness": 17.5,
+          "technology": 43.75,
+          "infrastructure": 66,
+          "backup": 46.67,
+          "cloudTools": 46.67,
+          "securityTrust": 50,
+          "willingness": 50
+        }
+      ],
+      "districtLeaderboard": [
+        {
+          "district": "Garowe",
+          "label": "Garowe",
+          "responses": 3,
+          "averageReadiness": 60.33,
+          "awareness": 69.17,
+          "technology": 52.08,
+          "infrastructure": 52.67,
+          "backup": 48.89,
+          "cloudTools": 72.22,
+          "securityTrust": 53.33,
+          "willingness": 66.67
+        },
+        {
+          "district": "Hodan",
+          "label": "Hodan",
+          "responses": 4,
+          "averageReadiness": 58.25,
+          "awareness": 61.25,
+          "technology": 56.25,
+          "infrastructure": 54.5,
+          "backup": 57.5,
+          "cloudTools": 60.83,
+          "securityTrust": 52.5,
+          "willingness": 75
+        },
+        {
+          "district": "Baidoa",
+          "label": "Baidoa",
+          "responses": 3,
+          "averageReadiness": 56.67,
+          "awareness": 51.67,
+          "technology": 52.08,
+          "infrastructure": 57,
+          "backup": 58.89,
+          "cloudTools": 55.56,
+          "securityTrust": 50,
+          "willingness": 66.67
+        },
+        {
+          "district": "Karaan",
+          "label": "Karaan",
+          "responses": 4,
+          "averageReadiness": 55.5,
+          "awareness": 53.13,
+          "technology": 50,
+          "infrastructure": 54.5,
+          "backup": 53.33,
+          "cloudTools": 60.83,
+          "securityTrust": 52.5,
+          "willingness": 62.5
+        },
+        {
+          "district": "Wadajir",
+          "label": "Wadajir",
+          "responses": 4,
+          "averageReadiness": 55,
+          "awareness": 59.38,
+          "technology": 50,
+          "infrastructure": 54.5,
+          "backup": 53.33,
+          "cloudTools": 60.83,
+          "securityTrust": 52.5,
+          "willingness": 62.5
+        },
+        {
+          "district": "Kismayo",
+          "label": "Kismayo",
+          "responses": 3,
+          "averageReadiness": 54.67,
+          "awareness": 60.83,
+          "technology": 52.08,
+          "infrastructure": 50.67,
+          "backup": 55.56,
+          "cloudTools": 65.56,
+          "securityTrust": 53.33,
+          "willingness": 66.67
+        },
+        {
+          "district": "Hargeisa",
+          "label": "Hargeisa",
+          "responses": 3,
+          "averageReadiness": 53.33,
+          "awareness": 49.17,
+          "technology": 52.08,
+          "infrastructure": 57.67,
+          "backup": 55.56,
+          "cloudTools": 50,
+          "securityTrust": 53.33,
+          "willingness": 66.67
+        }
+      ]
+    },
+    "factorSummary": [
+      {
+        "factor": "willingness",
+        "label": "Adoption readiness",
+        "score": 66.67
+      },
+      {
+        "factor": "cloudTools",
+        "label": "Cloud usage",
+        "score": 60.83
+      },
+      {
+        "factor": "awareness",
+        "label": "Cloud awareness",
+        "score": 57.81
+      },
+      {
+        "factor": "backup",
+        "label": "Data storage and backup",
+        "score": 54.72
+      },
+      {
+        "factor": "infrastructure",
+        "label": "Infrastructure readiness",
+        "score": 54.5
+      },
+      {
+        "factor": "securityTrust",
+        "label": "Security confidence",
+        "score": 52.5
+      },
+      {
+        "factor": "technology",
+        "label": "Technology usage",
+        "score": 52.08
+      }
+    ],
+    "gapAnalysis": {
+      "overall": [
+        {
+          "factor": "technology",
+          "label": "Technology usage",
+          "current": 52.08,
+          "ideal": 100,
+          "gap": 47.92
+        },
+        {
+          "factor": "securityTrust",
+          "label": "Security confidence",
+          "current": 52.5,
+          "ideal": 100,
+          "gap": 47.5
+        },
+        {
+          "factor": "infrastructure",
+          "label": "Infrastructure readiness",
+          "current": 54.5,
+          "ideal": 100,
+          "gap": 45.5
+        },
+        {
+          "factor": "backup",
+          "label": "Data storage and backup",
+          "current": 54.72,
+          "ideal": 100,
+          "gap": 45.28
+        },
+        {
+          "factor": "awareness",
+          "label": "Cloud awareness",
+          "current": 57.81,
+          "ideal": 100,
+          "gap": 42.19
+        },
+        {
+          "factor": "cloudTools",
+          "label": "Cloud usage",
+          "current": 60.83,
+          "ideal": 100,
+          "gap": 39.17
+        },
+        {
+          "factor": "willingness",
+          "label": "Adoption readiness",
+          "current": 66.67,
+          "ideal": 100,
+          "gap": 33.33
+        }
+      ]
+    },
+    "commonBarriers": [
+      {
+        "answer": "Amni darro",
+        "label": "Amni darro",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Aqoonta oo yar",
+        "label": "Aqoonta oo yar",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Internet liita",
+        "label": "Internet liita",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Kharash badan",
+        "label": "Kharash badan",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      }
+    ],
+    "securityConcerns": [
+      {
+        "answer": "Access control la’aan",
+        "label": "Access control la’aan",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Hackers",
+        "label": "Hackers",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Sirta oo baxda",
+        "label": "Sirta oo baxda",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Xatooyo xog",
+        "label": "Xatooyo xog",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      }
+    ],
+    "cloudTools": [
+      {
+        "answer": "Dropbox",
+        "label": "Dropbox",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Google Drive",
+        "label": "Google Drive",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "Ma isticmaalno",
+        "label": "Ma isticmaalno",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      },
+      {
+        "answer": "OneDrive",
+        "label": "OneDrive",
+        "count": 6,
+        "percentage": 25,
+        "responsePercentage": 25
+      }
+    ],
+    "cloudNeeds": [
+      {
+        "answer": "backup",
+        "label": "backup",
+        "count": 24,
+        "percentage": 33.33,
+        "responsePercentage": 100
+      },
+      {
+        "answer": "iyo maamulka dukumentiyada.",
+        "label": "iyo maamulka dukumentiyada.",
+        "count": 24,
+        "percentage": 33.33,
+        "responsePercentage": 100
+      },
+      {
+        "answer": "Waxaan rabnaa kayd xogeed",
+        "label": "Waxaan rabnaa kayd xogeed",
+        "count": 24,
+        "percentage": 33.33,
+        "responsePercentage": 100
+      }
+    ],
+    "businessNeeds": {
+      "openEndedQuestions": {
+        "q7": {
+          "totalResponses": 24,
+          "themes": [
+            {
+              "theme": "Data storage, backup, and document management",
+              "keywords": [
+                "backup",
+                "kayd",
+                "xog",
+                "dukumenti",
+                "document"
+              ],
+              "count": 24,
+              "examples": [
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+              ],
+              "percentage": 100
+            },
+            {
+              "theme": "Infrastructure, internet, power, and cost",
+              "keywords": [
+                "internet",
+                "koronto",
+                "qiime",
+                "kharash",
+                "jaban"
+              ],
+              "count": 24,
+              "examples": [
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+              ],
+              "percentage": 100
+            },
+            {
+              "theme": "Future growth of cloud computing in Somalia",
+              "keywords": [
+                "mustaqbal",
+                "soomaaliya",
+                "kori",
+                "cloud"
+              ],
+              "count": 24,
+              "examples": [
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+                "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+              ],
+              "percentage": 100
+            }
+          ],
+          "keywords": [
+            {
+              "keyword": "adeeg",
+              "count": 24
+            },
+            {
+              "keyword": "cloud",
+              "count": 24
+            },
+            {
+              "keyword": "computing",
+              "count": 24
+            },
+            {
+              "keyword": "internet",
+              "count": 24
+            },
+            {
+              "keyword": "isticmaalo",
+              "count": 24
+            },
+            {
+              "keyword": "kaydiyo",
+              "count": 24
+            },
+            {
+              "keyword": "lagu",
+              "count": 24
+            },
+            {
+              "keyword": "laguna",
+              "count": 24
+            },
+            {
+              "keyword": "online",
+              "count": 24
+            },
+            {
+              "keyword": "software",
+              "count": 24
+            },
+            {
+              "keyword": "xogta",
+              "count": 24
+            }
+          ],
+          "sampleResponses": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ]
+        },
+        "q28": {
+          "totalResponses": 24,
+          "themes": [
+            {
+              "theme": "Data storage, backup, and document management",
+              "keywords": [
+                "backup",
+                "kayd",
+                "xog",
+                "dukumenti",
+                "document"
+              ],
+              "count": 24,
+              "examples": [
+                "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+                "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+                "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada."
+              ],
+              "percentage": 100
+            },
+            {
+              "theme": "Efficiency, management, and collaboration",
+              "keywords": [
+                "hufnaan",
+                "fudud",
+                "maamul",
+                "shaqo",
+                "wada"
+              ],
+              "count": 24,
+              "examples": [
+                "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+                "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+                "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada."
+              ],
+              "percentage": 100
+            }
+          ],
+          "keywords": [
+            {
+              "keyword": "backup",
+              "count": 24
+            },
+            {
+              "keyword": "dukumentiyada",
+              "count": 24
+            },
+            {
+              "keyword": "kayd",
+              "count": 24
+            },
+            {
+              "keyword": "maamulka",
+              "count": 24
+            },
+            {
+              "keyword": "rabnaa",
+              "count": 24
+            },
+            {
+              "keyword": "waxaan",
+              "count": 24
+            },
+            {
+              "keyword": "xogeed",
+              "count": 24
+            }
+          ],
+          "sampleResponses": [
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada."
+          ]
+        },
+        "q29": {
+          "totalResponses": 24,
+          "themes": [
+            {
+              "theme": "Training, awareness, and skills",
+              "keywords": [
+                "tababar",
+                "wacyi",
+                "xirfad",
+                "aqoon"
+              ],
+              "count": 24,
+              "examples": [
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo."
+              ],
+              "percentage": 100
+            },
+            {
+              "theme": "Infrastructure, internet, power, and cost",
+              "keywords": [
+                "internet",
+                "koronto",
+                "qiime",
+                "kharash",
+                "jaban"
+              ],
+              "count": 24,
+              "examples": [
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo."
+              ],
+              "percentage": 100
+            },
+            {
+              "theme": "Future growth of cloud computing in Somalia",
+              "keywords": [
+                "mustaqbal",
+                "soomaaliya",
+                "kori",
+                "cloud"
+              ],
+              "count": 24,
+              "examples": [
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+                "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo."
+              ],
+              "percentage": 100
+            }
+          ],
+          "keywords": [
+            {
+              "keyword": "cloud",
+              "count": 24
+            },
+            {
+              "keyword": "computing",
+              "count": 24
+            },
+            {
+              "keyword": "haddii",
+              "count": 24
+            },
+            {
+              "keyword": "helo",
+              "count": 24
+            },
+            {
+              "keyword": "internet",
+              "count": 24
+            },
+            {
+              "keyword": "karaa",
+              "count": 24
+            },
+            {
+              "keyword": "kori",
+              "count": 24
+            },
+            {
+              "keyword": "mustaqbalka",
+              "count": 24
+            },
+            {
+              "keyword": "soomaaliya",
+              "count": 24
+            },
+            {
+              "keyword": "tababar",
+              "count": 24
+            },
+            {
+              "keyword": "wuu",
+              "count": 24
+            }
+          ],
+          "sampleResponses": [
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo."
+          ]
+        },
+        "q30": {
+          "totalResponses": 24,
+          "themes": [
+            {
+              "theme": "Training, awareness, and skills",
+              "keywords": [
+                "tababar",
+                "wacyi",
+                "xirfad",
+                "aqoon"
+              ],
+              "count": 24,
+              "examples": [
+                "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+                "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+                "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban."
+              ],
+              "percentage": 100
+            },
+            {
+              "theme": "Infrastructure, internet, power, and cost",
+              "keywords": [
+                "internet",
+                "koronto",
+                "qiime",
+                "kharash",
+                "jaban"
+              ],
+              "count": 24,
+              "examples": [
+                "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+                "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+                "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban."
+              ],
+              "percentage": 100
+            }
+          ],
+          "keywords": [
+            {
+              "keyword": "adeegyo",
+              "count": 24
+            },
+            {
+              "keyword": "dowladda",
+              "count": 24
+            },
+            {
+              "keyword": "jaban",
+              "count": 24
+            },
+            {
+              "keyword": "kordhiyaan",
+              "count": 24
+            },
+            {
+              "keyword": "qiimo",
+              "count": 24
+            },
+            {
+              "keyword": "shirkaduhu",
+              "count": 24
+            },
+            {
+              "keyword": "tababar",
+              "count": 24
+            },
+            {
+              "keyword": "wacyigelin",
+              "count": 24
+            }
+          ],
+          "sampleResponses": [
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban.",
+            "Dowladda iyo shirkaduhu ha kordhiyaan wacyigelin, tababar, iyo adeegyo qiimo jaban."
+          ]
+        }
+      },
+      "themeCards": [
+        {
+          "theme": "Infrastructure, internet, power, and cost",
+          "keywords": [
+            "internet",
+            "koronto",
+            "qiime",
+            "kharash",
+            "jaban"
+          ],
+          "count": 72,
+          "examples": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ],
+          "percentage": 75
+        },
+        {
+          "theme": "Data storage, backup, and document management",
+          "keywords": [
+            "backup",
+            "kayd",
+            "xog",
+            "dukumenti",
+            "document"
+          ],
+          "count": 48,
+          "examples": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ],
+          "percentage": 50
+        },
+        {
+          "theme": "Training, awareness, and skills",
+          "keywords": [
+            "tababar",
+            "wacyi",
+            "xirfad",
+            "aqoon"
+          ],
+          "count": 48,
+          "examples": [
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo."
+          ],
+          "percentage": 50
+        },
+        {
+          "theme": "Future growth of cloud computing in Somalia",
+          "keywords": [
+            "mustaqbal",
+            "soomaaliya",
+            "kori",
+            "cloud"
+          ],
+          "count": 48,
+          "examples": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ],
+          "percentage": 50
+        },
+        {
+          "theme": "Efficiency, management, and collaboration",
+          "keywords": [
+            "hufnaan",
+            "fudud",
+            "maamul",
+            "shaqo",
+            "wada"
+          ],
+          "count": 24,
+          "examples": [
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada."
+          ],
+          "percentage": 25
+        }
+      ],
+      "groupedTopicBlocks": [
+        {
+          "topic": "Infrastructure, internet, power, and cost",
+          "count": 72,
+          "percentage": 75,
+          "examples": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ]
+        },
+        {
+          "topic": "Data storage, backup, and document management",
+          "count": 48,
+          "percentage": 50,
+          "examples": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ]
+        },
+        {
+          "topic": "Training, awareness, and skills",
+          "count": 48,
+          "percentage": 50,
+          "examples": [
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo.",
+            "Mustaqbalka cloud computing ee Soomaaliya wuu kori karaa haddii internet iyo tababar la helo."
+          ]
+        },
+        {
+          "topic": "Future growth of cloud computing in Somalia",
+          "count": 48,
+          "percentage": 50,
+          "examples": [
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah.",
+            "Cloud computing waa adeeg internet lagu kaydiyo xogta laguna isticmaalo software online ah."
+          ]
+        },
+        {
+          "topic": "Efficiency, management, and collaboration",
+          "count": 24,
+          "percentage": 25,
+          "examples": [
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada.",
+            "Waxaan rabnaa kayd xogeed, backup, iyo maamulka dukumentiyada."
+          ]
+        }
+      ],
+      "keywordChart": [
+        {
+          "keyword": "cloud",
+          "count": 48
+        },
+        {
+          "keyword": "computing",
+          "count": 48
+        },
+        {
+          "keyword": "internet",
+          "count": 48
+        },
+        {
+          "keyword": "tababar",
+          "count": 48
+        },
+        {
+          "keyword": "adeeg",
+          "count": 24
+        },
+        {
+          "keyword": "adeegyo",
+          "count": 24
+        },
+        {
+          "keyword": "backup",
+          "count": 24
+        },
+        {
+          "keyword": "dowladda",
+          "count": 24
+        },
+        {
+          "keyword": "dukumentiyada",
+          "count": 24
+        },
+        {
+          "keyword": "haddii",
+          "count": 24
+        },
+        {
+          "keyword": "helo",
+          "count": 24
+        },
+        {
+          "keyword": "isticmaalo",
+          "count": 24
+        },
+        {
+          "keyword": "jaban",
+          "count": 24
+        },
+        {
+          "keyword": "karaa",
+          "count": 24
+        },
+        {
+          "keyword": "kayd",
+          "count": 24
+        },
+        {
+          "keyword": "kaydiyo",
+          "count": 24
+        },
+        {
+          "keyword": "kordhiyaan",
+          "count": 24
+        },
+        {
+          "keyword": "kori",
+          "count": 24
+        },
+        {
+          "keyword": "lagu",
+          "count": 24
+        },
+        {
+          "keyword": "laguna",
+          "count": 24
+        }
+      ],
+      "mostCommonRecommendationTheme": "Infrastructure, internet, power, and cost"
+    },
+    "summaryFindings": [
+      "24 responses were analyzed across 14 sectors and 7 districts.",
+      "The average stored cloud readiness score is 56.25 out of 100.",
+      "The most represented sector is Banks / Financial Institutions.",
+      "The highest readiness sector is Media & Communication Companies.",
+      "The most common adoption barrier is Amni darro.",
+      "The strongest indicator area is Adoption readiness, while the largest indicator gap is Technology usage."
+    ],
+    "recommendations": [
+      "Prioritize low-cost cloud storage and online backup services for organizations still using local or paper-based storage.",
+      "Deliver practical cloud-awareness and cybersecurity training in Somali for owners, managers, and operational staff.",
+      "Address infrastructure constraints through backup power, reliable connectivity, and phased migration plans.",
+      "Use high-readiness sectors as early adoption examples while supporting low-readiness sectors with basic digitization.",
+      "Create clear access-control, password, and recovery policies before moving sensitive business data to cloud platforms."
+    ],
+    "descriptiveStatistics": {
+      "responsesBySector": 14,
+      "responsesByDistrict": 7,
+      "stdDeviationReadiness": 9.9
+    },
+    "dataSourceNote": "The populated database stores the collected survey instrument in SurveyResponse.answerDetails snapshots. The current SurveyQuestion master differs from these snapshots, so this report analyzes the stored snapshots to preserve the actual collected answers."
+  },
+  "finalReport": {
+    "title": "Somalia Cloud Computing Survey Analytics Report",
+    "recommendations": [
+      "Prioritize low-cost cloud storage and online backup services for organizations still using local or paper-based storage.",
+      "Deliver practical cloud-awareness and cybersecurity training in Somali for owners, managers, and operational staff.",
+      "Address infrastructure constraints through backup power, reliable connectivity, and phased migration plans.",
+      "Use high-readiness sectors as early adoption examples while supporting low-readiness sectors with basic digitization.",
+      "Create clear access-control, password, and recovery policies before moving sensitive business data to cloud platforms."
+    ],
+    "keyFindings": [
+      "24 responses were analyzed across 14 sectors and 7 districts.",
+      "The average stored cloud readiness score is 56.25 out of 100.",
+      "The most represented sector is Banks / Financial Institutions.",
+      "The highest readiness sector is Media & Communication Companies.",
+      "The most common adoption barrier is Amni darro.",
+      "The strongest indicator area is Adoption readiness, while the largest indicator gap is Technology usage."
+    ]
+  },
+  "charts": {
+    "sector-ranking": "analytics/generated/sector-ranking-ea9a5590.png",
+    "technology-use": "analytics/generated/technology-use-c7d5ec74.png",
+    "barriers": "analytics/generated/barriers-83eb6891.png",
+    "adoption-willingness": "analytics/generated/adoption-willingness-72aafaf1.png"
+  }
+}

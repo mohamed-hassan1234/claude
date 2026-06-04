@@ -125,7 +125,7 @@ export default function ImportResponses() {
                 <p className="text-sm text-slate-500">{mappedCount} of {preview.questions.length} questions mapped.</p>
               </div>
               <button
-                disabled={importing || !csv || !timestampColumn}
+                disabled={importing || !csv}
                 onClick={importRows}
                 className="inline-flex w-full items-center justify-center gap-2 rounded bg-ocean px-4 py-2 text-sm font-semibold text-white disabled:opacity-50 sm:w-auto"
               >

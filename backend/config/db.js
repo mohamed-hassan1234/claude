@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
-  const uri =
-    process.env.MONGO_URI ||
-    process.env.MONGODB_URI ||
-    'mongodb://127.0.0.1:27017/cloud_survey_system';
+  const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
   const options = {};
+
+  if (!uri) {
+    console.error('MongoDB connection failed: MONGO_URI or MONGODB_URI is required.');
+    process.exit(1);
+  }
 
   if (process.env.MONGODB_USER && process.env.MONGODB_PASSWORD) {
     options.user = process.env.MONGODB_USER;
@@ -15,7 +17,9 @@ const connectDB = async () => {
 
   try {
     await mongoose.connect(uri, options);
-    console.log('MongoDB connected');
+    if (process.env.NODE_ENV !== 'production') {
+      console.info('MongoDB connected');
+    }
   } catch (error) {
     console.error('MongoDB connection failed:', error.message);
     process.exit(1);

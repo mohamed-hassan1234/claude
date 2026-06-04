@@ -43,7 +43,7 @@ const hydrateAnswersFromQuestions = (questions = [], submittedAnswers = {}, opti
     const normalized = normalizeAnswerValue(question, submittedAnswers[question.code]);
     const isEmpty = Array.isArray(normalized) ? normalized.length === 0 : normalized === '';
 
-    if (question.required && (!hasAnswer || isEmpty)) {
+    if (!options.skipRequiredValidation && question.required && (!hasAnswer || isEmpty)) {
       throw new ApiError(400, `Required question missing: ${question.text}`);
     }
 

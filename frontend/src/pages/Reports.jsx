@@ -5,6 +5,7 @@ import {
   CalendarRange,
   CheckCircle2,
   CircleGauge,
+  Download,
   Filter,
   PieChart as PieChartIcon,
   RefreshCw,
@@ -92,6 +93,23 @@ const buildQueryParams = (filters) => {
 
 const buildCacheKey = (tab, filters) => `${tab}::${new URLSearchParams(buildQueryParams(filters)).toString()}`;
 
+const filenameFromDisposition = (disposition, fallback) => {
+  const match = String(disposition || '').match(/filename="?([^"]+)"?/i);
+  return match?.[1] || fallback;
+};
+
+const downloadFile = async (url, filename, params = {}) => {
+  const response = await api.get(url, { params, responseType: 'blob' });
+  const href = URL.createObjectURL(response.data);
+  const link = document.createElement('a');
+  link.href = href;
+  link.download = filenameFromDisposition(response.headers['content-disposition'], filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(href);
+};
+
 function useMediaQuery(query) {
   const getMatch = () => {
     if (typeof window === 'undefined' || !window.matchMedia) return false;
@@ -117,7 +135,7 @@ function ScopeChip({ label }) {
   return <span className="rounded bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600">{label}</span>;
 }
 
-function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefresh, refreshing }) {
+function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefresh, refreshing, onGenerateReport, generatingReport }) {
   const hasFilters = Object.values(filters).some(Boolean);
   const selectedSector = sectors.find((sector) => (sector._id || sector.name) === filters.sector);
 
@@ -132,14 +150,25 @@ function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefres
               Survey results organized into clear KPIs, distribution charts, rankings, and decision-ready findings.
             </p>
           </div>
-          <button
-            type="button"
-            onClick={onRefresh}
-            className="inline-flex w-full items-center justify-center gap-2 rounded border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-teal-600 hover:text-teal-700 sm:w-auto"
-          >
-            <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
-            Refresh
-          </button>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <button
+              type="button"
+              onClick={onGenerateReport}
+              disabled={generatingReport}
+              className="inline-flex w-full items-center justify-center gap-2 rounded bg-teal-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            >
+              <Download size={16} className={generatingReport ? 'animate-pulse' : ''} />
+              {generatingReport ? 'Generating...' : 'Generate Research Report'}
+            </button>
+            <button
+              type="button"
+              onClick={onRefresh}
+              className="inline-flex w-full items-center justify-center gap-2 rounded border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-700 transition hover:border-teal-600 hover:text-teal-700 sm:w-auto"
+            >
+              <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
+              Refresh
+            </button>
+          </div>
         </div>
       </div>
 
@@ -802,6 +831,8 @@ export default function Reports() {
   const [tabCache, setTabCache] = useState({});
   const [tabErrors, setTabErrors] = useState({});
   const [loadingKey, setLoadingKey] = useState('');
+  const [generatingReport, setGeneratingReport] = useState(false);
+  const [downloadError, setDownloadError] = useState('');
 
   const questionTabs = useMemo(
     () =>
@@ -928,6 +959,19 @@ export default function Reports() {
     });
   };
 
+  const generateResearchReport = async () => {
+    setGeneratingReport(true);
+    setDownloadError('');
+
+    try {
+      await downloadFile('/exports/research-report.docx', 'cloud-computing-research-report.docx', buildQueryParams(filters));
+    } catch (error) {
+      setDownloadError(error.response?.data?.message || 'Failed to generate the research report.');
+    } finally {
+      setGeneratingReport(false);
+    }
+  };
+
   if (metaLoading) return <Loading label="Loading reports and analytics..." />;
   if (metaError) return <ActiveError message={metaError} onRetry={retryMetaLoad} />;
 
@@ -941,7 +985,11 @@ export default function Reports() {
         onClear={clearFilters}
         onRefresh={refreshActiveTab}
         refreshing={refreshing}
+        onGenerateReport={generateResearchReport}
+        generatingReport={generatingReport}
       />
+
+      {downloadError ? <ActiveError message={downloadError} onRetry={generateResearchReport} /> : null}
 
       <TabBar tabs={tabs} activeTab={activeTab} onSelect={setActiveTab} />
 

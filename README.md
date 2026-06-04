@@ -23,12 +23,13 @@ analytics/
   requirements.txt
 ```
 
-## Local Requirements
+## Deployment Requirements
 
 - Node.js 18+
 - Python 3.10+
-- MongoDB installed locally and running
-- MongoDB URL: `mongodb://127.0.0.1:27017/cloud_survey_system`
+- MongoDB connection string supplied through backend environment variables
+- Frontend domain: `https://claude.elivateict.com`
+- Backend port: `5000`
 
 ## Setup
 
@@ -84,18 +85,13 @@ npm run dev:backend
 npm run dev:frontend
 ```
 
-Open:
+Production frontend:
 
-- Public survey: `http://localhost:5173`
-- Admin login: `http://localhost:5173/galiadi`
-- API health: `http://localhost:5000/api/health`
+- Public survey: `https://claude.elivateict.com`
+- Admin login: `https://claude.elivateict.com/galiadi`
+- API base URL: `https://claude.elivateict.com/api`
 
-If port `5000` is already occupied on your machine, start the backend on another port and point Vite at it:
-
-```bash
-set PORT=5050&& npm.cmd run dev --prefix backend
-set VITE_API_URL=http://localhost:5050/api&& npm.cmd run dev --prefix frontend -- --port 5174
-```
+For local development, set `VITE_DEV_PROXY_TARGET` in `frontend/.env` to the backend URL used on your machine.
 
 ## Core Features
 
