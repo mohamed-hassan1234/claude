@@ -2,10 +2,10 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   AlertCircle,
   BarChart3,
+  BookOpen,
   CalendarRange,
   CheckCircle2,
   CircleGauge,
-  Download,
   Filter,
   PieChart as PieChartIcon,
   RefreshCw,
@@ -157,8 +157,8 @@ function FilterHeader({ filters, sectors, districts, onChange, onClear, onRefres
               disabled={generatingReport}
               className="inline-flex w-full items-center justify-center gap-2 rounded bg-teal-700 px-3 py-2 text-sm font-semibold text-white transition hover:bg-teal-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
             >
-              <Download size={16} className={generatingReport ? 'animate-pulse' : ''} />
-              {generatingReport ? 'Generating...' : 'Generate Research Report'}
+              <BookOpen size={16} className={generatingReport ? 'animate-pulse' : ''} />
+              {generatingReport ? 'Generating...' : 'Generate Academic Research Report'}
             </button>
             <button
               type="button"

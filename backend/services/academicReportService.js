@@ -3,6 +3,7 @@ const {
   BorderStyle,
   Document,
   Footer,
+  Header,
   HeadingLevel,
   ImageRun,
   Packer,
@@ -643,6 +644,73 @@ const recommendationForSector = (sector) => {
   return `${sector.sector} should prioritize ${weaknesses}. Its leading barrier is ${sector.topBarrier}, and its leading security concern is ${sector.topSecurityConcern}.`;
 };
 
+const isTextQuestion = (question) => ['paragraph', 'short_text'].includes(question?.type);
+
+const questionChart = (question, title, limit = 10) =>
+  isTextQuestion(question)
+    ? barChartSvg(title, question.textAnalysis?.keywords || [], { labelKey: 'keyword', valueKey: 'count', limit, color: '#f59e0b' })
+    : barChartSvg(title, question.answers, { limit });
+
+const questionRows = (question) =>
+  question.answers.length
+    ? question.answers.map((item) => [item.answer, item.count, pct(item.percentage), pct(item.responsePercentage)])
+    : [['No analyzable response text', 0, pct(0), pct(0)]];
+
+const addQuestionAnalysis = (children, state, analytics, code, options = {}) => {
+  const question = analytics.questionAnalysis.find((item) => item.code === code);
+  if (!question) return;
+  const title = options.title || `${code.toUpperCase()}: ${question.question}`;
+  const chartTitle = options.chartTitle || `${code.toUpperCase()} Response Analysis`;
+  children.push(p(title, { heading: options.heading || HeadingLevel.HEADING_2 }));
+  children.push(
+    ...figureBlock(state, `${code.toUpperCase()} main chart`, questionChart(question, chartTitle, options.limit || 10), questionInterpretation(question), options.width || 600, options.height || 260),
+    ...tableBlock(state, `${code.toUpperCase()} Frequency and Percentage Table`, ['Response', 'Frequency', 'Selection %', 'Respondent %'], questionRows(question)),
+    p(`Interpretation: ${questionInterpretation(question)}`),
+    p(`Insight summary: ${question.totalResponses} valid responses were analyzed for this question. The result contributes to the report findings only through observed survey data.`),
+    p(`Key finding: ${questionInterpretation(question)}`)
+  );
+};
+
+const addChapterQuestions = (children, state, analytics, title, codes, intro) => {
+  children.push(p(title, { heading: HeadingLevel.HEADING_1 }), p(intro));
+  codes.forEach((code) => addQuestionAnalysis(children, state, analytics, code));
+};
+
+const buildTopFindings = (analytics) => {
+  const totals = analytics.totals;
+  const sectorRows = analytics.sectorComparison.rows;
+  const factorRows = analytics.factorSummary;
+  const gapRows = analytics.gapAnalysis.overall;
+  const barrierRows = analytics.barriers.overallRanking;
+  const securityRows = analytics.security.securityConcerns;
+  const cloudNeeds = analytics.cloudNeeds;
+  const readinessRows = analytics.readiness.distribution;
+  const districtRows = analytics.districtComparison.rows;
+
+  return [
+    `The evidence base contains ${totals.totalResponses} live MongoDB survey responses across ${totals.totalSectorsCovered} sectors and ${totals.totalDistrictsCovered} districts.`,
+    `The overall Cloud Readiness Index is ${pct(totals.averageCloudReadinessScore)}, classified as ${readinessBand(totals.averageCloudReadinessScore)} readiness.`,
+    `The median readiness score is ${pct(analytics.readinessStats.median)}, with a minimum of ${pct(analytics.readinessStats.min)} and a maximum of ${pct(analytics.readinessStats.max)}.`,
+    `Cloud awareness is ${pct(totals.awarenessRate)}, showing the share of respondents who reported prior awareness of cloud computing.`,
+    `Current cloud tools usage is ${pct(totals.cloudToolsUsageRate)}, which indicates the existing adoption baseline.`,
+    `Adoption willingness is ${pct(totals.adoptionWillingnessRate)}, showing the share of respondents ready to use cloud solutions when available.`,
+    `The strongest readiness factor is ${top(factorRows).label} at ${pct(top(factorRows).score)}.`,
+    `The largest readiness gap is ${top(gapRows).label}, with a gap of ${pct(top(gapRows).gap)} from the ideal score.`,
+    `The highest-readiness sector is ${top(sectorRows).sector} with a CRI of ${pct(top(sectorRows).averageReadiness)}.`,
+    `The lowest-readiness sector is ${sectorRows[sectorRows.length - 1]?.sector || 'No sector'} with a CRI of ${pct(sectorRows[sectorRows.length - 1]?.averageReadiness || 0)}.`,
+    `The highest-response district is ${top(analytics.districtDistribution).answer}, representing ${pct(top(analytics.districtDistribution).responsePercentage)} of respondents.`,
+    `The highest-readiness district is ${top(districtRows).district} with a CRI of ${pct(top(districtRows).averageReadiness)}.`,
+    `The top reported adoption barrier is ${top(barrierRows).answer}, reported by ${pct(top(barrierRows).responsePercentage)} of respondents.`,
+    `The top security concern is ${top(securityRows).answer}, reported by ${pct(top(securityRows).responsePercentage)} of respondents.`,
+    `The highest-ranked cloud service need is ${top(cloudNeeds).answer}, reported by ${pct(top(cloudNeeds).responsePercentage)} of respondents.`,
+    `The top open-ended response theme is ${top(analytics.businessNeeds.themes).theme || 'No dominant theme'}, appearing in ${pct(top(analytics.businessNeeds.themes).percentage)} of analyzed text responses.`,
+    `The most repeated open-ended keyword is ${top(analytics.businessNeeds.keywords).keyword || 'No keyword'}, appearing ${top(analytics.businessNeeds.keywords).count || 0} times.`,
+    `The most common readiness band is ${top(readinessRows.sort((left, right) => right.count - left.count)).band}, representing ${pct(top(readinessRows.sort((left, right) => right.count - left.count)).percentage)} of responses.`,
+    `The backup practice rate is ${pct(totals.backupPracticeRate)}, showing how many respondents reported some form of backup activity.`,
+    `The infrastructure stability score is ${pct(totals.infrastructureStabilityRate)}, confirming that infrastructure remains a major adoption condition.`
+  ];
+};
+
 const buildDocChildren = (analytics) => {
   const state = { figure: 0, table: 0 };
   const children = [];
@@ -654,20 +722,25 @@ const buildDocChildren = (analytics) => {
   const barrierRows = analytics.barriers.overallRanking;
   const securityRows = analytics.security.securityConcerns;
   const cloudNeeds = analytics.cloudNeeds;
+  const topFindings = buildTopFindings(analytics);
+  const generatedAt = new Date(analytics.generatedAt).toLocaleString('en-GB');
 
   children.push(
     p('Cloud Computing Readiness, Challenges, and Adoption Across Business Sectors in Somalia', {
       heading: HeadingLevel.TITLE,
       alignment: AlignmentType.CENTER,
       before: 240,
-      after: 400
+      after: 360
     }),
-    p('Automatically Generated Academic Research Report', { alignment: AlignmentType.CENTER }),
-    p(`Generated: ${new Date(analytics.generatedAt).toLocaleString('en-GB')}`, { alignment: AlignmentType.CENTER }),
-    p(`Evidence base: ${totals.totalResponses} responses, ${totals.totalSectorsCovered} sectors, ${totals.totalDistrictsCovered} districts`, {
+    p('Generate Academic Research Report', { alignment: AlignmentType.CENTER }),
+    p('Research Area: Cloud Computing, Digital Transformation, and Business Technology Adoption', { alignment: AlignmentType.CENTER }),
+    p('Organization Name: Cloud Computing Survey Analytics System', { alignment: AlignmentType.CENTER }),
+    p('Survey Project Name: Somalia Business Sector Cloud Computing Readiness Survey', { alignment: AlignmentType.CENTER }),
+    p(`Report Generation Date: ${generatedAt}`, { alignment: AlignmentType.CENTER }),
+    p(`Evidence Base: ${totals.totalResponses} MongoDB survey responses, ${totals.totalSectorsCovered} sectors, ${totals.totalDistrictsCovered} districts`, {
       alignment: AlignmentType.CENTER
     }),
-    p('Data source: MongoDB live survey responses, analytics results, readiness scores, sector comparison, and open-ended answer analysis.', {
+    p('Privacy Statement: respondent names, phone numbers, and personal identifiers are excluded. The report uses only aggregated survey and analytics results.', {
       alignment: AlignmentType.CENTER
     }),
     new Paragraph({ children: [new PageBreak()] }),
@@ -675,171 +748,168 @@ const buildDocChildren = (analytics) => {
   );
 
   introAnalysis(analytics).forEach((item) => children.push(p(item)));
+  [
+    `The leading reported adoption barrier is ${top(barrierRows).answer || 'not available'}, while the leading cloud security concern is ${top(securityRows).answer || 'not available'}.`,
+    `The strongest readiness factor is ${top(factorRows).label || 'not available'} and the largest readiness gap is ${top(gapRows).label || 'not available'}.`,
+    `The top identified cloud service need is ${top(cloudNeeds).answer || 'not available'}, which helps guide practical service design and implementation priorities.`
+  ].forEach((item) => children.push(p(item)));
+
   children.push(
-    ...tableBlock(state, 'Executive KPI Summary', ['Metric', 'Value'], [
-      ['Total responses', totals.totalResponses],
+    ...tableBlock(state, 'Executive KPI Summary', ['Metric', 'Live Data Value'], [
+      ['Total respondents', totals.totalResponses],
       ['Sectors covered', totals.totalSectorsCovered],
       ['Districts covered', totals.totalDistrictsCovered],
-      ['Average CRI', num(totals.averageCloudReadinessScore)],
+      ['Average Cloud Readiness Index', pct(totals.averageCloudReadinessScore)],
       ['Awareness rate', pct(totals.awarenessRate)],
-      ['Cloud usage rate', pct(totals.cloudToolsUsageRate)],
+      ['Cloud tools usage rate', pct(totals.cloudToolsUsageRate)],
       ['Adoption willingness', pct(totals.adoptionWillingnessRate)],
-      ['Security confidence', pct(totals.securityTrustRate)]
+      ['Infrastructure stability score', pct(totals.infrastructureStabilityRate)],
+      ['Security confidence score', pct(totals.securityTrustRate)]
     ]),
     new Paragraph({ children: [new PageBreak()] }),
     p('Table of Contents', { heading: HeadingLevel.HEADING_1 }),
-    new TableOfContents('Summary', { hyperlink: true, headingStyleRange: '1-3' }),
+    new TableOfContents('Contents', { hyperlink: true, headingStyleRange: '1-3' }),
     new Paragraph({ children: [new PageBreak()] })
   );
 
   children.push(p('Chapter 1: Introduction', { heading: HeadingLevel.HEADING_1 }));
   [
-    'Cloud computing provides internet-based access to storage, software, collaboration tools, backup services, analytics, and business applications. It allows organizations to use modern digital capabilities without maintaining every server or application locally.',
-    'For Somali organizations, cloud computing is connected to business continuity, safer data storage, remote access, better collaboration, and more efficient management. However, adoption depends on awareness, infrastructure, cost, skills, and trust.',
-    `This system-generated report uses live survey data only. The analyzed sample contains ${totals.totalResponses} responses and no statistics are invented or manually assumed.`
+    'Cloud computing provides on-demand access to storage, software, infrastructure, collaboration platforms, backup services, and business applications through the internet. It enables organizations to reduce dependence on local servers and manual records while improving continuity, scalability, and remote access.',
+    'Digital transformation is increasingly important for Somali organizations because business operations depend on secure data storage, communication, mobile money integration, customer records, financial systems, and responsive decision-making. Cloud adoption can support these needs, but only when awareness, infrastructure, skills, cost, and security trust are sufficiently developed.',
+    `This report is generated entirely from live database evidence. The analyzed sample contains ${totals.totalResponses} responses. No placeholder statistics, dummy percentages, or fabricated findings are used.`,
+    'The problem addressed by this research is the uneven readiness of Somali business sectors to adopt cloud computing despite growing digital needs. The study therefore examines awareness, usage, infrastructure, backup practices, security concerns, business needs, and sector-level readiness.'
   ].forEach((item) => children.push(p(item)));
 
-  children.push(p('Chapter 2: Research Objectives', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Study Objectives', { heading: HeadingLevel.HEADING_2 }));
   [
-    'Assess cloud awareness and understanding across surveyed organizations.',
-    'Measure technology usage, cloud usage, data storage, and backup practices.',
-    'Evaluate infrastructure, security concerns, and adoption barriers.',
-    'Compare readiness across sectors and districts.',
-    'Generate a Cloud Readiness Index and Cloud Service Need Assessment.',
-    'Provide organization-level, sector-level, and national-level recommendations based on actual findings.'
+    'Measure cloud awareness, knowledge, technology usage, cloud usage, infrastructure readiness, security concerns, and adoption willingness.',
+    'Compare readiness across sectors and districts using actual survey responses and stored readiness scores.',
+    'Identify service needs, adoption barriers, and practical recommendations for organizations, sectors, government, and national digital transformation stakeholders.'
   ].forEach((item) => children.push(bullet(item)));
 
-  children.push(p('Chapter 3: Literature Review', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 2: Survey Overview', { heading: HeadingLevel.HEADING_1 }));
   [
-    'Cloud computing literature commonly identifies usefulness, ease of use, security, cost, infrastructure readiness, staff capability, and management support as major determinants of adoption.',
-    'Service models include Infrastructure as a Service, Platform as a Service, and Software as a Service. For the surveyed organizations, SaaS tools such as storage, backup, accounting, communication, and document management are the most immediate adoption path.',
-    'In developing business environments, cloud adoption can reduce local infrastructure burdens but depends heavily on internet reliability, electricity stability, skills, and cybersecurity confidence.'
+    'The survey uses a structured questionnaire with 30 coded questions. Responses are stored in MongoDB with stable question codes, sector references, district values, readiness scores, and answer details used by the analytics system.',
+    `The dataset includes ${totals.totalResponses} responses from ${totals.totalSectorsCovered} sectors and ${totals.totalDistrictsCovered} districts. All charts in this chapter are generated from the same database records used for the DOCX report.`
   ].forEach((item) => children.push(p(item)));
-
-  children.push(p('Chapter 4: Methodology', { heading: HeadingLevel.HEADING_1 }));
-  [
-    'The report uses a descriptive quantitative design supported by qualitative open-ended analysis.',
-    'Frequencies, percentages, sector rankings, district rankings, readiness bands, and derived factor indicators are generated automatically from MongoDB survey responses.',
-    'Open-ended responses are analyzed using keyword frequency, theme extraction, sentiment classification, topic clustering, and repeated idea detection.',
-    'The Cloud Readiness Index uses readiness scores stored with survey responses and classifies scores as High, Moderate, or Low.'
-  ].forEach((item) => children.push(p(item)));
-
   children.push(
-    ...tableBlock(state, 'Methodology Dataset Summary', ['Item', 'Value'], [
-      ['Responses analyzed', totals.totalResponses],
-      ['Sectors analyzed', totals.totalSectorsCovered],
-      ['Districts analyzed', totals.totalDistrictsCovered],
-      ['Readiness minimum', analytics.readinessStats.min],
-      ['Readiness median', analytics.readinessStats.median],
-      ['Readiness maximum', analytics.readinessStats.max],
-      ['Readiness standard deviation', analytics.readinessStats.stdDev]
-    ])
+    ...figureBlock(state, 'Sector distribution of respondents', donutChartSvg('Sector Distribution', analytics.sectorDistribution), `The sector distribution shows that ${top(analytics.sectorDistribution).answer || 'no sector'} is the largest respondent group. This affects interpretation because sectors with more responses contribute more heavily to aggregate percentages.`),
+    ...tableBlock(state, 'Sector Distribution', ['Sector', 'Responses', 'Respondent Share'], analytics.sectorDistribution.map((item) => [item.answer, item.count, pct(item.responsePercentage)])),
+    ...figureBlock(state, 'District distribution of respondents', barChartSvg('District Distribution', analytics.districtDistribution), `The most represented district is ${top(analytics.districtDistribution).answer || 'no district'}. District distribution matters because internet quality, power reliability, and access to technical support can vary by location.`),
+    ...tableBlock(state, 'District Distribution', ['District', 'Responses', 'Respondent Share'], analytics.districtDistribution.map((item) => [item.answer, item.count, pct(item.responsePercentage)]))
   );
 
-  children.push(p('Chapter 5: Respondent Profile Analysis', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 3: Respondent Profile Analysis', { heading: HeadingLevel.HEADING_1 }));
+  [
+    'Respondent profile analysis describes the organizational background of the survey sample. It is intentionally aggregated and does not include respondent names, phone numbers, or other personal identifiers.',
+    'The profile section helps explain whether findings are concentrated in certain business categories, districts, organization sizes, or respondent roles.'
+  ].forEach((item) => children.push(p(item)));
+  ['q1', 'q3', 'q4'].forEach((code) => addQuestionAnalysis(children, state, analytics, code));
+
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 4: Cloud Awareness Analysis',
+    ['q6', 'q7'],
+    'Cloud awareness analysis examines the extent to which surveyed organizations understand cloud computing concepts. Awareness is a foundational adoption factor because organizations are unlikely to migrate data, applications, or business processes to the cloud without basic understanding and confidence.'
+  );
+
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 5: Technology Usage Analysis',
+    ['q8', 'q9', 'q10', 'q11', 'q12'],
+    'Technology usage analysis evaluates the current digital maturity of respondents. Devices, business software, internet access, internet quality, and storage practices show whether organizations already possess the operational foundation needed for cloud adoption.'
+  );
+
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 6: Data Storage and Backup Analysis',
+    ['q13', 'q14', 'q15', 'q16', 'q17'],
+    'Data storage and backup analysis identifies exposure to data loss, continuity risks, and readiness for safer cloud-based backup and document management. The findings are used to identify practical risk-reduction opportunities.'
+  );
+
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 7: Cloud Usage Analysis',
+    ['q18', 'q19', 'q20', 'q21'],
+    'Cloud usage analysis examines existing cloud adoption, daily usage patterns, perceived cloud importance, and cloud-related operational barriers. It distinguishes organizations that are already using cloud tools from those that still require awareness, infrastructure, or trust-building support.'
+  );
+
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 8: Infrastructure Analysis',
+    ['q22', 'q23', 'q24'],
+    'Infrastructure analysis focuses on internet reliability, electricity stability, backup power availability, and related readiness conditions. Cloud systems depend on stable connectivity and power, so infrastructure remains a critical determinant of adoption.'
+  );
   children.push(
     ...figureBlock(
       state,
-      'Sector distribution of respondents',
-      donutChartSvg('Sector Distribution', analytics.sectorDistribution, { valueKey: 'count' }),
-      `The sector profile shows that ${top(analytics.sectorDistribution).answer} is the most represented category. Sector mix affects the overall report because sectors with more responses have greater influence on aggregate findings.`
-    ),
-    ...tableBlock(
-      state,
-      'Sector Distribution',
-      ['Sector', 'Responses', 'Respondent Share'],
-      analytics.sectorDistribution.map((item) => [item.answer, item.count, pct(item.responsePercentage)])
-    ),
-    ...figureBlock(
-      state,
-      'District distribution of respondents',
-      barChartSvg('District Distribution', analytics.districtDistribution),
-      `The most represented district is ${top(analytics.districtDistribution).answer}. District distribution matters because infrastructure quality and adoption barriers may differ by location.`
+      'Infrastructure readiness score by sector',
+      barChartSvg('Infrastructure Readiness by Sector', sectorRows, { labelKey: 'sector', valueKey: 'infrastructure', color: '#14b8a6', limit: 14 }),
+      `The overall infrastructure stability score is ${pct(totals.infrastructureStabilityRate)}. Sectors with lower infrastructure scores may need connectivity, power backup, or reliability improvements before adopting cloud-dependent systems.`
     )
   );
 
-  const chapterGroups = [
-    ['Chapter 6: Cloud Awareness Analysis', ['q5', 'q6', 'q7'], 'Cloud awareness is the foundation of adoption because organizations must understand cloud concepts before moving operational data and systems online.'],
-    ['Chapter 7: Technology Usage Analysis', ['q8', 'q9', 'q22', 'q26'], 'Technology usage indicates whether organizations already have devices, software, skills, and demand for modern digital systems.'],
-    ['Chapter 8: Data Storage & Backup Analysis', ['q12', 'q13', 'q14'], 'Storage and backup practices indicate data-loss exposure and business-continuity readiness.'],
-    ['Chapter 9: Cloud Usage Analysis', ['q15', 'q16', 'q17'], 'Cloud usage analysis measures current adoption and perceived usefulness of cloud services.'],
-    ['Chapter 10: Infrastructure Analysis', ['q10', 'q11', 'q18', 'q19', 'q20'], 'Infrastructure analysis examines internet and power conditions that influence cloud reliability.'],
-    ['Chapter 11: Challenges & Security Analysis', ['q21', 'q23', 'q24', 'q25'], 'Challenges and security concerns explain why organizations may delay or avoid cloud adoption.'],
-    ['Chapter 12: Business Needs Analysis', ['q26', 'q27', 'q28'], 'Business needs analysis identifies demand, willingness, and cloud-service priorities.']
-  ];
-
-  chapterGroups.forEach(([title, codes, intro]) => {
-    children.push(p(title, { heading: HeadingLevel.HEADING_1 }), p(intro));
-    codes.forEach((code) => {
-      const q = analytics.questionAnalysis.find((item) => item.code === code);
-      if (!q) return;
-      children.push(p(`${code.toUpperCase()}: ${q.question}`, { heading: HeadingLevel.HEADING_2 }));
-      children.push(
-        ...figureBlock(
-          state,
-          `${code.toUpperCase()} response distribution`,
-          q.type === 'paragraph' || q.type === 'short_text'
-            ? barChartSvg(`${code.toUpperCase()} Top Keywords`, q.textAnalysis?.keywords || [], { labelKey: 'keyword', valueKey: 'count' })
-            : barChartSvg(`${code.toUpperCase()} Response Distribution`, q.answers),
-          questionInterpretation(q)
-        ),
-        ...tableBlock(
-          state,
-          `${code.toUpperCase()} Frequency and Percentage Table`,
-          ['Response', 'Frequency', 'Selection %', 'Respondent %'],
-          q.answers.map((item) => [item.answer, item.count, pct(item.percentage), pct(item.responsePercentage)])
-        )
-      );
-    });
-  });
-
-  children.push(p('Chapter 13: Question-by-Question Analysis', { heading: HeadingLevel.HEADING_1 }));
-  analytics.questionAnalysis.forEach((q) => {
-    children.push(p(`${q.code.toUpperCase()}: ${q.question}`, { heading: HeadingLevel.HEADING_2 }));
-    children.push(
-      ...figureBlock(
-        state,
-        `${q.code.toUpperCase()} main chart`,
-        q.type === 'paragraph' || q.type === 'short_text'
-          ? barChartSvg(`${q.code.toUpperCase()} Keyword Chart`, q.textAnalysis?.keywords || [], { labelKey: 'keyword', valueKey: 'count', limit: 8 })
-          : barChartSvg(`${q.code.toUpperCase()} Frequency Chart`, q.answers, { limit: 8 }),
-        questionInterpretation(q),
-        600,
-        260
-      ),
-      ...tableBlock(
-        state,
-        `${q.code.toUpperCase()} Full Frequency Table`,
-        ['Response', 'Frequency', 'Selection %', 'Respondent %'],
-        q.answers.map((item) => [item.answer, item.count, pct(item.percentage), pct(item.responsePercentage)])
-      ),
-      p(`Insight summary: ${questionInterpretation(q)}`)
-    );
-  });
-
-  children.push(p('Chapter 14: Cross-Sector Comparative Analysis', { heading: HeadingLevel.HEADING_1 }));
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 9: Security and Challenges Analysis',
+    ['q25', 'q26', 'q27'],
+    'Security and challenges analysis identifies the barriers that may prevent adoption, the security fears that shape trust, and the technology challenges that organizations report. These results guide risk management and training priorities.'
+  );
   children.push(
+    ...figureBlock(state, 'Challenge ranking', barChartSvg('Challenge Ranking', barrierRows, { color: '#ef4444' }), `The most frequent challenge is ${top(barrierRows).answer || 'not available'}. This barrier should be addressed before or during cloud implementation planning.`),
+    ...figureBlock(state, 'Security concern ranking', barChartSvg('Security Concern Ranking', securityRows, { color: '#6366f1' }), `The leading security concern is ${top(securityRows).answer || 'not available'}. Security recommendations should directly respond to this concern.`)
+  );
+
+  addChapterQuestions(
+    children,
+    state,
+    analytics,
+    'Chapter 10: Business Needs Analysis',
+    ['q28', 'q29', 'q30'],
+    'Business needs analysis uses open-ended responses to identify desired cloud services, adoption intentions, and future expectations. Python NLP analysis is used to extract repeated themes, keywords, sentiment, and topic clusters from long-text responses.'
+  );
+
+  children.push(p('Chapter 11: Question-by-Question Analysis', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('This chapter analyzes all 30 survey questions. Each subsection includes a frequency table, percentage table, main chart, interpretation, insight summary, and key finding. Questions with open-ended text use keyword/theme charts rather than exposing personal respondent-level text.'));
+  analytics.questionAnalysis.forEach((question) => addQuestionAnalysis(children, state, analytics, question.code, { limit: 8 }));
+
+  children.push(p('Chapter 12: Cross-Sector Comparison', { heading: HeadingLevel.HEADING_1 }));
+  children.push(
+    p('Cross-sector comparison examines readiness differences among hospitals, banks, telecom, education, SMEs, NGOs, e-commerce, logistics, and other sectors represented in the live dataset. The analysis uses aggregated sector scores and never displays personal identifiers.'),
     ...figureBlock(
       state,
-      'Sector vs Readiness',
+      'Sector vs readiness',
       barChartSvg('Sector Readiness Ranking', sectorRows, { labelKey: 'sector', valueKey: 'averageReadiness', color: '#14b8a6', limit: 14 }),
-      `${top(sectorRows).sector} has the highest readiness score. ${sectorRows[sectorRows.length - 1]?.sector} has the lowest readiness score.`
+      `${top(sectorRows).sector || 'No sector'} has the highest readiness score. ${sectorRows[sectorRows.length - 1]?.sector || 'No sector'} has the lowest readiness score. This comparison identifies where cloud adoption support should be prioritized.`
     ),
     ...figureBlock(
       state,
       'Sector factor heatmap',
       heatmapSvg('Sector Factor Heatmap', sectorRows),
-      'The heatmap compares awareness, technology, infrastructure, backup, cloud usage, security, and willingness across sectors. Stronger colors show stronger readiness factors.'
+      'The heatmap compares awareness, technology, infrastructure, backup, cloud usage, security, and willingness across sectors. Stronger scores indicate stronger readiness factors.'
     ),
     ...tableBlock(
       state,
       'Cross-Sector Readiness Comparison',
-      ['Sector', 'Responses', 'CRI', 'Awareness', 'Cloud Usage', 'Infrastructure', 'Security', 'Backup', 'Willingness'],
+      ['Sector', 'Responses', 'CRI', 'Awareness', 'Technology', 'Cloud Usage', 'Infrastructure', 'Security', 'Backup', 'Willingness'],
       sectorRows.map((item) => [
         item.sector,
         item.responses,
         pct(item.averageReadiness),
         pct(item.awareness),
+        pct(item.technology),
         pct(item.cloudTools),
         pct(item.infrastructure),
         pct(item.securityTrust),
@@ -852,118 +922,89 @@ const buildDocChildren = (analytics) => {
     children.push(
       p(`${sector.sector}`, { heading: HeadingLevel.HEADING_2 }),
       p(
-        `${sector.sector} has a Cloud Readiness Index of ${pct(sector.averageReadiness)} and is classified as ${sector.readinessBand}. Awareness is ${pct(sector.awareness)}, technology level is ${pct(sector.technology)}, infrastructure is ${pct(sector.infrastructure)}, security confidence is ${pct(sector.securityTrust)}, and adoption willingness is ${pct(sector.willingness)}. ${recommendationForSector(sector)}`
+        `${sector.sector} records a Cloud Readiness Index of ${pct(sector.averageReadiness)} and is classified as ${sector.readinessBand}. Awareness is ${pct(sector.awareness)}, technology usage is ${pct(sector.technology)}, infrastructure readiness is ${pct(sector.infrastructure)}, backup readiness is ${pct(sector.backup)}, cloud usage is ${pct(sector.cloudTools)}, security confidence is ${pct(sector.securityTrust)}, and willingness is ${pct(sector.willingness)}. ${recommendationForSector(sector)}`
       )
     );
   });
 
-  children.push(p('Chapter 15: Cloud Readiness Assessment', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 13: Cloud Readiness Index', { heading: HeadingLevel.HEADING_1 }));
   children.push(
+    p('The Cloud Readiness Index classifies respondents and sectors into High, Moderate, and Low readiness. It uses stored readiness scores and derived factor indicators based on awareness, technology, infrastructure, backup, cloud usage, security trust, and willingness.'),
     ...figureBlock(
       state,
       'Cloud Readiness Index distribution',
       donutChartSvg('Cloud Readiness Bands', analytics.readiness.distribution),
-      `The average CRI is ${pct(totals.averageCloudReadinessScore)}. The distribution shows the share of organizations classified as High, Moderate, and Low readiness.`
+      `The average CRI is ${pct(totals.averageCloudReadinessScore)}. This figure shows how many responses fall into High, Moderate, and Low readiness bands.`
     ),
-    ...tableBlock(
-      state,
-      'Readiness Factor Breakdown',
-      ['Factor', 'Score', 'Gap to Ideal'],
-      factorRows.map((item) => [item.label, pct(item.score), pct(100 - item.score)])
-    ),
-    ...tableBlock(
-      state,
-      'Readiness Gap Analysis',
-      ['Factor', 'Current', 'Ideal', 'Gap'],
-      gapRows.map((item) => [item.label, pct(item.current), pct(item.ideal), pct(item.gap)])
-    )
-  );
-
-  children.push(p('Chapter 16: Cloud Service Need Assessment', { heading: HeadingLevel.HEADING_1 }));
-  children.push(
     ...figureBlock(
       state,
-      'Cloud service needs',
-      barChartSvg('Cloud Service Need Assessment', cloudNeeds, { color: '#6366f1' }),
-      `The highest-ranked cloud service need is ${top(cloudNeeds).answer}. Need assessment helps identify which services should be prioritized first.`
+      'Readiness factor ranking',
+      barChartSvg('Readiness Factor Ranking', factorRows, { labelKey: 'label', valueKey: 'score', color: '#0f7c90' }),
+      `The strongest factor is ${top(factorRows).label || 'not available'}, while the weakest gap is identified through the gap table below.`
     ),
-    ...tableBlock(
-      state,
-      'Sector Urgency Ranking',
-      ['Sector', 'Need Score', 'Need Band', 'Top Cloud Need', 'Top Barrier'],
-      analytics.needAssessment.sectorUrgency.map((item) => [item.sector, pct(item.needScore), item.needBand, item.topCloudNeed, item.topBarrier])
-    )
+    ...tableBlock(state, 'Readiness Factor Breakdown', ['Factor', 'Score', 'Gap to Ideal'], factorRows.map((item) => [item.label, pct(item.score), pct(100 - item.score)])),
+    ...tableBlock(state, 'Readiness Gap Analysis', ['Factor', 'Current', 'Ideal', 'Gap'], gapRows.map((item) => [item.label, pct(item.current), pct(item.ideal), pct(item.gap)]))
   );
 
-  children.push(p('Chapter 17: Open-Ended Response Analysis', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 14: AI-Powered Open Response Analysis', { heading: HeadingLevel.HEADING_1 }));
   children.push(
+    p('This chapter analyzes long-text answers using Python-based NLP supported by local fallback text analysis. The output includes theme extraction, keyword frequency, topic grouping, repeated ideas, and sentiment classification. The report does not reproduce respondent names, phone numbers, or personal identifiers.'),
     ...figureBlock(
       state,
-      'Theme extraction from open-ended responses',
+      'Theme analysis from open-ended responses',
       barChartSvg('Open-Ended Themes', analytics.businessNeeds.themes, { labelKey: 'theme', valueKey: 'count' }),
-      `The dominant theme is ${top(analytics.businessNeeds.themes).theme}. This indicates the most repeated idea in written responses.`
+      `The dominant theme is ${top(analytics.businessNeeds.themes).theme || 'not available'}. This shows the most repeated topic in written responses.`
     ),
     ...figureBlock(
       state,
-      'Keyword frequency',
+      'Keyword frequency analysis',
       barChartSvg('Keyword Frequency', analytics.businessNeeds.keywords, { labelKey: 'keyword', valueKey: 'count', color: '#f59e0b' }),
-      `The most repeated keyword is ${top(analytics.businessNeeds.keywords).keyword}. Keyword frequency helps reveal repeated operational concerns.`
+      `The most repeated keyword is ${top(analytics.businessNeeds.keywords).keyword || 'not available'}. Keyword frequency identifies recurring operational needs and concerns.`
     ),
     ...figureBlock(
       state,
       'Sentiment distribution',
       donutChartSvg('Open-Ended Sentiment', analytics.businessNeeds.sentiment),
-      'Sentiment analysis classifies written responses as positive, neutral, or negative based on repeated positive and risk-oriented terms.'
+      'Sentiment classification groups written responses into positive, neutral, and negative categories based on repeated terms and response patterns.'
     ),
-    ...tableBlock(
-      state,
-      'Repeated Ideas',
-      ['Idea / Keyword', 'Frequency', 'Response Share'],
-      analytics.businessNeeds.repeatedIdeas.map((item) => [item.answer, item.count, pct(item.percentage)])
-    )
+    ...tableBlock(state, 'Repeated Ideas and Topic Clusters', ['Idea / Keyword', 'Frequency', 'Response Share'], analytics.businessNeeds.repeatedIdeas.map((item) => [item.answer, item.count, pct(item.percentage)]))
   );
 
-  children.push(p('Chapter 18: Key Findings', { heading: HeadingLevel.HEADING_1 }));
-  [
-    `The survey includes ${totals.totalResponses} responses across ${totals.totalSectorsCovered} sectors and ${totals.totalDistrictsCovered} districts.`,
-    `The average Cloud Readiness Index is ${pct(totals.averageCloudReadinessScore)}, indicating ${readinessBand(totals.averageCloudReadinessScore)} readiness.`,
-    `Cloud awareness is ${pct(totals.awarenessRate)} and current cloud usage is ${pct(totals.cloudToolsUsageRate)}.`,
-    `Adoption willingness is ${pct(totals.adoptionWillingnessRate)}.`,
-    `The top barrier is ${top(barrierRows).answer}.`,
-    `The top security concern is ${top(securityRows).answer}.`,
-    `The strongest readiness factor is ${top(factorRows).label}.`,
-    `The largest readiness gap is ${top(gapRows).label}.`,
-    `The highest-readiness sector is ${top(sectorRows).sector}.`,
-    `The highest cloud-service need is ${top(cloudNeeds).answer}.`
-  ].forEach((item) => children.push(bullet(item)));
+  children.push(p('Chapter 15: Key Findings', { heading: HeadingLevel.HEADING_1 }));
+  topFindings.forEach((finding) => children.push(bullet(finding)));
 
-  children.push(p('Chapter 19: Recommendations', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 16: Recommendations', { heading: HeadingLevel.HEADING_1 }));
   children.push(p('Organization-Level Recommendations', { heading: HeadingLevel.HEADING_2 }));
   [
-    'Begin with low-risk cloud services such as online backup, cloud storage, and secure document sharing.',
-    'Create written backup schedules and assign responsibility for checking backup completion.',
-    'Train employees on passwords, account recovery, access control, and safe file sharing.',
-    'Use phased migration so critical systems move only after staff and infrastructure are ready.'
+    'Begin with low-risk, high-value cloud services such as online backup, secure file storage, email collaboration, document sharing, and basic business-management tools.',
+    `Prioritize the largest readiness gap, ${top(gapRows).label || 'the weakest factor'}, because it has the strongest evidence-based need for improvement.`,
+    'Create clear backup schedules, access-control policies, password rules, and employee accountability for data protection.',
+    'Use phased implementation so sensitive systems migrate only after employees, internet connectivity, and security controls are ready.'
   ].forEach((item) => children.push(bullet(item)));
   children.push(p('Sector-Level Recommendations', { heading: HeadingLevel.HEADING_2 }));
   sectorRows.slice(0, 14).forEach((sector) => children.push(bullet(recommendationForSector(sector))));
-  children.push(p('National-Level Recommendations', { heading: HeadingLevel.HEADING_2 }));
+  children.push(p('Government-Level Recommendations', { heading: HeadingLevel.HEADING_2 }));
   [
-    'Improve internet reliability and affordability to support business cloud adoption.',
-    'Support cloud-awareness and cybersecurity training in Somali and English.',
-    'Encourage local cloud support providers to offer migration, onboarding, and helpdesk services.',
-    'Build partnerships among universities, telecom providers, business associations, and technology companies.'
+    'Support cloud awareness programs for business owners, managers, schools, clinics, SMEs, and public-facing service providers.',
+    'Encourage cybersecurity guidance, data-protection standards, and trusted local support services for cloud migration.',
+    'Coordinate with telecom providers and business associations to reduce infrastructure barriers that repeatedly appear in the survey.'
+  ].forEach((item) => children.push(bullet(item)));
+  children.push(p('National Digital Transformation Recommendations', { heading: HeadingLevel.HEADING_2 }));
+  [
+    'Promote affordable connectivity, stable power solutions, and digital-skills development as national cloud-readiness foundations.',
+    'Build partnerships among universities, government institutions, NGOs, technology firms, and investors to support sector-specific cloud adoption.',
+    'Use the Cloud Readiness Index as a recurring measurement tool so progress can be tracked over time using comparable evidence.'
   ].forEach((item) => children.push(bullet(item)));
 
-  children.push(p('Chapter 20: Conclusion', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 17: Conclusion', { heading: HeadingLevel.HEADING_1 }));
   [
-    `This academic report was generated automatically from live database responses and analytics. It analyzed ${totals.totalResponses} responses from ${totals.totalSectorsCovered} sectors and found an overall CRI of ${pct(totals.averageCloudReadinessScore)}.`,
-    'The results show that cloud adoption in Somalia is possible but uneven. Readiness is shaped by awareness, technology maturity, infrastructure reliability, backup practices, security trust, and willingness to adopt.',
-    'The strongest path forward is phased adoption supported by training, affordable cloud services, secure backup practices, infrastructure improvement, and sector-specific implementation planning.'
+    `This research report was generated automatically from ${totals.totalResponses} real survey responses stored in MongoDB. It examined cloud awareness, technology use, data storage, cloud usage, infrastructure, security concerns, business needs, cross-sector comparison, readiness, and open-ended response patterns.`,
+    `The overall Cloud Readiness Index is ${pct(totals.averageCloudReadinessScore)}, which places the analyzed sample in the ${readinessBand(totals.averageCloudReadinessScore)} category. The findings show that adoption is possible but uneven across sectors and depends on awareness, infrastructure, backup maturity, security trust, and willingness to adopt.`,
+    'The future outlook is positive where organizations combine phased cloud adoption with training, practical security controls, reliable internet, better backup practices, and sector-specific implementation planning. The system can regenerate this report whenever new survey data is added, ensuring future reports remain evidence-based and current.'
   ].forEach((item) => children.push(p(item)));
 
   children.push(p('Appendices', { heading: HeadingLevel.HEADING_1 }));
-  children.push(p('Appendix A: Complete District Comparison', { heading: HeadingLevel.HEADING_2 }));
+  children.push(p('Appendix A: District Readiness Comparison', { heading: HeadingLevel.HEADING_2 }));
   children.push(
     ...tableBlock(
       state,
@@ -972,10 +1013,10 @@ const buildDocChildren = (analytics) => {
       districtRows.map((item) => [item.district, item.responses, pct(item.averageReadiness), pct(item.awareness), pct(item.cloudTools), pct(item.infrastructure), pct(item.securityTrust)])
     )
   );
-  children.push(p('Appendix B: Data Integrity Statement', { heading: HeadingLevel.HEADING_2 }));
+  children.push(p('Appendix B: Data Integrity and Privacy Statement', { heading: HeadingLevel.HEADING_2 }));
   children.push(
     p(
-      'This document is generated from MongoDB survey responses and analytics at request time. The generator does not use placeholder statistics or manually invented percentages. If filters are applied, all frequencies, charts, and interpretations reflect the filtered dataset.'
+      'This document is generated from MongoDB survey responses and analytics at request time. The generator does not use placeholder statistics, dummy data, invented percentages, or manually supplied findings. Respondent names, phone numbers, and personal identifiers are excluded from report tables, charts, interpretations, and recommendations. If filters are applied, all frequencies, charts, and interpretations reflect only the filtered dataset.'
     )
   );
 
@@ -1020,6 +1061,22 @@ const buildAcademicResearchReportDocx = async (filters = {}) => {
               new Paragraph({
                 alignment: AlignmentType.CENTER,
                 children: [new TextRun('Page '), new TextRun({ children: [PageNumber.CURRENT] })]
+              })
+            ]
+          })
+        },
+        headers: {
+          default: new Header({
+            children: [
+              new Paragraph({
+                alignment: AlignmentType.CENTER,
+                children: [
+                  new TextRun({
+                    text: 'Cloud Computing Readiness, Challenges, and Adoption Across Business Sectors in Somalia',
+                    size: 18,
+                    color: '475569'
+                  })
+                ]
               })
             ]
           })
