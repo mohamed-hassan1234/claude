@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'cloud-survey-backend',
-      cwd: './backend',
+      cwd: '/var/www/claude/backend',
       script: 'server.js',
       instances: 1,
       exec_mode: 'fork',
