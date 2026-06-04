@@ -9,7 +9,9 @@ const connectDB = async () => {
     process.exit(1);
   }
 
-  if (process.env.MONGODB_USER && process.env.MONGODB_PASSWORD) {
+  const uriHasCredentials = /^mongodb(?:\+srv)?:\/\/[^/@]+:[^/@]*@/i.test(uri);
+
+  if (!uriHasCredentials && process.env.MONGODB_USER && process.env.MONGODB_PASSWORD) {
     options.user = process.env.MONGODB_USER;
     options.pass = process.env.MONGODB_PASSWORD;
     options.authSource = process.env.MONGODB_AUTH_SOURCE || 'admin';
