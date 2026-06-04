@@ -29,7 +29,7 @@ analytics/
 - Python 3.10+
 - MongoDB connection string supplied through backend environment variables
 - Frontend domain: `https://claude.elivateict.com`
-- Backend port: `5000`
+- Backend port: `5001`
 
 ## Setup
 

@@ -8,7 +8,7 @@ module.exports = {
       exec_mode: 'fork',
       env: {
         NODE_ENV: 'production',
-        PORT: 5000,
+        PORT: 5001,
         CLIENT_URLS: 'https://claude.elivateict.com'
       }
     }
