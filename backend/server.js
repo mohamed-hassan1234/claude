@@ -21,7 +21,7 @@ const auditRoutes = require('./routes/auditRoutes');
 const app = express();
 
 const normalizeOrigin = (value = '') => value.trim().replace(/\/+$/, '');
-const defaultClientOrigins = 'https://claude.elivateict.com';
+const defaultClientOrigins = 'https://claude.elivateict.com,https://www.claude.elivateict.com';
 const allowedOrigins = (process.env.CLIENT_URLS || process.env.CLIENT_URL || defaultClientOrigins)
   .split(',')
   .map(normalizeOrigin)
@@ -44,6 +44,7 @@ const corsOptions = {
   optionsSuccessStatus: 204
 };
 
+app.set('trust proxy', 1);
 app.use(
   helmet({
     crossOriginResourcePolicy: { policy: 'cross-origin' }

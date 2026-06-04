@@ -9,7 +9,7 @@ module.exports = {
       env: {
         NODE_ENV: 'production',
         PORT: 5001,
-        CLIENT_URLS: 'https://claude.elivateict.com'
+        CLIENT_URLS: 'https://claude.elivateict.com,https://www.claude.elivateict.com'
       }
     }
   ]

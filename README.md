@@ -89,7 +89,7 @@ Production frontend:
 
 - Public survey: `https://claude.elivateict.com`
 - Admin login: `https://claude.elivateict.com/galiadi`
-- API base URL: `https://claude.elivateict.com/api`
+- API base path: `/api` through the same Nginx host, proxied to backend port `5001`
 
 For local development, set `VITE_DEV_PROXY_TARGET` in `frontend/.env` to the backend URL used on your machine.
 
