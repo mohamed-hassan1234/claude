@@ -547,7 +547,9 @@ const p = (text = '', options = {}) =>
     heading: options.heading,
     alignment: options.alignment,
     spacing: { before: options.before ?? 120, after: options.after ?? 120, line: options.line ?? 300 },
-    pageBreakBefore: options.pageBreakBefore,
+    pageBreakBefore:
+      options.pageBreakBefore ??
+      (options.heading === HeadingLevel.HEADING_1 && /^(Chapter|Appendices|References|List of)/.test(String(text || ''))),
     thematicBreak: options.thematicBreak
   });
 
@@ -596,17 +598,38 @@ const table = (headers, rows) =>
 
 const figureBlock = (state, title, svg, interpretation, width = 620, height = 300) => {
   state.figure += 1;
+  state.figureEntries.push({ number: state.figure, title });
   return [
     runs([chartImage(svg, width, height)], { alignment: AlignmentType.CENTER, before: 120, after: 40 }),
     caption(`Figure ${state.figure}. ${title}`),
-    p(interpretation)
+    p(`Description: Figure ${state.figure} presents ${title.toLowerCase()} using aggregated survey analytics generated from MongoDB responses. The chart is included to make the underlying distribution, ranking, or comparison visible before interpretation.`),
+    p(`Interpretation: ${interpretation}`),
+    p('Discussion: The figure should not be treated as a decorative dashboard element. It is an empirical research exhibit that connects the numeric pattern to organizational readiness, adoption barriers, and the practical feasibility of cloud implementation in the surveyed context.'),
+    p('Implication: The result should be read as evidence of the current level of digital readiness, adoption pressure, or operational constraint within the surveyed organizations. It helps convert dashboard-style numbers into a research finding that can guide practical decision-making.'),
+    p('Risk analysis: Where the figure shows low scores, concentrated barriers, or uneven sector performance, the main risk is that cloud adoption may become fragmented, delayed, or implemented without sufficient awareness, infrastructure, backup discipline, or security controls.'),
+    p('Opportunity analysis: Where the figure shows strong readiness factors, repeated demand, or positive adoption signals, it identifies an opportunity for phased cloud migration, targeted training, secure backup implementation, or sector-specific service design.'),
+    p('Sector impact: Sector-level effects should be interpreted in relation to each sector’s operational sensitivity. Data-intensive sectors may face higher continuity and security risks, while sectors with stronger readiness can become early adopters and demonstration cases.'),
+    p('Recommendation: Stakeholders should use this chart as a prioritization tool. The strongest categories can be used for early implementation, while weaker categories should receive training, infrastructure improvement, security awareness, and managed cloud onboarding before full migration.')
   ];
 };
 
 const tableBlock = (state, title, headers, rows) => {
   state.table += 1;
+  state.tableEntries.push({ number: state.table, title });
   return [caption(`Table ${state.table}. ${title}`), table(headers, rows)];
 };
+
+const listOfEntries = (title, entries, typeLabel) => [
+  p(title, { heading: HeadingLevel.HEADING_1 }),
+  ...(entries.length
+    ? entries.map((entry) =>
+        runs([
+          new TextRun({ text: `${typeLabel} ${entry.number}. `, bold: true }),
+          new TextRun(entry.title)
+        ])
+      )
+    : [p(`No ${typeLabel.toLowerCase()} entries were generated for the selected dataset.`)])
+];
 
 const top = (rows = [], index = 0) => rows[index] || {};
 
@@ -664,10 +687,24 @@ const addQuestionAnalysis = (children, state, analytics, code, options = {}) => 
   children.push(p(title, { heading: options.heading || HeadingLevel.HEADING_2 }));
   children.push(
     ...figureBlock(state, `${code.toUpperCase()} main chart`, questionChart(question, chartTitle, options.limit || 10), questionInterpretation(question), options.width || 600, options.height || 260),
-    ...tableBlock(state, `${code.toUpperCase()} Frequency and Percentage Table`, ['Response', 'Frequency', 'Selection %', 'Respondent %'], questionRows(question)),
+    ...tableBlock(
+      state,
+      `${code.toUpperCase()} Frequency Table`,
+      ['Response', 'Frequency'],
+      questionRows(question).map((row) => [row[0], row[1]])
+    ),
+    ...tableBlock(
+      state,
+      `${code.toUpperCase()} Percentage Table`,
+      ['Response', 'Selection %', 'Respondent %'],
+      questionRows(question).map((row) => [row[0], row[2], row[3]])
+    ),
     p(`Interpretation: ${questionInterpretation(question)}`),
     p(`Insight summary: ${question.totalResponses} valid responses were analyzed for this question. The result contributes to the report findings only through observed survey data.`),
-    p(`Key finding: ${questionInterpretation(question)}`)
+    p(`Key finding: ${questionInterpretation(question)}`),
+    p('Discussion: This question provides a specific evidence point within the wider cloud-readiness model. Its frequency distribution should be interpreted together with sector comparison, readiness scoring, and related questions in the same chapter. A concentrated leading response indicates a common pattern, while a dispersed distribution suggests that organizations are at different stages of maturity or face different operating conditions.'),
+    p('Implications: The results have practical implications for cloud planning because they show where organizations already have capacity and where they may need training, infrastructure support, security guidance, or phased implementation. The implication is based only on observed answer counts and percentages in the table above.'),
+    p('Recommendation: Decision makers should use this question as a diagnostic indicator. Where the result is positive, it can support early cloud adoption; where the result reveals weakness or uncertainty, it should trigger targeted awareness, skills development, backup planning, infrastructure improvement, or security controls before full cloud migration.')
   );
 };
 
@@ -712,7 +749,7 @@ const buildTopFindings = (analytics) => {
 };
 
 const buildDocChildren = (analytics) => {
-  const state = { figure: 0, table: 0 };
+  const state = { figure: 0, table: 0, figureEntries: [], tableEntries: [] };
   const children = [];
   const totals = analytics.totals;
   const sectorRows = analytics.sectorComparison.rows;
@@ -726,6 +763,12 @@ const buildDocChildren = (analytics) => {
   const generatedAt = new Date(analytics.generatedAt).toLocaleString('en-GB');
 
   children.push(
+    p('Cover Page', {
+      heading: HeadingLevel.HEADING_1,
+      alignment: AlignmentType.CENTER,
+      before: 120,
+      after: 240
+    }),
     p('Cloud Computing Readiness, Challenges, and Adoption Across Business Sectors in Somalia', {
       heading: HeadingLevel.TITLE,
       alignment: AlignmentType.CENTER,
@@ -771,6 +814,7 @@ const buildDocChildren = (analytics) => {
     new TableOfContents('Contents', { hyperlink: true, headingStyleRange: '1-3' }),
     new Paragraph({ children: [new PageBreak()] })
   );
+  const frontMatterListIndex = children.length;
 
   children.push(p('Chapter 1: Introduction', { heading: HeadingLevel.HEADING_1 }));
   [
@@ -828,7 +872,7 @@ const buildDocChildren = (analytics) => {
     children,
     state,
     analytics,
-    'Chapter 6: Data Storage and Backup Analysis',
+    'Chapter 6: Data Storage & Backup Analysis',
     ['q13', 'q14', 'q15', 'q16', 'q17'],
     'Data storage and backup analysis identifies exposure to data loss, continuity risks, and readiness for safer cloud-based backup and document management. The findings are used to identify practical risk-reduction opportunities.'
   );
@@ -863,7 +907,7 @@ const buildDocChildren = (analytics) => {
     children,
     state,
     analytics,
-    'Chapter 9: Security and Challenges Analysis',
+    'Chapter 9: Security & Challenges Analysis',
     ['q25', 'q26', 'q27'],
     'Security and challenges analysis identifies the barriers that may prevent adoption, the security fears that shape trust, and the technology challenges that organizations report. These results guide risk management and training priorities.'
   );
@@ -899,6 +943,36 @@ const buildDocChildren = (analytics) => {
       'Sector factor heatmap',
       heatmapSvg('Sector Factor Heatmap', sectorRows),
       'The heatmap compares awareness, technology, infrastructure, backup, cloud usage, security, and willingness across sectors. Stronger scores indicate stronger readiness factors.'
+    ),
+    ...figureBlock(
+      state,
+      'Sector vs awareness',
+      barChartSvg('Sector Awareness Comparison', sectorRows, { labelKey: 'sector', valueKey: 'awareness', color: '#0ea5e9', limit: 14 }),
+      `${top([...sectorRows].sort((left, right) => right.awareness - left.awareness)).sector || 'No sector'} records the highest awareness score, while lower-scoring sectors require stronger introductory cloud education before adoption plans are introduced.`
+    ),
+    ...figureBlock(
+      state,
+      'Sector vs technology usage',
+      barChartSvg('Sector Technology Usage Comparison', sectorRows, { labelKey: 'sector', valueKey: 'technology', color: '#14b8a6', limit: 14 }),
+      `${top([...sectorRows].sort((left, right) => right.technology - left.technology)).sector || 'No sector'} shows the strongest technology usage profile. Technology maturity affects whether cloud services can be adopted quickly or require basic digital preparation.`
+    ),
+    ...figureBlock(
+      state,
+      'Sector vs cloud usage',
+      barChartSvg('Sector Cloud Usage Comparison', sectorRows, { labelKey: 'sector', valueKey: 'cloudTools', color: '#6366f1', limit: 14 }),
+      `${top([...sectorRows].sort((left, right) => right.cloudTools - left.cloudTools)).sector || 'No sector'} shows the strongest current cloud usage. Existing usage indicates practical familiarity and may reduce the training burden during migration.`
+    ),
+    ...figureBlock(
+      state,
+      'Sector vs infrastructure',
+      barChartSvg('Sector Infrastructure Comparison', sectorRows, { labelKey: 'sector', valueKey: 'infrastructure', color: '#f59e0b', limit: 14 }),
+      `${top([...sectorRows].sort((left, right) => right.infrastructure - left.infrastructure)).sector || 'No sector'} has the strongest infrastructure score. Infrastructure gaps can restrict adoption even when awareness and willingness are high.`
+    ),
+    ...figureBlock(
+      state,
+      'Sector vs security confidence',
+      barChartSvg('Sector Security Confidence Comparison', sectorRows, { labelKey: 'sector', valueKey: 'securityTrust', color: '#ef4444', limit: 14 }),
+      `${top([...sectorRows].sort((left, right) => right.securityTrust - left.securityTrust)).sector || 'No sector'} has the strongest security confidence. Lower confidence indicates a need for cybersecurity assurance, access-control training, and trust-building before data is moved to cloud services.`
     ),
     ...tableBlock(
       state,
@@ -946,7 +1020,7 @@ const buildDocChildren = (analytics) => {
     ...tableBlock(state, 'Readiness Gap Analysis', ['Factor', 'Current', 'Ideal', 'Gap'], gapRows.map((item) => [item.label, pct(item.current), pct(item.ideal), pct(item.gap)]))
   );
 
-  children.push(p('Chapter 14: AI-Powered Open Response Analysis', { heading: HeadingLevel.HEADING_1 }));
+  children.push(p('Chapter 14: Open Response Analysis', { heading: HeadingLevel.HEADING_1 }));
   children.push(
     p('This chapter analyzes long-text answers using Python-based NLP supported by local fallback text analysis. The output includes theme extraction, keyword frequency, topic grouping, repeated ideas, and sentiment classification. The report does not reproduce respondent names, phone numbers, or personal identifiers.'),
     ...figureBlock(
@@ -1018,6 +1092,24 @@ const buildDocChildren = (analytics) => {
     p(
       'This document is generated from MongoDB survey responses and analytics at request time. The generator does not use placeholder statistics, dummy data, invented percentages, or manually supplied findings. Respondent names, phone numbers, and personal identifiers are excluded from report tables, charts, interpretations, and recommendations. If filters are applied, all frequencies, charts, and interpretations reflect only the filtered dataset.'
     )
+  );
+
+  children.push(p('References', { heading: HeadingLevel.HEADING_1 }));
+  [
+    'Mell, P., & Grance, T. (2011). The NIST Definition of Cloud Computing. National Institute of Standards and Technology.',
+    'International Organization for Standardization. ISO/IEC 27001 Information Security Management Systems.',
+    'International Organization for Standardization. ISO/IEC 17788 Cloud Computing Overview and Vocabulary.',
+    'World Bank digital development publications on digital transformation, connectivity, and cloud-enabled service delivery.',
+    'Cloud Computing Survey Analytics System. Live MongoDB survey responses, analytics outputs, readiness scores, sector comparisons, and Python NLP results generated at report time.'
+  ].forEach((reference) => children.push(p(reference)));
+
+  children.splice(
+    frontMatterListIndex,
+    0,
+    ...listOfEntries('List of Figures', state.figureEntries, 'Figure'),
+    new Paragraph({ children: [new PageBreak()] }),
+    ...listOfEntries('List of Tables', state.tableEntries, 'Table'),
+    new Paragraph({ children: [new PageBreak()] })
   );
 
   return children;
